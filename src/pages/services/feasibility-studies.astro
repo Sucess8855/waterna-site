@@ -1,0 +1,205 @@
+---
+import Base from '../../layouts/Base.astro';
+import { site } from '../../data/site';
+
+const covered = [
+  ['Water source and demand', 'Characterising the raw water or effluent, establishing design flows, and testing the peaks that actually size the plant.'],
+  ['Treatment options appraisal', 'A shortlist of viable process routes, compared on performance, footprint, operability and risk — not on which supplier called first.'],
+  ['Capex and opex modelling', 'Budget capital estimates alongside chemical, energy, labour and disposal costs, so the whole-life picture is visible before you commit.'],
+  ['Regulatory and environmental review', 'Discharge consents, trade effluent agreements, permitting obligations and the constraints they place on the design.'],
+  ['Site and stakeholder constraints', 'Available land, existing assets worth reusing, utility limits, access, and what your operations team can realistically run.'],
+  ['A clear recommendation', 'A written report with a recommended option, the reasoning behind it, and the risks we would want closed out at the next stage.'],
+];
+---
+
+<Base
+  title="Water Treatment Feasibility Studies | Waterna"
+  description="Independent feasibility studies for water and wastewater treatment schemes — options appraisal, capex and opex modelling, and a clear recommendation before you commit capital."
+>
+  <section class="phead">
+    <div class="wrap">
+      <p class="eyebrow"><a href="/services">Services</a> &rsaquo; Feasibility Studies</p>
+      <h1>Feasibility Studies</h1>
+      <p class="lede">
+        The cheapest point to change your mind about a treatment scheme is before it is designed. A
+        feasibility study establishes whether the project is technically sound and financially worth
+        building — and which of the obvious options is actually the right one.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap cols">
+      <div class="cols__main">
+        <h2>Why it matters</h2>
+        <p>
+          Most treatment projects that disappoint were decided too early. A technology gets selected
+          on a supplier visit or a plant tour, the design is built around it, and the difficulties only
+          become visible at commissioning — when changing course is expensive.
+        </p>
+        <p>
+          A feasibility study puts a deliberate pause between the problem and the purchase order. It
+          costs a fraction of the scheme it evaluates, and it is the single most effective way to
+          avoid buying a plant that cannot meet its consent, cannot be operated by your team, or
+          costs far more to run than anyone budgeted for.
+        </p>
+
+        <h2>What the study covers</h2>
+        <dl class="deflist">
+          {
+            covered.map(([term, def]) => (
+              <div>
+                <dt>{term}</dt>
+                <dd>{def}</dd>
+              </div>
+            ))
+          }
+        </dl>
+
+        <h2>What you get</h2>
+        <p>
+          A written feasibility report you can put in front of a board, a lender or a regulator: the
+          options considered, how they compare, what we recommend, what it will cost to build and to
+          run, and the specific risks that need closing out before detailed design begins.
+        </p>
+        <p>
+          If the honest answer is that the project does not stack up, the report says so. That
+          conclusion has saved our clients considerably more than our fee.
+        </p>
+      </div>
+
+      <aside class="cols__side">
+        <div class="panel">
+          <h2 class="panel__h">Talk it through</h2>
+          <p>
+            Most feasibility work starts with a fifteen-minute conversation about your water, your
+            flows and your consent.
+          </p>
+          <p class="panel__contact">
+            <a class="btn btn--primary" href={site.phoneHref}>Call {site.phone}</a>
+          </p>
+          <p class="panel__small">
+            Or email <a href={`mailto:${site.email}`}>{site.email}</a>
+          </p>
+        </div>
+
+        <div class="panel panel--plain">
+          <h2 class="panel__h">Related services</h2>
+          <ul>
+            <li><a href="/services/design-services">Design Services</a></li>
+            <li><a href="/services/engineering-consultancy">Engineering Consultancy</a></li>
+            <li><a href="/services/plant-optimisation">Plant Optimisation</a></li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .phead {
+    background: var(--brand-tint);
+    border-bottom: 1px solid var(--line);
+    padding-block: clamp(2.5rem, 6vw, 4rem);
+  }
+
+  .phead .eyebrow a {
+    color: var(--brand);
+    text-decoration: none;
+  }
+
+  .phead .eyebrow a:hover {
+    text-decoration: underline;
+  }
+
+  .cols {
+    display: grid;
+    gap: 2.5rem;
+  }
+
+  @media (min-width: 900px) {
+    .cols {
+      grid-template-columns: minmax(0, 1fr) 20rem;
+      gap: 3.5rem;
+    }
+  }
+
+  .cols__main h2 {
+    margin-top: 2.25rem;
+  }
+
+  .cols__main h2:first-child {
+    margin-top: 0;
+  }
+
+  .deflist {
+    margin: 0 0 1.5rem;
+  }
+
+  .deflist > div {
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .deflist dt {
+    font-weight: 650;
+    color: var(--ink);
+    margin-bottom: 0.2rem;
+  }
+
+  .deflist dd {
+    margin: 0;
+    font-size: 0.98rem;
+  }
+
+  .panel {
+    background: var(--bg-alt);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 1.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .panel--plain {
+    background: #fff;
+  }
+
+  .panel__h {
+    font-size: 1.05rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .panel p {
+    font-size: 0.95rem;
+  }
+
+  .panel__contact {
+    margin-bottom: 0.6rem;
+  }
+
+  .panel__small {
+    margin-bottom: 0;
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+
+  .panel ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .panel li {
+    margin-bottom: 0.4rem;
+  }
+
+  .panel li a {
+    text-decoration: none;
+    font-weight: 550;
+    font-size: 0.95rem;
+  }
+
+  .panel li a:hover {
+    text-decoration: underline;
+  }
+</style>

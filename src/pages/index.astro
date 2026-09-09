@@ -1,0 +1,208 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, services } from '../data/site';
+
+const sectors = [
+  {
+    slug: 'industrial-water-treatment',
+    title: 'Industrial Water Treatment',
+    summary:
+      'Process water that meets specification consistently — clarification, filtration, reverse osmosis, ion exchange and disinfection.',
+  },
+  {
+    slug: 'wastewater-treatment',
+    title: 'Wastewater Treatment',
+    summary:
+      'Effluent schemes that hold their discharge consent, from primary settlement and biological treatment through to tertiary polishing.',
+  },
+  {
+    slug: 'anaerobic-digestion',
+    title: 'Anaerobic Digestion & Sludge',
+    summary:
+      'Digestion, thermal hydrolysis, dewatering and sludge disposal routes — assessed on whole-life cost, not headline capex.',
+  },
+];
+
+const reasons = [
+  {
+    title: 'We do not sell equipment',
+    body: 'We have no vendor agreements and no commission arrangements. When we recommend a technology, it is because it fits your water, your site and your budget.',
+  },
+  {
+    title: 'Whole-life cost, not headline capex',
+    body: 'Chemical dose, energy, membrane replacement and sludge disposal usually dwarf the purchase price. We model the cost you will actually live with.',
+  },
+  {
+    title: 'Compliance built in from the start',
+    body: 'Discharge consents, trade effluent agreements and environmental permitting are designed into the scheme, not retrofitted after commissioning.',
+  },
+];
+---
+
+<Base
+  title="Water & Wastewater Treatment Consultants | Waterna"
+  description="Independent UK water and wastewater treatment consultancy. Feasibility studies, process design, HAZOP and plant optimisation — vendor-neutral advice, no equipment sales."
+>
+  <section class="hero">
+    <div class="wrap hero__inner">
+      <div>
+        <p class="eyebrow">Independent consultancy &middot; United Kingdom</p>
+        <h1>Water and wastewater treatment engineering, without a vendor agenda</h1>
+        <p class="lede">
+          Waterna is an independent process engineering consultancy with more than 15 years in water,
+          effluent and sludge treatment. We design new plant, fix underperforming plant, and tell you
+          honestly when you do not need to spend the money.
+        </p>
+        <div class="hero__cta">
+          <a class="btn btn--primary" href={site.phoneHref}>Call {site.phone}</a>
+          <a class="btn btn--ghost" href={`mailto:${site.email}`}>Email us</a>
+        </div>
+        <p class="hero__note">
+          Speak to a chartered process engineer — not a salesperson. No charge for an initial conversation.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <p class="eyebrow">What we do</p>
+      <h2>Services</h2>
+      <p class="lede">
+        From the first feasibility question through to a commissioned plant and trained operators.
+      </p>
+
+      <div class="grid grid--3 svc-grid">
+        {
+          services.map((s) => (
+            <article class="card">
+              <h3>{s.title}</h3>
+              <p>{s.summary}</p>
+              <a href={`/services/${s.slug}`}>Read more &rarr;</a>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="wrap">
+      <p class="eyebrow">Why Waterna</p>
+      <h2>Independent means independent</h2>
+
+      <div class="grid grid--3 why-grid">
+        {
+          reasons.map((r) => (
+            <div>
+              <h3>{r.title}</h3>
+              <p>{r.body}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <p class="eyebrow">Where we work</p>
+      <h2>Sectors</h2>
+
+      <div class="grid grid--3">
+        {
+          sectors.map((s) => (
+            <article class="card">
+              <h3>{s.title}</h3>
+              <p>{s.summary}</p>
+              <a href={`/sectors/${s.slug}`}>Read more &rarr;</a>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="wrap cta__inner">
+      <div>
+        <h2>Got a treatment problem worth a second opinion?</h2>
+        <p>
+          Tell us the water, the flow and the consent you are working to. We will tell you whether
+          there is a project here — and roughly what it should cost.
+        </p>
+      </div>
+      <div class="cta__actions">
+        <a class="btn btn--primary" href={site.phoneHref}>{site.phone}</a>
+        <a class="btn btn--ghost" href="/contact">Contact page</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    background: linear-gradient(180deg, var(--brand-tint), #fff);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .hero__inner {
+    padding-block: clamp(3rem, 8vw, 6rem);
+    max-width: 62rem;
+  }
+
+  .hero__cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.75rem;
+  }
+
+  .hero__note {
+    margin-top: 1.1rem;
+    font-size: 0.94rem;
+    color: var(--muted);
+  }
+
+  .svc-grid,
+  .why-grid {
+    margin-top: 2.25rem;
+  }
+
+  .grid {
+    margin-top: 2.25rem;
+  }
+
+  .cta {
+    background: var(--brand-tint);
+    padding-block: clamp(2.5rem, 6vw, 4rem);
+    border-top: 1px solid var(--line);
+  }
+
+  .cta__inner {
+    display: grid;
+    gap: 1.5rem;
+    align-items: center;
+  }
+
+  @media (min-width: 800px) {
+    .cta__inner {
+      grid-template-columns: 1.6fr 1fr;
+    }
+  }
+
+  .cta h2 {
+    margin-bottom: 0.4rem;
+  }
+
+  .cta p {
+    margin-bottom: 0;
+    max-width: 54ch;
+  }
+
+  .cta__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+</style>

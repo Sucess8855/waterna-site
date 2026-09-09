@@ -1,0 +1,167 @@
+---
+import { site, nav } from '../data/site';
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+---
+
+<header class="hdr">
+  <div class="wrap hdr__inner">
+    <a href="/" class="hdr__brand" aria-label={`${site.name} — home`}>
+      <img src="/logo.png" alt="" width="40" height="40" />
+      <span class="hdr__name">{site.name}</span>
+    </a>
+
+    <input type="checkbox" id="navToggle" class="hdr__toggle" />
+    <label for="navToggle" class="hdr__burger" aria-hidden="true">
+      <span></span><span></span><span></span>
+    </label>
+
+    <nav class="hdr__nav" aria-label="Main">
+      <ul>
+        {
+          nav.map((item) => (
+            <li>
+              <a href={item.href} aria-current={path.startsWith(item.href) ? 'page' : undefined}>
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <a class="hdr__phone" href={site.phoneHref}>
+      <span class="hdr__phone-label">Call us</span>
+      <span class="hdr__phone-num">{site.phone}</span>
+    </a>
+  </div>
+</header>
+
+<style>
+  .hdr {
+    border-bottom: 1px solid var(--line);
+    background: #fff;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+
+  .hdr__inner {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    min-height: 74px;
+    flex-wrap: wrap;
+  }
+
+  .hdr__brand {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    text-decoration: none;
+    margin-right: auto;
+  }
+
+  .hdr__name {
+    font-weight: 700;
+    font-size: 1.3rem;
+    letter-spacing: 0.02em;
+    color: var(--brand-deep);
+  }
+
+  .hdr__nav ul {
+    display: flex;
+    gap: 1.4rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .hdr__nav a {
+    text-decoration: none;
+    color: var(--body);
+    font-size: 0.96rem;
+    font-weight: 550;
+    padding-block: 0.35rem;
+    border-bottom: 2px solid transparent;
+  }
+
+  .hdr__nav a:hover,
+  .hdr__nav a[aria-current='page'] {
+    color: var(--brand-deep);
+    border-bottom-color: var(--brand);
+  }
+
+  .hdr__phone {
+    text-decoration: none;
+    line-height: 1.2;
+    text-align: right;
+  }
+
+  .hdr__phone-label {
+    display: block;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+  }
+
+  .hdr__phone-num {
+    display: block;
+    font-weight: 700;
+    color: var(--brand-deep);
+    white-space: nowrap;
+  }
+
+  /* mobile nav */
+  .hdr__toggle,
+  .hdr__burger {
+    display: none;
+  }
+
+  @media (max-width: 900px) {
+    .hdr__burger {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 44px;
+      height: 44px;
+      padding: 10px;
+      cursor: pointer;
+      order: 3;
+    }
+
+    .hdr__burger span {
+      display: block;
+      height: 2px;
+      background: var(--brand-deep);
+      border-radius: 2px;
+    }
+
+    .hdr__nav {
+      display: none;
+      order: 4;
+      width: 100%;
+      padding-bottom: 1rem;
+    }
+
+    .hdr__toggle:checked ~ .hdr__nav {
+      display: block;
+    }
+
+    .hdr__nav ul {
+      flex-direction: column;
+      gap: 0.15rem;
+    }
+
+    .hdr__nav a {
+      display: block;
+      padding: 0.55rem 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .hdr__phone {
+      order: 2;
+    }
+  }
+</style>
