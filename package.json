@@ -11,5 +11,8 @@
   },
   "dependencies": {
     "astro": "^7.3.2"
+  },
+  "devDependencies": {
+    "@playwright/mcp": "^0.0.80"
   }
 }
