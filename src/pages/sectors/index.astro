@@ -1,0 +1,142 @@
+---
+import Base from '../../layouts/Base.astro';
+import { site } from '../../data/site';
+import { sectors } from '../../data/sectors';
+---
+
+<Base
+  title="Sectors We Work In | Waterna"
+  description="Industrial water treatment, wastewater and effluent treatment, and anaerobic digestion and sludge — independent process engineering across each."
+>
+  <section class="phead">
+    <div class="wrap">
+      <p class="eyebrow">Where we work</p>
+      <h1>Sectors</h1>
+      <p class="lede">
+        Our work sits across three areas that share the same underlying engineering: characterise
+        what is actually arriving, design for the worst case rather than the average, and cost the
+        whole life rather than the purchase.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="grid grid--3">
+        {
+          sectors.map((s) => (
+            <article class="card scard">
+              <h2>
+                <a href={`/sectors/${s.slug}`}>{s.title}</a>
+              </h2>
+              <p>{s.summary}</p>
+              <ul class="scard__list">
+                {s.technologies.slice(0, 4).map((t) => (
+                  <li>{t}</li>
+                ))}
+              </ul>
+              <a class="scard__more" href={`/sectors/${s.slug}`}>
+                Read more &rarr;
+              </a>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="wrap cta__inner">
+      <div>
+        <h2>Working on something that spans more than one of these?</h2>
+        <p>
+          Most real sites do. A works with an effluent plant, a digester and a process water demand
+          is one system, and it pays to have it looked at as one.
+        </p>
+      </div>
+      <div class="cta__actions">
+        <a class="btn btn--primary" href={site.phoneHref}>{site.phone}</a>
+        <a class="btn btn--ghost" href="/contact">Contact page</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .phead {
+    background: var(--brand-tint);
+    border-bottom: 1px solid var(--line);
+    padding-block: clamp(2.5rem, 6vw, 4rem);
+  }
+
+  .scard h2 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .scard h2 a {
+    text-decoration: none;
+    color: var(--ink);
+  }
+
+  .scard h2 a:hover {
+    color: var(--brand);
+  }
+
+  .scard__list {
+    list-style: none;
+    margin: 0 0 1rem;
+    padding: 0;
+    border-top: 1px solid var(--line);
+    padding-top: 0.85rem;
+  }
+
+  .scard__list li {
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin-bottom: 0.25rem;
+  }
+
+  .scard__more {
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+  }
+
+  .scard__more:hover {
+    text-decoration: underline;
+  }
+
+  .cta {
+    background: var(--brand-tint);
+    padding-block: clamp(2.5rem, 6vw, 4rem);
+    border-top: 1px solid var(--line);
+  }
+
+  .cta__inner {
+    display: grid;
+    gap: 1.5rem;
+    align-items: center;
+  }
+
+  @media (min-width: 800px) {
+    .cta__inner {
+      grid-template-columns: 1.6fr 1fr;
+    }
+  }
+
+  .cta h2 {
+    margin-bottom: 0.4rem;
+  }
+
+  .cta p {
+    margin-bottom: 0;
+    max-width: 54ch;
+  }
+
+  .cta__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+</style>

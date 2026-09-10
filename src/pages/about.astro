@@ -1,0 +1,325 @@
+---
+import Base from '../layouts/Base.astro';
+import { site } from '../data/site';
+import { team } from '../data/team';
+
+const principles = [
+  {
+    title: 'We sell no equipment',
+    body: 'We hold no vendor agreements and take no commission on equipment. The process route we recommend is the one that fits your water, your site and your operators.',
+  },
+  {
+    title: 'Whole-life cost, not headline capex',
+    body: 'Chemicals, energy, membrane replacement and sludge disposal usually exceed the purchase price over a plant’s life. We model the cost you will actually live with.',
+  },
+  {
+    title: 'We will tell you not to spend',
+    body: 'Plenty of problems we are asked to price a plant for turn out to be operational. If the answer is a control change rather than a capital scheme, that is what the report says.',
+  },
+];
+---
+
+<Base
+  title="About Waterna | Independent Water Treatment Consultancy"
+  description="Waterna is an independent UK water and wastewater treatment consultancy. Chartered process engineers, no equipment sales, no vendor agreements."
+>
+  <section class="phead">
+    <div class="wrap">
+      <p class="eyebrow">About us</p>
+      <h1>Independent process engineering for water and effluent</h1>
+      <p class="lede">
+        Waterna is a UK process engineering consultancy working in water, wastewater and sludge
+        treatment. We design new plant, diagnose plant that is not performing, and give an
+        independent read on schemes other people have designed.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap cols">
+      <div class="cols__main">
+        <h2>What we are</h2>
+        <p>
+          Waterna Ltd is registered in England and Wales, company number {site.companyNumber}, and
+          works from {site.address.city}. Our background is industrial: refineries, gas plants,
+          petrochemicals, manufacturing and the utility systems that sit underneath them, alongside
+          conventional water and wastewater treatment.
+        </p>
+        <p>
+          That matters because industrial water problems tend to be specific. The question is rarely
+          which technology is best in general — it is which one tolerates the variability of your
+          particular stream, fits the space you have, and can be run by the people you employ.
+        </p>
+
+        <h2>What we are not</h2>
+        <p>
+          We are not a supplier, a contractor or an agent. Nobody here earns more if you buy a
+          bigger plant. That independence is the whole basis on which we ask you to trust a
+          recommendation, so we protect it: no vendor agreements, no commission arrangements, no
+          preferred technology.
+        </p>
+      </div>
+
+      <aside class="cols__side">
+        <div class="panel">
+          <h2 class="panel__h">At a glance</h2>
+          <dl class="facts">
+            <div><dt>Registered</dt><dd>England &amp; Wales, no. {site.companyNumber}</dd></div>
+            <div><dt>Based in</dt><dd>{site.address.city}, {site.address.postcode}</dd></div>
+            <div><dt>Works</dt><dd>UK, Europe and the Middle East</dd></div>
+            <div><dt>Independence</dt><dd>No equipment sales, no vendor agreements</dd></div>
+          </dl>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="wrap">
+      <p class="eyebrow">How we work</p>
+      <h2>Three commitments</h2>
+      <div class="grid grid--3">
+        {
+          principles.map((p) => (
+            <div>
+              <h3>{p.title}</h3>
+              <p>{p.body}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <p class="eyebrow">Who you work with</p>
+      <h2>The team</h2>
+      <p class="lede">
+        You deal directly with the engineers doing the work. There is no account layer between you
+        and the person writing the report.
+      </p>
+
+      <div class="grid grid--2 team">
+        {
+          team.map((person) => (
+            <article class="card person">
+              <h3>{person.name}</h3>
+              <p class="person__role">{person.role}</p>
+
+              {/* Bios are written later; the card stays valid without one. */}
+              {person.bio.map((para) => (
+                <p>{para}</p>
+              ))}
+
+              {person.credentials.length > 0 && (
+                <>
+                  <h4>Credentials</h4>
+                  <ul>
+                    {person.credentials.map((c) => (
+                      <li>{c}</li>
+                    ))}
+                  </ul>
+                </>
+              )}
+
+              {person.education.length > 0 && (
+                <>
+                  <h4>Education</h4>
+                  <ul>
+                    {person.education.map((e) => (
+                      <li>{e}</li>
+                    ))}
+                  </ul>
+                </>
+              )}
+
+              {person.focus.length > 0 && (
+                <ul class="person__focus">
+                  {person.focus.map((f) => (
+                    <li>{f}</li>
+                  ))}
+                </ul>
+              )}
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="wrap cta__inner">
+      <div>
+        <h2>Want a second opinion on something?</h2>
+        <p>
+          The first conversation costs nothing and usually takes fifteen minutes. If it is not work
+          for us, we will say so.
+        </p>
+      </div>
+      <div class="cta__actions">
+        <a class="btn btn--primary" href={site.phoneHref}>{site.phone}</a>
+        <a class="btn btn--ghost" href="/contact">Contact page</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .phead {
+    background: var(--brand-tint);
+    border-bottom: 1px solid var(--line);
+    padding-block: clamp(2.5rem, 6vw, 4rem);
+  }
+
+  .cols {
+    display: grid;
+    gap: 2.5rem;
+  }
+
+  @media (min-width: 900px) {
+    .cols {
+      grid-template-columns: minmax(0, 1fr) 20rem;
+      gap: 3.5rem;
+      align-items: start;
+    }
+  }
+
+  .cols__main h2 {
+    margin-top: 2.25rem;
+  }
+
+  .cols__main h2:first-child {
+    margin-top: 0;
+  }
+
+  .cols__main p {
+    max-width: 68ch;
+  }
+
+  .panel {
+    background: var(--bg-alt);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 1.5rem;
+  }
+
+  .panel__h {
+    font-size: 1.05rem;
+    margin-bottom: 0.9rem;
+  }
+
+  .facts {
+    margin: 0;
+  }
+
+  .facts > div {
+    padding-block: 0.6rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .facts > div:first-child {
+    border-top: 0;
+    padding-top: 0;
+  }
+
+  .facts dt {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    font-weight: 600;
+  }
+
+  .facts dd {
+    margin: 0.15rem 0 0;
+    font-size: 0.95rem;
+    color: var(--ink);
+  }
+
+  .team {
+    margin-top: 2.25rem;
+  }
+
+  .person h3 {
+    margin-bottom: 0.15rem;
+    font-size: 1.25rem;
+  }
+
+  .person__role {
+    color: var(--brand);
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+  }
+
+  .person h4 {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin: 1.1rem 0 0.4rem;
+  }
+
+  .person ul {
+    margin: 0;
+    padding-left: 1.1rem;
+  }
+
+  .person li {
+    font-size: 0.93rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .person__focus {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    padding: 0;
+    margin-top: 1.2rem;
+  }
+
+  .person__focus li {
+    font-size: 0.82rem;
+    background: var(--bg-alt);
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    padding: 0.25rem 0.6rem;
+    margin: 0;
+    color: var(--body);
+  }
+
+  .cta {
+    background: var(--brand-tint);
+    padding-block: clamp(2.5rem, 6vw, 4rem);
+    border-top: 1px solid var(--line);
+  }
+
+  .cta__inner {
+    display: grid;
+    gap: 1.5rem;
+    align-items: center;
+  }
+
+  @media (min-width: 800px) {
+    .cta__inner {
+      grid-template-columns: 1.6fr 1fr;
+    }
+  }
+
+  .cta h2 {
+    margin-bottom: 0.4rem;
+  }
+
+  .cta p {
+    margin-bottom: 0;
+    max-width: 54ch;
+  }
+
+  .cta__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+</style>

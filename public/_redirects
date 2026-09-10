@@ -1,0 +1,8 @@
+# Wix URL map — applied at cutover so existing links and rankings survive.
+# Cloudflare Pages reads this file from the build output root.
+
+/aboutus       /about     301
+/contact-us    /contact   301
+/book-online   /contact   301
+
+# /blog and /post/* are preserved as-is once the blog is migrated.

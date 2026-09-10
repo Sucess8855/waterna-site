@@ -1,0 +1,160 @@
+---
+import Base from '../layouts/Base.astro';
+import { site } from '../data/site';
+
+const updated = '10 September 2026';
+---
+
+<Base
+  title="Privacy Policy | Waterna"
+  description="How Waterna Ltd collects, uses and protects personal data submitted through this website, under UK GDPR."
+>
+  <section class="phead">
+    <div class="wrap">
+      <p class="eyebrow">Legal</p>
+      <h1>Privacy Policy</h1>
+      <p class="lede">
+        How we handle personal information you give us through this website. Last updated {updated}.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap prose">
+      <h2>Who we are</h2>
+      <p>
+        {site.legalName} is a company registered in England and Wales, company number {
+          site.companyNumber
+        }, with its registered office at {site.address.street}, {site.address.city}, {
+          site.address.postcode
+        }, {site.address.country}.
+      </p>
+      <p>
+        For the purposes of UK data protection law we are the data controller for personal data
+        collected through this website. If you have a question about this policy, email
+        <a href={`mailto:${site.email}`}>{site.email}</a> or call {site.phone}.
+      </p>
+
+      <h2>What we collect</h2>
+      <p>We collect personal data in two ways.</p>
+      <p>
+        <strong>Information you send us.</strong> If you use our enquiry form we collect your name,
+        email address, and — if you choose to give them — your company name and telephone number,
+        together with the content of your message. If you email or telephone us instead, we hold
+        whatever you tell us in that correspondence.
+      </p>
+      <p>
+        <strong>Technical information.</strong> Our hosting provider records standard server
+        information when a page is requested, including IP address, browser type and the page
+        requested. This is used to deliver the site securely and to protect it from abuse.
+      </p>
+
+      <h2>Cookies and analytics</h2>
+      <p>
+        This website sets no cookies of its own, uses no advertising trackers, and runs no
+        third-party analytics. Fonts and images are served from this site rather than from an
+        external network, so loading a page does not disclose your visit to another company.
+      </p>
+
+      <h2>Why we use it, and our lawful basis</h2>
+      <p>
+        We use the information you send solely to respond to your enquiry and, where it leads to
+        work, to carry out that work. Our lawful basis is our legitimate interest in answering people
+        who contact us about our services, and, once we are engaged, the performance of a contract
+        with you.
+      </p>
+      <p>
+        We do not use your details for marketing unless you ask us to, we do not add enquirers to a
+        mailing list, and we never sell personal data.
+      </p>
+
+      <h2>Who we share it with</h2>
+      <p>
+        We do not share your personal data except with the service providers that make this site
+        work:
+      </p>
+      <ul>
+        <li>
+          <strong>Our website host,</strong> which serves the site and keeps the server logs
+          described above.
+        </li>
+        <li>
+          <strong>Our email provider,</strong> which delivers enquiry-form messages to our inbox and
+          carries our ordinary email correspondence.
+        </li>
+      </ul>
+      <p>
+        These providers process data on our instructions under written terms. We may also disclose
+        information where the law requires it.
+      </p>
+
+      <h2>How long we keep it</h2>
+      <p>
+        Enquiries that do not lead to work are deleted within 24 months. Where an enquiry becomes a
+        project, we keep the correspondence for the duration of the engagement and for six years
+        afterwards, which reflects our professional and contractual record-keeping obligations.
+        Server logs are retained for a short period by our host.
+      </p>
+
+      <h2>Where your data is held</h2>
+      <p>
+        Our providers may process data outside the United Kingdom. Where that happens, we rely on
+        safeguards recognised under UK data protection law, such as adequacy regulations or standard
+        contractual clauses.
+      </p>
+
+      <h2>Your rights</h2>
+      <p>Under UK GDPR you have the right to:</p>
+      <ul>
+        <li>ask what personal data we hold about you, and receive a copy;</li>
+        <li>have inaccurate data corrected;</li>
+        <li>ask us to delete data we no longer need;</li>
+        <li>ask us to restrict how we use it, or object to our use of it;</li>
+        <li>request your data in a portable form; and</li>
+        <li>withdraw consent, where we relied on consent.</li>
+      </ul>
+      <p>
+        To exercise any of these, email <a href={`mailto:${site.email}`}>{site.email}</a>. We will
+        respond within one month.
+      </p>
+
+      <h2>Complaints</h2>
+      <p>
+        If you are unhappy with how we have handled your data, please tell us first so we can put it
+        right. You also have the right to complain to the Information Commissioner’s Office, the UK
+        supervisory authority, at <a href="https://ico.org.uk" rel="noopener">ico.org.uk</a>.
+      </p>
+
+      <h2>Changes to this policy</h2>
+      <p>
+        If we change how we handle personal data we will update this page and revise the date at the
+        top.
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .phead {
+    background: var(--brand-tint);
+    border-bottom: 1px solid var(--line);
+    padding-block: clamp(2.5rem, 6vw, 4rem);
+  }
+
+  .prose {
+    max-width: 70ch;
+  }
+
+  .prose h2 {
+    margin-top: 2.5rem;
+    font-size: clamp(1.3rem, 2.4vw, 1.6rem);
+  }
+
+  .prose h2:first-child {
+    margin-top: 0;
+  }
+
+  .prose li {
+    margin-bottom: 0.5em;
+  }
+</style>
