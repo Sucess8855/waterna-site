@@ -6,8 +6,7 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 <header class="hdr">
   <div class="wrap hdr__inner">
     <a href="/" class="hdr__brand" aria-label={`${site.name} — home`}>
-      <img src="/logo.png" alt="" width="40" height="40" />
-      <span class="hdr__name">{site.name}</span>
+      <img src="/logo.png" alt={site.name} width="149" height="58" />
     </a>
 
     <input type="checkbox" id="navToggle" class="hdr__toggle" />
@@ -56,16 +55,13 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/';
   .hdr__brand {
     display: flex;
     align-items: center;
-    gap: 0.6rem;
     text-decoration: none;
     margin-right: auto;
   }
 
-  .hdr__name {
-    font-weight: 700;
-    font-size: 1.3rem;
-    letter-spacing: 0.02em;
-    color: var(--brand-deep);
+  .hdr__brand img {
+    height: 58px;
+    width: auto;
   }
 
   .hdr__nav ul {
