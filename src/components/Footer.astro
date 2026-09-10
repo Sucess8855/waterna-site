@@ -1,5 +1,6 @@
 ---
-import { site, nav, services } from '../data/site';
+import { site, nav } from '../data/site';
+import { services } from '../data/services';
 const year = new Date().getFullYear();
 ---
 
@@ -18,7 +19,7 @@ const year = new Date().getFullYear();
     <div>
       <h2 class="ftr__h">Services</h2>
       <ul>
-        {services.map((s) => <li><a href={`/services/${s.slug}`}>{s.title}</a></li>)}
+        {services.map((s) => <li><a href={`/services/${s.slug}`}>{s.navTitle ?? s.title}</a></li>)}
       </ul>
     </div>
 

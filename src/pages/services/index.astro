@@ -1,0 +1,190 @@
+---
+import Base from '../../layouts/Base.astro';
+import { site } from '../../data/site';
+import { services } from '../../data/services';
+---
+
+<Base
+  title="Water & Wastewater Treatment Services | Waterna"
+  description="Feasibility studies, process design, independent engineering consultancy, HAZOP, commissioning and optimisation, and operator training for water, effluent and sludge treatment."
+>
+  <section class="phead">
+    <div class="wrap">
+      <p class="eyebrow">What we do</p>
+      <h1>Services</h1>
+      <p class="lede">
+        From the first feasibility question through to a commissioned plant and a trained team. We
+        sell no equipment, so the process route we recommend is the one that fits your water — not
+        the one that fits a supplier’s catalogue.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <ol class="slist">
+        {
+          services.map((s, i) => (
+            <li class="slist__item">
+              <span class="slist__num" aria-hidden="true">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <div class="slist__body">
+                <h2>
+                  <a href={`/services/${s.slug}`}>{s.title}</a>
+                </h2>
+                <p>{s.summary}</p>
+                <ul class="slist__tags">
+                  {s.covered.slice(0, 3).map(([term]) => <li>{term}</li>)}
+                </ul>
+                <a class="slist__more" href={`/services/${s.slug}`}>
+                  Read more about {s.navTitle ?? s.title} &rarr;
+                </a>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="wrap cta__inner">
+      <div>
+        <h2>Not sure which of these you need?</h2>
+        <p>
+          Most people are not, at the start. Describe the problem and we will tell you what the
+          right first step is — even when that step is not one we would be paid for.
+        </p>
+      </div>
+      <div class="cta__actions">
+        <a class="btn btn--primary" href={site.phoneHref}>{site.phone}</a>
+        <a class="btn btn--ghost" href="/contact">Contact page</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .phead {
+    background: var(--brand-tint);
+    border-bottom: 1px solid var(--line);
+    padding-block: clamp(2.5rem, 6vw, 4rem);
+  }
+
+  .slist {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0;
+  }
+
+  .slist__item {
+    display: grid;
+    gap: 1rem;
+    padding-block: 2rem;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 0;
+  }
+
+  .slist__item:first-child {
+    padding-top: 0;
+  }
+
+  @media (min-width: 720px) {
+    .slist__item {
+      grid-template-columns: 5rem minmax(0, 1fr);
+      gap: 1.5rem;
+    }
+  }
+
+  .slist__num {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--line);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  .slist__body h2 {
+    font-size: clamp(1.35rem, 2.4vw, 1.7rem);
+    margin-bottom: 0.4rem;
+  }
+
+  .slist__body h2 a {
+    text-decoration: none;
+    color: var(--ink);
+  }
+
+  .slist__body h2 a:hover {
+    color: var(--brand);
+  }
+
+  .slist__body > p {
+    max-width: 64ch;
+    margin-bottom: 0.9rem;
+  }
+
+  .slist__tags {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0 0 1rem;
+    padding: 0;
+  }
+
+  .slist__tags li {
+    font-size: 0.82rem;
+    color: var(--body);
+    background: var(--bg-alt);
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    padding: 0.25rem 0.6rem;
+    margin: 0;
+  }
+
+  .slist__more {
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+  }
+
+  .slist__more:hover {
+    text-decoration: underline;
+  }
+
+  .cta {
+    background: var(--brand-tint);
+    padding-block: clamp(2.5rem, 6vw, 4rem);
+    border-top: 1px solid var(--line);
+  }
+
+  .cta__inner {
+    display: grid;
+    gap: 1.5rem;
+    align-items: center;
+  }
+
+  @media (min-width: 800px) {
+    .cta__inner {
+      grid-template-columns: 1.6fr 1fr;
+    }
+  }
+
+  .cta h2 {
+    margin-bottom: 0.4rem;
+  }
+
+  .cta p {
+    margin-bottom: 0;
+    max-width: 54ch;
+  }
+
+  .cta__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+</style>
