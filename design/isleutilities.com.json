@@ -1,0 +1,90 @@
+{
+  "source": "https://isleutilities.com/",
+  "tokens": {
+    "spacing": {
+      "scale": [5, 10, 20, 30, 60, 90],
+      "base_unit": 10,
+      "section_padding": "90px 150px"
+    },
+    "typography": {
+      "families": ["Lexend Deca", "Montserrat"],
+      "scale": [
+        { "role": "hero", "size": "117px", "weight": "700", "family": "Lexend Deca" },
+        { "role": "display", "size": "100px", "weight": "900", "family": "Lexend Deca" },
+        { "role": "section-title", "size": "64px", "weight": "700", "family": "Lexend Deca" },
+        { "role": "subsection", "size": "32px", "weight": "700", "family": "Montserrat" },
+        { "role": "lede", "size": "20px", "weight": "600", "family": "Montserrat" },
+        { "role": "button", "size": "20px", "weight": "800", "family": "Montserrat" },
+        { "role": "body", "size": "16px", "weight": "400", "family": "Montserrat" },
+        { "role": "caption", "size": "15px", "weight": "400", "family": "Montserrat" }
+      ],
+      "scale_is_mathematical": false,
+      "scale_note": "Irregular ratios: 16 to 20 is 1.25x, 20 to 32 is 1.6x, 32 to 64 is 2.0x"
+    },
+    "colors": [
+      { "role": "background", "value": "#FFFFFF", "area_pct": 74.4 },
+      { "role": "surface-base", "value": "#EEEEEE", "area_pct": 0 },
+      { "role": "band-dark", "value": "#08414D", "area_pct": 9.0 },
+      { "role": "band-mid", "value": "#0A7580", "area_pct": 7.4 },
+      { "role": "accent", "value": "#00B2A4", "area_pct": 0.6 },
+      { "role": "accent-soft", "value": "#A1E6E6", "area_pct": 0.1 },
+      { "role": "text-primary", "value": "#4F4F4F", "area_pct": 0 },
+      { "role": "text-heading", "value": "#08414D", "area_pct": 0 }
+    ],
+    "radius": ["50%", "40px", "36px", "20px", "0px 0px 14px 14px"],
+    "shadows": [
+      "rgba(8,65,77,0.12) 0px 2px 48px -12px",
+      "rgba(0,0,0,0.2) 0px 2px 4px 0px",
+      "rgba(0,0,0,0.12) 0px 16px 36px -6px",
+      "rgba(255,255,255,0.15) 0px 0px 0px 2px inset"
+    ],
+    "image_ratios": [
+      { "usage": "hero", "ratio": "1.25:1" },
+      { "usage": "thumbnail", "ratio": "1:1" }
+    ],
+    "grid": {
+      "max_width": "none",
+      "container_width": "1440px",
+      "columns": 3,
+      "gutter": "150px section padding",
+      "grid_method": "flexbox and absolute positioning; CSS Grid count is 0"
+    },
+    "motion": {
+      "duration": "0.3s",
+      "easing": "cubic-bezier(0.78, 0.13, 0.15, 0.86)",
+      "animated_properties": ["transform", "box-shadow", "opacity", "background", "color", "border"],
+      "prefers_reduced_motion": true,
+      "focus_visible": true
+    }
+  },
+  "taste": [
+    {
+      "name": "One Claim Owns the First Screen",
+      "trigger": "When making a globally unknown consultancy legible in two seconds",
+      "decision": "Spent the entire first viewport on three words at 117px over a full-bleed photograph, over the conventional hero of headline plus subhead plus two buttons plus trust logos",
+      "reason": "A visitor who cannot say what a company does after one glance leaves; adding a second message to the first screen buys nothing and costs the first one",
+      "evidence": ["117px hero against 16px body, a 7.3x jump", "midrange 26-36px used 7 times or fewer each", "hero is the only left-aligned block on a page that centres its bands"]
+    },
+    {
+      "name": "The Accent Is a Promise, Not a Decoration",
+      "trigger": "When a vivid brand teal was available across every section, card and heading",
+      "decision": "Confined #00B2A4 to button fills alone and built structural colour from two darker teals, over spreading the accent across headings, icons, borders and rules",
+      "reason": "If the eye-catching colour appears in six non-clickable places it stops meaning click here, and the visitor must read every element to find the action",
+      "evidence": ["#00B2A4 occupies 0.6% of background area, button fill only", "#08414D at 9.0% and #0A7580 at 7.4% carry all section banding", "buttons are the only 800-weight text on the page"]
+    },
+    {
+      "name": "Shadows Belong to the Brand's Colour Space",
+      "trigger": "When cards needed to lift off a white background",
+      "decision": "Tinted the shadow toward brand teal at 48px blur and -12px spread, over the default grey rgba(0,0,0,0.1) drop shadow every framework ships",
+      "reason": "A grey shadow on a coloured brand surface reads as a rendering artefact; a shadow carrying the brand hue reads as the object sitting in the same light as everything around it",
+      "evidence": ["rgba(8,65,77,0.12) 0 2px 48px -12px on cards", "rgba(0,0,0,0.2) 0 2px 4px reserved for tight functional depth", "shadow hue matches the #08414D heading colour"]
+    },
+    {
+      "name": "Restraint: Photography Argues Once, Then Gets Out of the Way",
+      "trigger": "When every section could have been illustrated with stock imagery of plants, engineers and water",
+      "decision": "Spent the entire photographic budget on one full-bleed hero and rendered everything below in flat colour, line icons and type, over the sector convention of a photograph per section",
+      "reason": "Stock photography repeated down a page reads as padding and trains the visitor to skip images; used once, a photograph sets the subject and the page can then be read rather than looked at",
+      "evidence": ["only one image renders above thumbnail scale, 1440x1152 hero", "remaining rendered images are 35px region flags at 1:1", "three feature columns use line icons at 50% radius, not photographs", "#FFFFFF holds 74.4% of background area below the hero"]
+    }
+  ]
+}
