@@ -4,10 +4,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro"
+    "dev": "node node_modules/astro/bin/astro.mjs dev",
+    "start": "node node_modules/astro/bin/astro.mjs dev",
+    "build": "node node_modules/astro/bin/astro.mjs build",
+    "preview": "node node_modules/astro/bin/astro.mjs preview",
+    "stop": "node node_modules/astro/bin/astro.mjs dev stop",
+    "status": "node node_modules/astro/bin/astro.mjs dev status",
+    "logs": "node node_modules/astro/bin/astro.mjs dev logs",
+    "shots": "node scripts/shot.mjs"
   },
   "dependencies": {
     "astro": "^7.3.2",
