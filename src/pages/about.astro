@@ -101,11 +101,11 @@ const principles = [
       <p class="eyebrow">Who you work with</p>
       <h2>The team</h2>
       <p class="lede">
-        You deal directly with the engineers doing the work. There is no account layer between you
+        You deal directly with the engineer doing the work. There is no account layer between you
         and the person writing the report.
       </p>
 
-      <div class="grid grid--2 team">
+      <div class={team.length > 1 ? 'grid grid--2 team' : 'team team--single'}>
         {
           team.map((person) => (
             <article class="card person">
@@ -244,6 +244,10 @@ const principles = [
 
   .team {
     margin-top: 2.25rem;
+  }
+
+  .team--single {
+    max-width: 34rem;
   }
 
   .person h3 {

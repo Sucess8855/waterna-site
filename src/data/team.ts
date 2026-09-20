@@ -3,7 +3,7 @@ export interface Person {
   draft?: boolean;
   name: string;
   role: string;
-  /** Bios are written later — leave as an empty array until then. */
+  /** Bio is written later — leave as an empty array until then. */
   bio: string[];
   education: string[];
   credentials: string[];
@@ -13,17 +13,9 @@ export interface Person {
 export const team: Person[] = [
   {
     draft: true,
-    // TODO: replace with the founder's real name and job title.
-    name: 'NAME TO CONFIRM',
-    role: 'ROLE TO CONFIRM',
-    bio: [],
-    education: [],
-    credentials: [],
-    focus: [],
-  },
-  {
-    draft: true,
     name: 'Mohamed Oulabi',
+    // TODO: confirm — CV says Principal Process Engineer, but as founder
+    // this may want to read "Founder & Principal Process Engineer".
     role: 'Principal Process Engineer',
     // Bio to be written later.
     bio: [],
