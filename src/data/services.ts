@@ -2,6 +2,12 @@ export interface Service {
   slug: string;
   title: string;
   navTitle?: string;
+  /** Engineering services, or the data-and-digital offer. Defaults to engineering. */
+  group?: 'engineering' | 'digital';
+  /** Products read differently from services — see headings below. */
+  kind?: 'service' | 'product';
+  /** Override the three section headings on the detail page. */
+  headings?: { why: string; covered: string; deliverables: string };
   summary: string;
   metaTitle: string;
   metaDescription: string;
@@ -283,6 +289,107 @@ export const services: Service[] = [
       'A training package written around your site, delivered on site or remotely, with written material your team keeps. Where useful we produce operating procedures alongside it, so the knowledge stays after the session ends.',
     related: ['plant-optimisation', 'hazop', 'engineering-consultancy'],
   },
+
+  {
+    slug: 'data-analysis',
+    title: 'Data Analysis & Performance Review',
+    navTitle: 'Data Analysis',
+    group: 'digital',
+    summary:
+      'Turn the operating data you already collect into a diagnosis — what is drifting, why, and what to do about it.',
+    metaTitle: 'Water Treatment Data Analysis & Performance Review | Waterna',
+    metaDescription:
+      'Independent engineering analysis of water and wastewater operating data — SCADA and historian exports, lab results, chemical and energy use — turned into performance insight and ranked recommendations.',
+    intro:
+      'Most plants already generate more than enough data to explain their own behaviour. What is usually missing is someone reading it against what the process ought to be doing. We turn routine operating records into a diagnosis.',
+    why: [
+      'Operating data tends to be collected for compliance reporting and consulted only once something has already gone wrong. Meanwhile the drift that will cause next quarter’s problem is visible in it today — in a slowly rising chemical dose, a creeping differential pressure, an energy figure that no longer matches the flow.',
+      'Reading it properly means comparing what the plant is doing against what the process should be doing, not against last month. That is an engineering judgement rather than a statistical one, which is why this work sits with process engineers rather than with a general analytics provider.',
+      'The approach is tailored to the process in question, and applies across municipal water, wastewater, industrial water treatment, desalination and reuse.',
+    ],
+    covered: [
+      [
+        'The data we work from',
+        'SCADA and historian exports, laboratory results, flow and pressure records, water quality parameters, influent and effluent data, chemical consumption, energy use, maintenance records and equipment performance data.',
+      ],
+      [
+        'Trend and anomaly detection',
+        'Abnormal trends, step changes and slow drift — and the discipline to separate an instrument fault from a real process change before acting on it.',
+      ],
+      [
+        'Root cause analysis',
+        'Working back from the symptom to the mechanism, so the recommendation addresses the cause rather than the indicator that revealed it.',
+      ],
+      [
+        'Efficiency and cost',
+        'Chemical dose, energy per cubic metre, sludge production and disposal — establishing where the operating budget is actually going.',
+      ],
+      [
+        'Benchmarking against design',
+        'Current performance compared against the design basis, and against the plant’s own best historical performance.',
+      ],
+      [
+        'Ranked recommendations',
+        'Practical actions with expected effect, separating what can be changed operationally from what genuinely needs capital.',
+      ],
+    ],
+    deliverables:
+      'A structured engineering assessment: what the data shows, what is causing it, and a ranked set of recommendations. Available as a one-off diagnostic study, a recurring performance review, or through an ongoing monitoring dashboard. It is frequently the first stage of an optimisation project, because it establishes and quantifies the opportunity before anyone proposes changing the plant.',
+    related: ['ro-insight', 'plant-optimisation', 'engineering-consultancy'],
+  },
+
+  {
+    slug: 'ro-insight',
+    title: 'Waterna RO Insight™',
+    navTitle: 'RO Insight™',
+    group: 'digital',
+    kind: 'product',
+    headings: {
+      why: 'Why it exists',
+      covered: 'What it monitors',
+      deliverables: 'How you get it',
+    },
+    summary:
+      'A decision-support platform for reverse osmosis desalination — over 100 engineering KPIs, fouling and scaling diagnostics, CIP forecasting and energy optimisation.',
+    metaTitle: 'Waterna RO Insight™ | RO Desalination Performance Software',
+    metaDescription:
+      'Waterna RO Insight™ converts routine RO plant data into over 100 engineering KPIs, fouling and scaling diagnostics, CIP effectiveness and forecasting, fleet benchmarking and energy optimisation.',
+    intro:
+      'Waterna RO Insight™ is a decision-support and performance optimisation platform built specifically for reverse osmosis desalination. It converts routine plant operating data into more than 100 engineering KPIs, diagnostics, alarms and predictive indicators.',
+    why: [
+      'RO plants are instrumented heavily and interrogated lightly. Everything needed to see fouling developing, to judge whether the last clean actually worked, or to tell whether a train is drifting from its own baseline is usually already being recorded — but normalising it, trending it and reading it takes engineering time operations teams rarely have.',
+      'RO Insight™ does that continuously. It moves a team from reactive troubleshooting — cleaning once flux has already fallen, replacing membranes once rejection has already failed — to deciding from evidence, ahead of the problem.',
+    ],
+    covered: [
+      [
+        'Membrane performance',
+        'Normalised permeate flow, salt rejection and differential pressure, tracked per train against its own baseline rather than a generic target.',
+      ],
+      [
+        'Fouling and scaling',
+        'Developing fouling and scaling conditions identified from their performance signatures, before they force an unplanned shutdown.',
+      ],
+      [
+        'CIP effectiveness and forecasting',
+        'Whether a clean achieved what it should have, and a forecast of when the next one will be needed.',
+      ],
+      [
+        'Energy and operating cost',
+        'Specific energy consumption, and the cost consequence of running away from the optimum.',
+      ],
+      [
+        'Benchmarking',
+        'Each train measured against its own commissioning baseline and against the wider fleet.',
+      ],
+      [
+        'Alarms and predictive indicators',
+        'Automated diagnostics and operator-facing recommendations, surfaced together on a central dashboard.',
+      ],
+    ],
+    deliverables:
+      'RO Insight™ is a commercial software platform, available under licence or subscription. It runs from historian and SCADA exports, or can be configured for live data connectivity, depending on your infrastructure. Take it on its own, or combine it with our engineering and optimisation services so continuous monitoring is backed by specialist support when a result needs interpreting. It is vendor-neutral: it works with any manufacturer’s membranes, and nothing in it steers you toward a particular supplier.',
+    related: ['data-analysis', 'plant-optimisation', 'feasibility-studies'],
+  },
 ];
 
 export const serviceIndex = services.map((s) => ({
@@ -291,3 +398,15 @@ export const serviceIndex = services.map((s) => ({
   navTitle: s.navTitle ?? s.title,
   summary: s.summary,
 }));
+
+export const engineeringServices = services.filter(
+  (s) => (s.group ?? 'engineering') === 'engineering',
+);
+
+export const digitalServices = services.filter((s) => s.group === 'digital');
+
+export const DEFAULT_HEADINGS = {
+  why: 'Why it matters',
+  covered: 'What it covers',
+  deliverables: 'What you get',
+} as const;

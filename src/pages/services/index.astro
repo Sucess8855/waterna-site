@@ -1,7 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import { site } from '../../data/site';
-import { services } from '../../data/services';
+import { engineeringServices, digitalServices } from '../../data/services';
 ---
 
 <Base
@@ -14,8 +14,8 @@ import { services } from '../../data/services';
       <h1>Services</h1>
       <p class="lede">
         From the first feasibility question through to a commissioned plant and a trained team. We
-        sell no equipment, so the process route we recommend is the one that fits your water — not
-        the one that fits a supplier’s catalogue.
+        specify no equipment and take no commission from suppliers, so the process route we
+        recommend is the one that fits your water — not the one that fits a catalogue.
       </p>
     </div>
   </section>
@@ -24,7 +24,7 @@ import { services } from '../../data/services';
     <div class="wrap">
       <ol class="slist">
         {
-          services.map((s, i) => (
+          engineeringServices.map((s, i) => (
             <li class="slist__item">
               <span class="slist__num" aria-hidden="true">
                 {String(i + 1).padStart(2, '0')}
@@ -45,6 +45,34 @@ import { services } from '../../data/services';
           ))
         }
       </ol>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="wrap">
+      <p class="eyebrow">Data &amp; digital</p>
+      <h2>Two more ways we work</h2>
+      <p class="lede">
+        The same engineering judgement, applied to the data your plant already produces — as a
+        study, or as software that runs continuously.
+      </p>
+
+      <div class="grid grid--2 dgrid">
+        {
+          digitalServices.map((s) => (
+            <article class="card dcard">
+              {s.kind === 'product' && <p class="dcard__tag">Software platform</p>}
+              <h3>
+                <a href={`/services/${s.slug}`}>{s.title}</a>
+              </h3>
+              <p>{s.summary}</p>
+              <a class="slist__more" href={`/services/${s.slug}`}>
+                Read more &rarr;
+              </a>
+            </article>
+          ))
+        }
+      </div>
     </div>
   </section>
 
@@ -153,6 +181,37 @@ import { services } from '../../data/services';
 
   .slist__more:hover {
     text-decoration: underline;
+  }
+
+  .dgrid {
+    margin-top: 2rem;
+  }
+
+  .dcard h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .dcard h3 a {
+    text-decoration: none;
+    color: var(--ink);
+  }
+
+  .dcard h3 a:hover {
+    color: var(--brand);
+  }
+
+  .dcard__tag {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #fff;
+    background: var(--brand-deep);
+    border-radius: 3px;
+    padding: 0.22rem 0.55rem;
+    margin: 0 0 0.7rem;
   }
 
   .cta {

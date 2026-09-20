@@ -1,7 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import { site } from '../../data/site';
-import { services } from '../../data/services';
+import { services, DEFAULT_HEADINGS } from '../../data/services';
 
 export function getStaticPaths() {
   return services.map((service) => ({
@@ -11,6 +11,7 @@ export function getStaticPaths() {
 }
 
 const { service } = Astro.props;
+const headings = service.headings ?? DEFAULT_HEADINGS;
 const related = service.related
   .map((slug) => services.find((s) => s.slug === slug))
   .filter((s) => s !== undefined);
@@ -19,6 +20,7 @@ const related = service.related
 <Base title={service.metaTitle} description={service.metaDescription}>
   <section class="phead">
     <div class="wrap">
+      {service.kind === 'product' && <p class="ptag">Software platform</p>}
       <nav class="crumbs" aria-label="Breadcrumb">
         <a href="/services">Services</a> <span aria-hidden="true">&rsaquo;</span>
         <span>{service.navTitle ?? service.title}</span>
@@ -31,10 +33,10 @@ const related = service.related
   <section class="section">
     <div class="wrap cols">
       <div class="cols__main">
-        <h2>Why it matters</h2>
+        <h2>{headings.why}</h2>
         {service.why.map((para) => <p>{para}</p>)}
 
-        <h2>What it covers</h2>
+        <h2>{headings.covered}</h2>
         <dl class="deflist">
           {
             service.covered.map(([term, def]) => (
@@ -46,16 +48,19 @@ const related = service.related
           }
         </dl>
 
-        <h2>What you get</h2>
+        <h2>{headings.deliverables}</h2>
         <p>{service.deliverables}</p>
       </div>
 
       <aside class="cols__side">
         <div class="panel">
-          <h2 class="panel__h">Talk it through</h2>
+          <h2 class="panel__h">{service.kind === 'product' ? 'See it on your data' : 'Talk it through'}</h2>
           <p>
-            Most work starts with a short conversation about your water, your flows and the consent
-            you are working to.
+            {
+              service.kind === 'product'
+                ? 'The quickest way to judge it is against a sample of your own plant data. Tell us what you record and we will show you what it produces.'
+                : 'Most work starts with a short conversation about your water, your flows and the consent you are working to.'
+            }
           </p>
           <p class="panel__contact">
             <a class="btn btn--primary" href={site.phoneHref}>Call {site.phone}</a>
@@ -87,6 +92,19 @@ const related = service.related
     background: var(--brand-tint);
     border-bottom: 1px solid var(--line);
     padding-block: clamp(2.5rem, 6vw, 4rem);
+  }
+
+  .ptag {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #fff;
+    background: var(--brand-deep);
+    border-radius: 3px;
+    padding: 0.25rem 0.6rem;
+    margin: 0 0 0.9rem;
   }
 
   .crumbs {

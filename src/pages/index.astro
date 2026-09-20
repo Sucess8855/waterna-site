@@ -1,7 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import { site } from '../data/site';
-import { services } from '../data/services';
+import { engineeringServices, digitalServices } from '../data/services';
 
 const sectors = [
   {
@@ -26,8 +26,8 @@ const sectors = [
 
 const reasons = [
   {
-    title: 'We do not sell equipment',
-    body: 'We have no vendor agreements and no commission arrangements. When we recommend a technology, it is because it fits your water, your site and your budget.',
+    title: 'We specify no equipment',
+    body: 'We hold no vendor agreements and take no commission from suppliers. Our own software is the one thing we sell, it is entirely optional, and it works with any manufacturer’s membranes.',
   },
   {
     title: 'Whole-life cost, not headline capex',
@@ -87,11 +87,39 @@ const reasons = [
 
       <div class="grid grid--3">
         {
-          services.map((s) => (
+          engineeringServices.map((s) => (
             <article class="card">
               <h3>{s.title}</h3>
               <p>{s.summary}</p>
               <a href={`/services/${s.slug}`}>Read more &rarr;</a>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="digital">
+    <div class="wrap">
+      <p class="eyebrow digital__eyebrow">Data &amp; digital</p>
+      <h2>We also read the data your plant already produces</h2>
+      <p class="digital__lede">
+        Every plant records more than enough to explain its own behaviour. Most of it is never read
+        against what the process ought to be doing.
+      </p>
+
+      <div class="grid grid--2 digital__grid">
+        {
+          digitalServices.map((s) => (
+            <article class="dcard">
+              {s.kind === 'product' && <p class="dcard__tag">Software platform</p>}
+              <h3>
+                <a href={`/services/${s.slug}`}>{s.title}</a>
+              </h3>
+              <p>{s.summary}</p>
+              <a class="dcard__more" href={`/services/${s.slug}`}>
+                Read more &rarr;
+              </a>
             </article>
           ))
         }
@@ -235,6 +263,84 @@ const reasons = [
 
   .hero__note a {
     color: #fff;
+    text-decoration: underline;
+  }
+
+  /* ---------- data & digital ---------- */
+
+  .digital {
+    background: var(--brand-deep);
+    color: rgba(255, 255, 255, 0.86);
+    padding-block: clamp(3rem, 7vw, 5rem);
+  }
+
+  .digital :global(h2) {
+    color: #fff;
+    max-width: 22ch;
+  }
+
+  .digital__eyebrow {
+    color: var(--accent);
+  }
+
+  .digital__lede {
+    font-size: 1.125rem;
+    max-width: 56ch;
+    margin-bottom: 0;
+  }
+
+  .digital__grid {
+    margin-top: 2.25rem;
+  }
+
+  .dcard {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 4px;
+    padding: 1.6rem;
+  }
+
+  .dcard :global(h3) {
+    color: #fff;
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .dcard :global(h3 a) {
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .dcard :global(h3 a:hover) {
+    color: var(--accent);
+  }
+
+  .dcard p {
+    font-size: 0.98rem;
+    margin-bottom: 0.9rem;
+  }
+
+  .dcard__tag {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--brand-deep);
+    background: var(--accent);
+    border-radius: 3px;
+    padding: 0.22rem 0.55rem;
+    margin: 0 0 0.7rem;
+  }
+
+  .dcard__more {
+    color: var(--accent);
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+  }
+
+  .dcard__more:hover {
     text-decoration: underline;
   }
 
