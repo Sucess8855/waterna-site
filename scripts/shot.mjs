@@ -22,9 +22,27 @@ for (const vp of viewports) {
     deviceScaleFactor: 2,
   });
   await page.goto(url, { waitUntil: 'networkidle' });
+
+  // Walk the page so loading="lazy" images actually decode before capture.
+  await page.evaluate(async () => {
+    const step = window.innerHeight;
+    for (let y = 0; y < document.body.scrollHeight; y += step) {
+      window.scrollTo(0, y);
+      await new Promise((r) => setTimeout(r, 120));
+    }
+    window.scrollTo(0, 0);
+  });
+  await page.waitForFunction(() => Array.from(document.images).every((i) => i.complete), null, {
+    timeout: 30000,
+  });
+  await page.waitForTimeout(400);
+
   const path = `${outDir}/${vp.name}.png`;
   await page.screenshot({ path, fullPage: true });
-  console.log(`${vp.name.padEnd(8)} ${vp.width}x${vp.height} -> ${path}`);
+  const missing = await page.evaluate(
+    () => Array.from(document.images).filter((i) => !i.naturalWidth).length,
+  );
+  console.log(`${vp.name.padEnd(8)} ${vp.width}x${vp.height} -> ${path}${missing ? `  (${missing} broken images)` : ''}`);
   await page.close();
 }
 

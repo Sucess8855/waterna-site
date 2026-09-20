@@ -20,6 +20,8 @@ Defined in `src/styles/global.css`. Treat this as the source of truth.
 | Text body | `--body` `#3D4C5C` | 8.4:1 on white |
 | Text heading | `--ink` `#0B1A2B` | 700 weight |
 | Hairline | `--line` `#D8E2EC` | Borders |
+| **Emphasis** | `--ember` `#C7502F` | Warm rust. Highlights words inside headings (`.hl`) and sets numerals apart. 4.55:1 on white, so safe for body text too. **Never a link or button** — those stay navy. |
+| Band | `--band` `#D7EEFB` | Full-bleed light section (`.section--band`), a step stronger than `--brand-tint` |
 
 - **Spacing base: 8px** — deliberately *not* Isle's 10px. Scale: 8, 16, 24, 32, 48, 64, 96.
 - **Section rhythm**: `clamp(3rem, 7vw, 5.5rem)` vertical padding, fixed down the page.
@@ -44,9 +46,14 @@ Defined in `src/styles/global.css`. Treat this as the source of truth.
 4. **Photography argues once, then gets out of the way.** One hero image. Below it, flat colour, type
    and diagrams — not a stock photograph per section. Real plant photography only; no generic
    business imagery.
-5. **Centre declarations, left-align explanations.** Section headings and CTA bands centre; body copy,
+5. **Two accents, strictly separated jobs.** Navy means *click this*. Rust `--ember` means
+   *pay attention to this*. Cyan is decoration on dark only. Never let the jobs blur — that
+   discipline is what stops a four-colour palette reading as noise.
+6. **Vary the section backgrounds.** White → `--band` → navy → photograph → white. A long page of
+   unbroken white reads as a document; alternating bands give it rhythm.
+7. **Centre declarations, left-align explanations.** Section headings and CTA bands centre; body copy,
    feature columns and case-study text stay left.
-6. **Phone number is the standing CTA** — in the header on every page. The Wix booking flow went
+8. **Phone number is the standing CTA** — in the header on every page. The Wix booking flow went
    unused; enquiries come by phone and email.
 
 ### Anti-patterns

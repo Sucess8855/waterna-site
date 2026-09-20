@@ -16,7 +16,7 @@ export const team: Person[] = [
     name: 'Mohamed Oulabi',
     // TODO: confirm — CV says Principal Process Engineer, but as founder
     // this may want to read "Founder & Principal Process Engineer".
-    role: 'Principal Process Engineer',
+    role: 'Founder & Principal Process Engineer',
     // Bio to be written later.
     bio: [],
     // Taken from his CV — verified, so safe to show now.

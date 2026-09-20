@@ -80,18 +80,24 @@ const reasons = [
   <section class="section">
     <div class="wrap">
       <p class="eyebrow">What we do</p>
-      <h2>Services</h2>
+      <h2>Engineering <span class="hl">services</span></h2>
       <p class="lede">
         From the first feasibility question through to a commissioned plant and trained operators.
       </p>
 
-      <div class="grid grid--3">
+      <div class="grid grid--3 scards">
         {
-          engineeringServices.map((s) => (
-            <article class="card">
-              <h3>{s.title}</h3>
+          engineeringServices.map((s, i) => (
+            <article class="card scard">
+              <span class="scard__num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+              <h3>
+                <a href={`/services/${s.slug}`}>{s.navTitle ?? s.title}</a>
+              </h3>
               <p>{s.summary}</p>
-              <a href={`/services/${s.slug}`}>Read more &rarr;</a>
+              <ul class="scard__tags">
+                {s.covered.slice(0, 2).map(([term]) => <li>{term}</li>)}
+              </ul>
+              <a class="scard__more" href={`/services/${s.slug}`}>Read more &rarr;</a>
             </article>
           ))
         }
@@ -130,7 +136,7 @@ const reasons = [
   <section class="section section--alt">
     <div class="wrap">
       <p class="eyebrow">Why Waterna</p>
-      <h2>Independent means independent</h2>
+      <h2>Independent means <span class="hl">independent</span></h2>
 
       <div class="grid grid--3">
         {
@@ -148,7 +154,7 @@ const reasons = [
   <section class="section">
     <div class="wrap">
       <p class="eyebrow">Where we work</p>
-      <h2>Sectors</h2>
+      <h2>Where we <span class="hl">work</span></h2>
 
       <div class="grid grid--3">
         {
@@ -161,6 +167,30 @@ const reasons = [
           ))
         }
       </div>
+    </div>
+  </section>
+
+  <section class="photoband">
+    <picture>
+      <source
+        type="image/webp"
+        srcset="/img/band-plant-1200.webp 1200w, /img/band-plant-1600.webp 1600w, /img/band-plant-2000.webp 2000w"
+        sizes="100vw"
+      />
+      <img
+        src="/img/band-plant-1600.jpg"
+        alt="Pump hall inside a water treatment plant"
+        width="2000"
+        height="917"
+        loading="lazy"
+        decoding="async"
+      />
+    </picture>
+    <div class="photoband__scrim"></div>
+    <div class="wrap photoband__inner">
+      <h2>Talk to an <span class="hl hl--light">engineer</span></h2>
+      <p>Not a sales desk. The first conversation costs nothing.</p>
+      <a class="btn btn--primary" href={site.phoneHref}>Call {site.phone}</a>
     </div>
   </section>
 
@@ -342,6 +372,124 @@ const reasons = [
 
   .dcard__more:hover {
     text-decoration: underline;
+  }
+
+  /* ---------- numbered service cards ---------- */
+
+  .scards {
+    margin-top: 2.25rem;
+  }
+
+  .scard {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .scard__num {
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--ember);
+    display: block;
+    margin-bottom: 0.55rem;
+  }
+
+  .scard :global(h3) {
+    margin-bottom: 0.4rem;
+  }
+
+  .scard :global(h3 a) {
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .scard :global(h3 a:hover) {
+    color: var(--brand);
+  }
+
+  .scard > p {
+    flex: 1;
+  }
+
+  .scard__tags {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin: 0 0 0.9rem;
+    padding: 0;
+  }
+
+  .scard__tags li {
+    font-size: 0.76rem;
+    color: var(--body);
+    background: var(--bg-alt);
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    padding: 0.2rem 0.5rem;
+    margin: 0;
+  }
+
+  .scard__more {
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+  }
+
+  .scard__more:hover {
+    text-decoration: underline;
+  }
+
+  /* ---------- photo CTA band ---------- */
+
+  .photoband {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    min-height: clamp(18rem, 32vh, 24rem);
+  }
+
+  .photoband picture,
+  .photoband img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+  }
+
+  .photoband img {
+    object-fit: cover;
+    object-position: center 50%;
+  }
+
+  .photoband__scrim {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(90deg, rgba(0, 22, 44, 0.88) 0%, rgba(0, 22, 44, 0.7) 50%, rgba(0, 22, 44, 0.55) 100%);
+  }
+
+  .photoband__inner {
+    padding-block: clamp(2.5rem, 6vw, 3.5rem);
+  }
+
+  .photoband :global(h2) {
+    color: #fff;
+    margin-bottom: 0.5rem;
+  }
+
+  .photoband p {
+    color: rgba(255, 255, 255, 0.88);
+    margin-bottom: 1.5rem;
+    max-width: 48ch;
+  }
+
+  .photoband :global(.hl--light) {
+    color: var(--accent);
   }
 
   /* ---------- closing CTA ---------- */

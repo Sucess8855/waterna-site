@@ -21,6 +21,14 @@
   --bg: #ffffff;
   --bg-alt: #f4f8fc;
 
+  /* Warm emphasis. 4.55:1 on white, so it is safe for body text as well as
+     headings. Used to highlight words and to set numerals apart — never for
+     links or buttons, which stay navy. */
+  --ember: #c7502f;
+
+  /* Full-bleed light band, a step stronger than --brand-tint. */
+  --band: #d7eefb;
+
   /* single brand-tinted shadow — never plain black (see CLAUDE.md) */
   --shadow-card: 0 2px 48px -12px rgba(0, 63, 118, 0.20);
 
@@ -129,6 +137,16 @@ li {
   font-weight: 600;
   color: var(--muted);
   margin: 0 0 0.85rem;
+}
+
+/* Highlight a word or phrase inside a heading. */
+.hl {
+  color: var(--ember);
+}
+
+.section--band {
+  background: var(--band);
+  border-block: 1px solid #bfe2f5;
 }
 
 .grid {
