@@ -362,10 +362,10 @@ export const services: Service[] = [
       deliverables: 'How you get it',
     },
     summary:
-      'A decision-support platform for reverse osmosis desalination — over 100 engineering KPIs, fouling and scaling diagnostics, CIP forecasting and energy optimisation.',
+      'A decision-support platform for reverse osmosis desalination — over 100 engineering KPIs, fouling and scaling diagnostics, CIP forecasting, energy optimisation, and a built-in AI assistant that runs offline.',
     metaTitle: 'Waterna RO Insight™ | RO Desalination Performance Software',
     metaDescription:
-      'Waterna RO Insight™ converts routine RO plant data into over 100 engineering KPIs, fouling and scaling diagnostics, CIP effectiveness and forecasting, fleet benchmarking and energy optimisation.',
+      'Waterna RO Insight™ converts routine RO plant data into over 100 engineering KPIs, fouling and scaling diagnostics, CIP forecasting, fleet benchmarking and energy optimisation — with an AI assistant that runs on-premise, so no plant data leaves your network.',
     intro:
       'Waterna RO Insight™ is a decision-support and performance optimisation platform built specifically for reverse osmosis desalination. It converts routine plant operating data into more than 100 engineering KPIs, diagnostics, alarms and predictive indicators.',
     why: [
@@ -401,63 +401,6 @@ export const services: Service[] = [
     deliverables:
       'RO Insight™ is a commercial software platform, available under licence or subscription. It runs from historian and SCADA exports, or can be configured for live data connectivity, depending on your infrastructure. Take it on its own, or combine it with our engineering and optimisation services so continuous monitoring is backed by specialist support when a result needs interpreting. It is vendor-neutral: it works with any manufacturer’s membranes, and nothing in it steers you toward a particular supplier.',
     related: ['data-analysis', 'plant-optimisation', 'feasibility-studies'],
-  },
-
-  {
-    // TODO: needs a product name. "Offline AI Assistant" is descriptive
-    // placeholder copy, not a brand.
-    slug: 'offline-ai-assistant',
-    pillar: 'software',
-    standalone: true,
-    kind: 'product',
-    title: 'Offline AI Assistant',
-    navTitle: 'Offline AI Assistant',
-    headings: {
-      why: 'Why offline',
-      covered: 'What it does',
-      deliverables: 'How it is deployed',
-    },
-    summary:
-      'An assistant that helps operators troubleshoot and read plant performance — running entirely on site, with no plant data leaving your network.',
-    metaTitle: 'Offline AI Assistant for Water Treatment Operators | Waterna',
-    metaDescription:
-      'An AI assistant for plant troubleshooting and performance analysis that runs entirely on your own hardware — air-gapped, with no operating data leaving the plant.',
-    intro:
-      'Most AI assistants require sending your operating data to somebody else’s servers. This one does not. It runs on your own hardware, inside your own network, so operators get the help without the plant’s data ever leaving site.',
-    why: [
-      'The reason plants do not use AI assistants is rarely that they would not be useful. It is that sending operating data, process drawings or fault history to an external service is not permitted — by OT security policy, by a data classification, by a customer contract, or by the straightforward judgement that a plant’s operating history is commercially sensitive.',
-      'Running offline removes that objection rather than arguing with it. There is no external call to make, so there is nothing to approve, nothing to log leaving the network, and no dependency on a connection that a control network may not have in the first place.',
-      'The point is not novelty. It is that the operator on shift at three in the morning, watching a differential pressure climb with no engineer to call, has somewhere sensible to start.',
-    ],
-    covered: [
-      [
-        'Troubleshooting support',
-        'A symptom described in plain language returns the likely causes, ranked, and the checks worth running first — the reasoning an experienced engineer would apply, available on shift.',
-      ],
-      [
-        'Performance interpretation',
-        'Reads trends against what the process ought to be doing, so a drifting figure is explained rather than merely displayed.',
-      ],
-      [
-        'Grounded in your own documents',
-        'Answers drawn from your operating procedures, manuals, drawings and fault history, rather than from generic material about a plant that is not yours.',
-      ],
-      [
-        'Nothing leaves the plant',
-        'It runs on hardware inside your network. There is no external call, so there is no data egress to approve, to log, or to explain to a security team.',
-      ],
-      [
-        'Works without a connection',
-        'Control networks are frequently air-gapped or have no dependable internet. The assistant does not need one.',
-      ],
-      [
-        'Knowledge retention',
-        'Small operations teams often carry critical process understanding in one or two people. Holding it somewhere that can be asked a question keeps it when they move on.',
-      ],
-    ],
-    deliverables:
-      'It runs on your own hardware, inside your own network, with no connection to us or to any model provider. What it needs depends on the size of your estate and how much of your documentation you want it to cover, so deployment and licensing are agreed case by case — tell us your network constraints and we will tell you what it takes.',
-    related: ['ro-insight', 'plant-optimisation', 'data-analysis'],
   },
 ];
 

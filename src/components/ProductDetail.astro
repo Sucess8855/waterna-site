@@ -89,8 +89,9 @@ const { service, detail } = Astro.props;
 
 <section class="ai">
   <div class="wrap">
-    <p class="eyebrow ai__eyebrow">Analytics</p>
-    <h2>Answers in plain language, on a layer built to <span class="hl hl--light">learn</span></h2>
+    <p class="eyebrow ai__eyebrow">Built-in AI assistant</p>
+    <h2>{detail.aiHeading.lead} <span class="hl hl--light">{detail.aiHeading.accent}</span></h2>
+    <p class="ai__intro">{detail.aiIntro}</p>
     <div class="ai__grid">
       {
         detail.ai.map((a) => (
@@ -343,7 +344,13 @@ const { service, detail } = Astro.props;
 
   .ai :global(h2) {
     color: #fff;
-    max-width: 24ch;
+    max-width: 26ch;
+  }
+
+  .ai__intro {
+    max-width: 68ch;
+    font-size: 1.02rem;
+    margin-bottom: 0;
   }
 
   .ai__eyebrow {

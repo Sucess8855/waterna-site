@@ -24,6 +24,8 @@ export interface ProductDetail {
   modulesIntro: string;
   modules: DiagnosticModule[];
   auditNote: string;
+  aiHeading: { lead: string; accent: string };
+  aiIntro: string;
   ai: { title: string; body: string }[];
   value: { title: string; body: string }[];
   facts: [string, string][];
@@ -106,10 +108,21 @@ export const roInsightDetail: ProductDetail = {
   auditNote:
     'Every module states a finding, its likely cause and a recommended action — and every number is traceable to the inputs behind it. Nothing asks to be taken on trust, which matters when the recommendation is to defer a membrane replacement or change a cleaning interval.',
 
+  aiHeading: { lead: 'Troubleshooting help that never leaves the', accent: 'plant' },
+  aiIntro:
+    'Plants avoid AI assistants not because they would not help, but because sending operating data, drawings or fault history to an external service is rarely permitted — by OT security policy, by a data classification, or by contract. The assistant built into RO Insight™ runs on your own hardware, inside your own network, which removes that objection rather than arguing with it.',
   ai: [
     {
-      title: 'Ask in plain language',
-      body: 'An assistant that answers questions about any rack, KPI or event from the live plant state — no query syntax, no hunting through dashboards for the chart that holds the answer.',
+      title: 'It runs offline',
+      body: 'The assistant operates entirely on site. There is no external call to make, so there is no data egress to approve, to log, or to explain to a security team — and no dependency on a connection that a control network may not have in the first place.',
+    },
+    {
+      title: 'Troubleshooting on shift',
+      body: 'Describe a symptom in plain language and get the likely causes, ranked, with the checks worth running first — the reasoning an experienced engineer would apply, available at three in the morning when there is nobody to call.',
+    },
+    {
+      title: 'Performance questions answered',
+      body: 'Ask about any rack, KPI or event and get an answer drawn from the live plant state, instead of hunting through dashboards for the chart that happens to hold it.',
     },
     {
       title: 'Built to learn',
@@ -142,6 +155,7 @@ export const roInsightDetail: ProductDetail = {
     ['Integration', 'Historian and SCADA exports, or a live feed from DCS and OT sources'],
     ['Architecture', 'Scalable and multi-rack, configured to the plant'],
     ['Applications', 'Seawater RO, industrial water, power and utilities, oil and gas produced water'],
+    ['AI assistant', 'Runs on-premise — no operating data leaves the network'],
     ['Basis', 'First-principles KPIs, auditable to source inputs'],
     ['Independence', 'Works with any manufacturer’s membranes'],
   ],
