@@ -1,9 +1,10 @@
 ---
 import Base from '../layouts/Base.astro';
-import ServiceDetail from '../components/ServiceDetail.astro';
+import ProductDetail from '../components/ProductDetail.astro';
 import { roInsight } from '../data/services';
+import { roInsightDetail } from '../data/products';
 ---
 
 <Base title={roInsight.metaTitle} description={roInsight.metaDescription}>
-  <ServiceDetail service={roInsight} />
+  <ProductDetail service={roInsight} detail={roInsightDetail} />
 </Base>

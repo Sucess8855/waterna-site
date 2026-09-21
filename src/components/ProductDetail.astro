@@ -1,0 +1,486 @@
+---
+import { site } from '../data/site';
+import { type Service } from '../data/services';
+import type { ProductDetail } from '../data/products';
+
+interface Props {
+  service: Service;
+  detail: ProductDetail;
+}
+
+const { service, detail } = Astro.props;
+---
+
+<section class="phead">
+  <div class="wrap">
+    <p class="ptag">Software platform</p>
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/software">Software</a> <span aria-hidden="true">&rsaquo;</span>
+      <span>{service.navTitle ?? service.title}</span>
+    </nav>
+    <h1>{service.title}</h1>
+    <p class="lede">{service.intro}</p>
+    <div class="phead__cta">
+      <a class="btn btn--primary" href={site.phoneHref}>Call {site.phone}</a>
+      <a class="btn btn--ghost" href="/contact">Request a walkthrough</a>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <h2>Why it <span class="hl">exists</span></h2>
+    <div class="prose">
+      {service.why.map((para) => <p>{para}</p>)}
+    </div>
+  </div>
+</section>
+
+<section class="section section--band">
+  <div class="wrap">
+    <h2>{detail.kpiHeadline}</h2>
+    <p class="lede">{detail.kpiNote}</p>
+
+    <div class="kpis">
+      {
+        detail.kpiGroups.map((g) => (
+          <article class="kpi">
+            <h3>{g.audience}</h3>
+            <p class="kpi__caption">{g.caption}</p>
+            <ul>
+              {g.items.map((i) => (
+                <li>{i}</li>
+              ))}
+            </ul>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <h2>What it <span class="hl">diagnoses</span></h2>
+    <p class="lede">{detail.modulesIntro}</p>
+
+    <ol class="mods">
+      {
+        detail.modules.map((m, i) => (
+          <li class="mod">
+            <span class="mod__num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+            <div>
+              <h3>{m.title}</h3>
+              <p>{m.body}</p>
+              <ul class="mod__chips">
+                {m.chips.map((c) => (
+                  <li>{c}</li>
+                ))}
+              </ul>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+
+    <p class="audit">{detail.auditNote}</p>
+  </div>
+</section>
+
+<section class="ai">
+  <div class="wrap">
+    <p class="eyebrow ai__eyebrow">Analytics</p>
+    <h2>Answers in plain language, on a layer built to <span class="hl hl--light">learn</span></h2>
+    <div class="ai__grid">
+      {
+        detail.ai.map((a) => (
+          <article class="ai__card">
+            <h3>{a.title}</h3>
+            <p>{a.body}</p>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<section class="section section--band">
+  <div class="wrap">
+    <h2>What it is designed to <span class="hl">deliver</span></h2>
+    <div class="value">
+      {
+        detail.value.map((v) => (
+          <article>
+            <h3>{v.title}</h3>
+            <p>{v.body}</p>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap cols">
+    <div>
+      <h2>At a <span class="hl">glance</span></h2>
+      <dl class="facts">
+        {
+          detail.facts.map(([k, v]) => (
+            <div>
+              <dt>{k}</dt>
+              <dd>{v}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+
+    <aside>
+      <div class="panel">
+        <h2 class="panel__h">See it on your data</h2>
+        <p>
+          The quickest way to judge it is against a sample of your own plant data. Tell us what you
+          record and we will show you what it produces.
+        </p>
+        <p class="panel__contact">
+          <a class="btn btn--primary" href={site.phoneHref}>Call {site.phone}</a>
+        </p>
+        <p class="panel__small">
+          Or email <a href={`mailto:${site.email}`}>{site.email}</a>
+        </p>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<style>
+  .phead {
+    background: var(--brand-tint);
+    border-bottom: 1px solid var(--line);
+    padding-block: clamp(2.5rem, 6vw, 4rem);
+  }
+
+  .ptag {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #fff;
+    background: var(--brand-deep);
+    border-radius: 3px;
+    padding: 0.25rem 0.6rem;
+    margin: 0 0 0.9rem;
+  }
+
+  .crumbs {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-bottom: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 600;
+  }
+
+  .crumbs a {
+    color: var(--brand);
+    text-decoration: none;
+  }
+
+  .crumbs a:hover {
+    text-decoration: underline;
+  }
+
+  .crumbs span[aria-hidden] {
+    margin-inline: 0.35rem;
+  }
+
+  .phead__cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.75rem;
+  }
+
+  .prose {
+    max-width: 70ch;
+  }
+
+  /* ---------- KPI groups ---------- */
+
+  .kpis {
+    display: grid;
+    gap: 1.5rem;
+    margin-top: 2.25rem;
+  }
+
+  @media (min-width: 820px) {
+    .kpis {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .kpi {
+    background: #fff;
+    border: 1px solid #bfe2f5;
+    border-top: 3px solid var(--ember);
+    border-radius: 4px;
+    padding: 1.6rem;
+  }
+
+  .kpi h3 {
+    font-size: 1.15rem;
+    margin-bottom: 0.1rem;
+  }
+
+  .kpi__caption {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+
+  .kpi ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .kpi li {
+    font-size: 0.93rem;
+    color: var(--ink);
+    padding-block: 0.45rem;
+    border-top: 1px solid var(--line);
+    margin: 0;
+  }
+
+  .kpi li:first-child {
+    border-top: 0;
+  }
+
+  /* ---------- diagnostic modules ---------- */
+
+  .mods {
+    list-style: none;
+    margin: 2rem 0 0;
+    padding: 0;
+  }
+
+  .mod {
+    display: grid;
+    gap: 0.75rem;
+    padding-block: 1.6rem;
+    border-bottom: 1px solid var(--line);
+    margin: 0;
+  }
+
+  .mod:first-child {
+    padding-top: 0;
+  }
+
+  @media (min-width: 720px) {
+    .mod {
+      grid-template-columns: 4rem minmax(0, 1fr);
+      gap: 1.5rem;
+    }
+  }
+
+  .mod__num {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--ember);
+    line-height: 1;
+  }
+
+  .mod h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .mod p {
+    max-width: 68ch;
+    margin-bottom: 0.7rem;
+  }
+
+  .mod__chips {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0;
+    padding: 0;
+  }
+
+  .mod__chips li {
+    font-size: 0.78rem;
+    color: var(--body);
+    background: var(--bg-alt);
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    padding: 0.22rem 0.55rem;
+    margin: 0;
+  }
+
+  .audit {
+    margin-top: 1.75rem;
+    padding-left: 1.25rem;
+    border-left: 3px solid var(--ember);
+    max-width: 68ch;
+    font-size: 1.02rem;
+    color: var(--ink);
+  }
+
+  /* ---------- analytics band ---------- */
+
+  .ai {
+    background: var(--brand-deep);
+    color: rgba(255, 255, 255, 0.86);
+    padding-block: clamp(3rem, 7vw, 4.5rem);
+  }
+
+  .ai :global(h2) {
+    color: #fff;
+    max-width: 24ch;
+  }
+
+  .ai__eyebrow {
+    color: var(--accent);
+  }
+
+  .ai__grid {
+    display: grid;
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  @media (min-width: 760px) {
+    .ai__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .ai__card {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 4px;
+    padding: 1.6rem;
+  }
+
+  .ai__card h3 {
+    color: #fff;
+    font-size: 1.15rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .ai__card p {
+    margin-bottom: 0;
+    font-size: 0.97rem;
+  }
+
+  /* ---------- value ---------- */
+
+  .value {
+    display: grid;
+    gap: 1.5rem;
+    margin-top: 2.25rem;
+  }
+
+  @media (min-width: 760px) {
+    .value {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1040px) {
+    .value {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .value h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .value p {
+    font-size: 0.95rem;
+    margin-bottom: 0;
+  }
+
+  /* ---------- at a glance ---------- */
+
+  .cols {
+    display: grid;
+    gap: 2.5rem;
+  }
+
+  @media (min-width: 900px) {
+    .cols {
+      grid-template-columns: minmax(0, 1fr) 20rem;
+      gap: 3.5rem;
+      align-items: start;
+    }
+  }
+
+  .facts {
+    margin: 1.5rem 0 0;
+    max-width: 62ch;
+  }
+
+  .facts > div {
+    display: grid;
+    gap: 0.15rem;
+    padding-block: 0.75rem;
+    border-top: 1px solid var(--line);
+  }
+
+  @media (min-width: 620px) {
+    .facts > div {
+      grid-template-columns: 11rem minmax(0, 1fr);
+      gap: 1rem;
+    }
+  }
+
+  .facts dt {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    font-weight: 700;
+  }
+
+  .facts dd {
+    margin: 0;
+    font-size: 0.97rem;
+    color: var(--ink);
+  }
+
+  .panel {
+    background: var(--bg-alt);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 1.5rem;
+  }
+
+  .panel__h {
+    font-size: 1.05rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .panel p {
+    font-size: 0.95rem;
+  }
+
+  .panel__contact {
+    margin-bottom: 0.6rem;
+  }
+
+  .panel__small {
+    margin-bottom: 0;
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+</style>
