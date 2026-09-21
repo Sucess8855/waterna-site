@@ -1,17 +1,20 @@
 ---
 import Base from '../../layouts/Base.astro';
 import { site } from '../../data/site';
-import { pillars } from '../../data/pillars';
-import { projectEngineering, plantPerformance, roInsight, serviceHref } from '../../data/services';
+import { pillars, softwarePillar } from '../../data/pillars';
+import { projectEngineering, plantPerformance, softwareProducts, serviceHref } from '../../data/services';
 
 const counts: Record<string, number> = {
   'project-engineering': projectEngineering.length,
   'plant-performance': plantPerformance.length,
 };
 
+const forks = [...pillars, softwarePillar];
+
 const members: Record<string, typeof projectEngineering> = {
   'project-engineering': projectEngineering,
-  'plant-performance': [...plantPerformance, roInsight],
+  'plant-performance': plantPerformance,
+  software: softwareProducts,
 };
 ---
 
@@ -22,10 +25,10 @@ const members: Record<string, typeof projectEngineering> = {
   <section class="phead">
     <div class="wrap">
       <p class="eyebrow">What we do</p>
-      <h1>Two kinds of <span class="hl">work</span></h1>
+      <h1>What we <span class="hl">do</span></h1>
       <p class="lede">
-        Almost every enquiry we get is one of two things: someone building a plant, or someone
-        running one. The engineering is related but the work is not, so we keep them apart.
+        Engineering for plant that does not exist yet, performance work for plant that does, and
+        software where a method is worth running continuously.
       </p>
     </div>
   </section>
@@ -34,7 +37,7 @@ const members: Record<string, typeof projectEngineering> = {
     <div class="wrap">
       <div class="fork">
         {
-          pillars.map((p) => (
+          forks.map((p) => (
             <article class="fork__card">
               <p class="fork__strap">{p.strapline}</p>
               <h2>
@@ -54,17 +57,6 @@ const members: Record<string, typeof projectEngineering> = {
             </article>
           ))
         }
-      </div>
-    </div>
-  </section>
-
-  <section class="product">
-    <div class="wrap product__inner">
-      <div>
-        <p class="eyebrow product__eyebrow">Software platform</p>
-        <h2>{roInsight.title}</h2>
-        <p class="product__lede">{roInsight.summary}</p>
-        <a class="btn btn--light" href={serviceHref(roInsight)}>About RO Insight&trade;</a>
       </div>
     </div>
   </section>
@@ -98,10 +90,10 @@ const members: Record<string, typeof projectEngineering> = {
     gap: 1.5rem;
   }
 
-  @media (min-width: 820px) {
+  @media (min-width: 900px) {
     .fork {
-      grid-template-columns: 1fr 1fr;
-      gap: 2rem;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.75rem;
     }
   }
 

@@ -1,0 +1,10 @@
+---
+import Base from '../../layouts/Base.astro';
+import PillarPage from '../../components/PillarPage.astro';
+import { softwareProducts } from '../../data/services';
+import { softwarePillar } from '../../data/pillars';
+---
+
+<Base title={softwarePillar.metaTitle} description={softwarePillar.metaDescription}>
+  <PillarPage pillar={softwarePillar} services={softwareProducts} />
+</Base>

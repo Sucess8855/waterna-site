@@ -1,5 +1,5 @@
 export interface Pillar {
-  slug: 'project-engineering' | 'plant-performance';
+  slug: 'project-engineering' | 'plant-performance' | 'software';
   title: string;
   strapline: string;
   summary: string;
@@ -63,4 +63,30 @@ export const pillars: Pillar[] = [
   },
 ];
 
-export const pillarBySlug = (slug: string) => pillars.find((p) => p.slug === slug);
+export const softwarePillar: Pillar = {
+  slug: 'software',
+  title: 'Software',
+  strapline: 'Built in-house',
+  summary:
+    'Engineering judgement packaged as software, so a plant is monitored continuously rather than only when someone is looking.',
+  metaTitle: 'Waterna Software | Water Treatment Performance Platforms',
+  metaDescription:
+    'Software built by Waterna for water treatment performance — starting with Waterna RO Insight, a decision-support platform for reverse osmosis desalination.',
+  intro:
+    'Some of what we do by hand is better done continuously. Where an engineering method is well enough understood to be automated, we build it as software so a plant is watched every day rather than only during a study.',
+  body: [
+    'A consultancy study is a snapshot. It tells you what was true across the period examined and what to do about it, and then it stops. For the questions that matter most on a running plant — is fouling developing, did that clean work, is this train drifting from its baseline — a snapshot is the wrong shape of answer.',
+    'So we build the recurring parts into tools. The engineering underneath is the same engineering we would apply in a study; the difference is that it runs continuously, on your own data, and surfaces a finding when there is one rather than waiting to be asked.',
+    'Everything we build is vendor-neutral. It works with whatever equipment is already on your site, and nothing in it steers you toward a particular supplier.',
+  ],
+  signals: [
+    'You want continuous monitoring rather than periodic studies',
+    'Your team is troubleshooting reactively',
+    'You operate more than one train, or more than one plant',
+    'You have historian or SCADA data nobody has time to read',
+  ],
+};
+
+export const allPillars = [...pillars, softwarePillar];
+
+export const pillarBySlug = (slug: string) => allPillars.find((p) => p.slug === slug);

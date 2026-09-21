@@ -1,7 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import { site } from '../data/site';
-import { projectEngineering, plantPerformance, roInsight, serviceHref } from '../data/services';
+import { projectEngineering, plantPerformance, softwareProducts, serviceHref } from '../data/services';
 import { pillars } from '../data/pillars';
 
 const sectors = [
@@ -90,10 +90,7 @@ const reasons = [
       <div class="fork">
         {
           pillars.map((p) => {
-            const members =
-              p.slug === 'project-engineering'
-                ? projectEngineering
-                : [...plantPerformance, roInsight];
+            const members = p.slug === 'project-engineering' ? projectEngineering : plantPerformance;
             return (
               <article class="fork__card">
                 <p class="fork__strap">{p.strapline}</p>
@@ -121,17 +118,31 @@ const reasons = [
 
   <section class="digital">
     <div class="wrap">
-      <p class="eyebrow digital__eyebrow">Software platform</p>
-      <h2>{roInsight.title}</h2>
-      <p class="digital__lede">{roInsight.summary}</p>
+      <p class="eyebrow digital__eyebrow">Software</p>
+      <h2>Engineering judgement, running <span class="hl hl--light">continuously</span></h2>
+      <p class="digital__lede">
+        Where a method is well enough understood to automate, we build it as software — so a plant is
+        watched every day rather than only during a study.
+      </p>
 
-      <div class="digital__grid">
-        <ul class="digital__list">
-          {roInsight.covered.slice(0, 6).map(([term]) => <li>{term}</li>)}
-        </ul>
-        <div class="digital__cta">
-          <a class="btn btn--light" href={serviceHref(roInsight)}>About RO Insight&trade;</a>
-        </div>
+      <div class="digital__products">
+        {
+          softwareProducts.map((s) => (
+            <article class="pcard">
+              <p class="pcard__tag">Software platform</p>
+              <h3>
+                <a href={serviceHref(s)}>{s.title}</a>
+              </h3>
+              <p>{s.summary}</p>
+              <ul class="pcard__list">
+                {s.covered.slice(0, 6).map(([term]) => <li>{term}</li>)}
+              </ul>
+              <a class="btn btn--light" href={serviceHref(s)}>
+                About {s.navTitle ?? s.title}
+              </a>
+            </article>
+          ))
+        }
       </div>
     </div>
   </section>
@@ -322,40 +333,72 @@ const reasons = [
     margin-bottom: 0;
   }
 
-  .digital__grid {
+  .digital__products {
     margin-top: 2.25rem;
     display: grid;
     gap: 1.5rem;
-    align-items: start;
   }
 
-  @media (min-width: 820px) {
-    .digital__grid {
-      grid-template-columns: 1.6fr 1fr;
-      gap: 2.5rem;
-    }
+  .pcard {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 4px;
+    padding: 1.75rem;
   }
 
-  .digital__list {
+  .pcard__tag {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--brand-deep);
+    background: var(--accent);
+    border-radius: 3px;
+    padding: 0.22rem 0.55rem;
+    margin: 0 0 0.8rem;
+  }
+
+  .pcard :global(h3) {
+    color: #fff;
+    font-size: clamp(1.4rem, 2.4vw, 1.75rem);
+    margin-bottom: 0.5rem;
+  }
+
+  .pcard :global(h3 a) {
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .pcard :global(h3 a:hover) {
+    color: var(--accent);
+  }
+
+  .pcard > p {
+    max-width: 62ch;
+    margin-bottom: 1.25rem;
+  }
+
+  .pcard__list {
     list-style: none;
-    margin: 0;
+    margin: 0 0 1.5rem;
     padding: 0;
     display: grid;
     gap: 0.5rem;
   }
 
-  @media (min-width: 560px) {
-    .digital__list {
-      grid-template-columns: 1fr 1fr;
+  @media (min-width: 620px) {
+    .pcard__list {
+      grid-template-columns: repeat(3, 1fr);
     }
   }
 
-  .digital__list :global(li) {
-    font-size: 0.93rem;
+  .pcard__list :global(li) {
+    font-size: 0.9rem;
     color: #fff;
-    padding: 0.55rem 0.8rem;
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.16);
+    padding: 0.5rem 0.75rem;
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.14);
     border-radius: 3px;
     margin: 0;
   }

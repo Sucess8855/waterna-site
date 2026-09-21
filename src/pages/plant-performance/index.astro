@@ -1,12 +1,12 @@
 ---
 import Base from '../../layouts/Base.astro';
 import PillarPage from '../../components/PillarPage.astro';
-import { plantPerformance, roInsight } from '../../data/services';
+import { plantPerformance } from '../../data/services';
 import { pillarBySlug } from '../../data/pillars';
 
 const pillar = pillarBySlug('plant-performance')!;
 ---
 
 <Base title={pillar.metaTitle} description={pillar.metaDescription}>
-  <PillarPage pillar={pillar} services={plantPerformance} product={roInsight} />
+  <PillarPage pillar={pillar} services={plantPerformance} />
 </Base>

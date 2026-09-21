@@ -18,7 +18,7 @@ export const site = {
 export const nav = [
   { label: 'Project Engineering', href: '/project-engineering' },
   { label: 'Plant Performance', href: '/plant-performance' },
-  { label: 'RO Insight™', href: '/ro-insight' },
+  { label: 'Software', href: '/software' },
   { label: 'Sectors', href: '/sectors' },
   { label: 'About', href: '/about' },
   { label: 'Contact', href: '/contact' },

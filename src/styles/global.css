@@ -144,6 +144,11 @@ li {
   color: var(--ember);
 }
 
+/* On dark bands rust drops to 2.3:1 — use cyan, which reaches 4.7:1 on navy. */
+.hl--light {
+  color: var(--accent);
+}
+
 .section--band {
   background: var(--band);
   border-block: 1px solid #bfe2f5;

@@ -3,7 +3,7 @@ export interface Service {
   title: string;
   navTitle?: string;
   /** Which pillar this belongs to. */
-  pillar: 'project-engineering' | 'plant-performance';
+  pillar: 'project-engineering' | 'plant-performance' | 'software';
   /** Set false to keep the content but drop the page from the site. */
   published?: boolean;
   /** Products live at their own top-level URL rather than under a pillar. */
@@ -351,7 +351,7 @@ export const services: Service[] = [
 
   {
     slug: 'ro-insight',
-    pillar: 'plant-performance',
+    pillar: 'software',
     standalone: true,
     title: 'Waterna RO Insight™',
     navTitle: 'RO Insight™',
@@ -413,6 +413,8 @@ export const projectEngineering = publishedServices.filter(
 export const plantPerformance = publishedServices.filter(
   (s) => s.pillar === 'plant-performance' && !s.standalone,
 );
+
+export const softwareProducts = publishedServices.filter((s) => s.pillar === 'software');
 
 export const roInsight = services.find((s) => s.slug === 'ro-insight')!;
 

@@ -1,6 +1,6 @@
 ---
 import { site } from '../data/site';
-import { projectEngineering, plantPerformance, roInsight, serviceHref } from '../data/services';
+import { projectEngineering, plantPerformance, softwareProducts, serviceHref } from '../data/services';
 const year = new Date().getFullYear();
 ---
 
@@ -27,7 +27,13 @@ const year = new Date().getFullYear();
       <h2 class="ftr__h">Plant Performance</h2>
       <ul>
         {plantPerformance.map((s) => <li><a href={serviceHref(s)}>{s.navTitle ?? s.title}</a></li>)}
-        <li><a href={serviceHref(roInsight)}>{roInsight.navTitle ?? roInsight.title}</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h2 class="ftr__h">Software</h2>
+      <ul>
+        {softwareProducts.map((s) => <li><a href={serviceHref(s)}>{s.navTitle ?? s.title}</a></li>)}
       </ul>
     </div>
 
@@ -76,7 +82,7 @@ const year = new Date().getFullYear();
 
   @media (min-width: 700px) {
     .ftr__grid {
-      grid-template-columns: 1.3fr 1fr 1fr 0.9fr 1fr;
+      grid-template-columns: 1.2fr 1fr 1fr 0.8fr 0.9fr 1fr;
     }
   }
 
