@@ -2,8 +2,12 @@ export interface Service {
   slug: string;
   title: string;
   navTitle?: string;
-  /** Engineering services, or the data-and-digital offer. Defaults to engineering. */
-  group?: 'engineering' | 'digital';
+  /** Which pillar this belongs to. */
+  pillar: 'project-engineering' | 'plant-performance';
+  /** Set false to keep the content but drop the page from the site. */
+  published?: boolean;
+  /** Products live at their own top-level URL rather than under a pillar. */
+  standalone?: boolean;
   /** Products read differently from services — see headings below. */
   kind?: 'service' | 'product';
   /** Override the three section headings on the detail page. */
@@ -21,6 +25,7 @@ export interface Service {
 export const services: Service[] = [
   {
     slug: 'feasibility-studies',
+    pillar: 'project-engineering',
     title: 'Feasibility Studies',
     summary:
       'Establish whether a treatment scheme is technically sound and financially worth building — before you commit capital.',
@@ -61,11 +66,12 @@ export const services: Service[] = [
     ],
     deliverables:
       'A written feasibility report you can put in front of a board, a lender or a regulator: the options considered, how they compare, what we recommend, what it will cost to build and to run, and the specific risks that need closing out before detailed design begins. If the honest answer is that the project does not stack up, the report says so.',
-    related: ['design-services', 'engineering-consultancy', 'plant-optimisation'],
+    related: ['design-services', 'independent-review', 'plant-optimisation'],
   },
 
   {
     slug: 'design-services',
+    pillar: 'project-engineering',
     title: 'Design Services',
     summary:
       'Process and engineering design, from block flow diagrams and mass balances through to equipment specification and P&IDs.',
@@ -106,15 +112,16 @@ export const services: Service[] = [
     ],
     deliverables:
       'A design package matched to your project stage — from a concept report and block flow diagram through to a full FEED deliverable set with P&IDs, datasheets, mass balance and basis of design. Everything is written so a third party can tender against it without depending on us to interpret it.',
-    related: ['feasibility-studies', 'engineering-consultancy', 'hazop'],
+    related: ['feasibility-studies', 'independent-review', 'hazop'],
   },
 
   {
-    slug: 'engineering-consultancy',
-    title: 'Engineering Consultancy',
+    slug: 'independent-review',
+    pillar: 'project-engineering',
+    title: 'Independent Review',
     summary:
       'Independent technical review, vendor-neutral equipment evaluation and design-stage support for your project team.',
-    metaTitle: 'Independent Water Engineering Consultancy | Waterna',
+    metaTitle: 'Independent Design Review & Technical Audit | Waterna',
     metaDescription:
       'Vendor-neutral technical review of water and wastewater treatment designs, tender evaluation, and specialist process engineering support for project teams.',
     intro:
@@ -156,6 +163,7 @@ export const services: Service[] = [
 
   {
     slug: 'hazop',
+    pillar: 'project-engineering',
     title: 'HAZOP & Risk Studies',
     summary:
       'Structured hazard and operability studies, chaired independently, with actions tracked through to close-out.',
@@ -196,11 +204,12 @@ export const services: Service[] = [
     ],
     deliverables:
       'A full HAZOP report with the node worksheets, the risk ranking, and an action register written so each item can be closed and evidenced. We can also run the close-out review once actions have been addressed.',
-    related: ['design-services', 'engineering-consultancy', 'training'],
+    related: ['design-services', 'independent-review', 'feasibility-studies'],
   },
 
   {
     slug: 'plant-optimisation',
+    pillar: 'plant-performance',
     title: 'Plant Operation, Commissioning & Optimisation',
     navTitle: 'Plant Optimisation',
     summary:
@@ -242,11 +251,13 @@ export const services: Service[] = [
     ],
     deliverables:
       'A diagnosis supported by your own data, a ranked set of interventions with expected effect and cost, and support implementing them. Where the answer is a capital fix we say so — but we look for the operational one first.',
-    related: ['engineering-consultancy', 'training', 'feasibility-studies'],
+    related: ['independent-review', 'training', 'feasibility-studies'],
   },
 
   {
     slug: 'training',
+    pillar: 'project-engineering',
+    published: false,
     title: 'Training',
     summary:
       'Practical operator and engineer training built around your plant, your consents and your control system.',
@@ -287,14 +298,14 @@ export const services: Service[] = [
     ],
     deliverables:
       'A training package written around your site, delivered on site or remotely, with written material your team keeps. Where useful we produce operating procedures alongside it, so the knowledge stays after the session ends.',
-    related: ['plant-optimisation', 'hazop', 'engineering-consultancy'],
+    related: ['plant-optimisation', 'data-analysis', 'independent-review'],
   },
 
   {
     slug: 'data-analysis',
+    pillar: 'plant-performance',
     title: 'Data Analysis & Performance Review',
     navTitle: 'Data Analysis',
-    group: 'digital',
     summary:
       'Turn the operating data you already collect into a diagnosis — what is drifting, why, and what to do about it.',
     metaTitle: 'Water Treatment Data Analysis & Performance Review | Waterna',
@@ -335,14 +346,15 @@ export const services: Service[] = [
     ],
     deliverables:
       'A structured engineering assessment: what the data shows, what is causing it, and a ranked set of recommendations. Available as a one-off diagnostic study, a recurring performance review, or through an ongoing monitoring dashboard. It is frequently the first stage of an optimisation project, because it establishes and quantifies the opportunity before anyone proposes changing the plant.',
-    related: ['ro-insight', 'plant-optimisation', 'engineering-consultancy'],
+    related: ['ro-insight', 'plant-optimisation', 'independent-review'],
   },
 
   {
     slug: 'ro-insight',
+    pillar: 'plant-performance',
+    standalone: true,
     title: 'Waterna RO Insight™',
     navTitle: 'RO Insight™',
-    group: 'digital',
     kind: 'product',
     headings: {
       why: 'Why it exists',
@@ -392,18 +404,28 @@ export const services: Service[] = [
   },
 ];
 
-export const serviceIndex = services.map((s) => ({
-  slug: s.slug,
-  title: s.title,
-  navTitle: s.navTitle ?? s.title,
-  summary: s.summary,
-}));
+export const publishedServices = services.filter((s) => s.published !== false);
 
-export const engineeringServices = services.filter(
-  (s) => (s.group ?? 'engineering') === 'engineering',
+export const projectEngineering = publishedServices.filter(
+  (s) => s.pillar === 'project-engineering' && !s.standalone,
 );
 
-export const digitalServices = services.filter((s) => s.group === 'digital');
+export const plantPerformance = publishedServices.filter(
+  (s) => s.pillar === 'plant-performance' && !s.standalone,
+);
+
+export const roInsight = services.find((s) => s.slug === 'ro-insight')!;
+
+/** Products sit at their own top-level URL; everything else nests under its pillar. */
+export function serviceHref(s: Service): string {
+  return s.standalone ? `/${s.slug}` : `/${s.pillar}/${s.slug}`;
+}
+
+export function relatedTo(s: Service): Service[] {
+  return s.related
+    .map((slug) => publishedServices.find((x) => x.slug === slug))
+    .filter((x): x is Service => x !== undefined);
+}
 
 export const DEFAULT_HEADINGS = {
   why: 'Why it matters',

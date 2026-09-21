@@ -1,7 +1,8 @@
 ---
 import Base from '../layouts/Base.astro';
 import { site } from '../data/site';
-import { engineeringServices, digitalServices } from '../data/services';
+import { projectEngineering, plantPerformance, roInsight, serviceHref } from '../data/services';
+import { pillars } from '../data/pillars';
 
 const sectors = [
   {
@@ -80,26 +81,39 @@ const reasons = [
   <section class="section">
     <div class="wrap">
       <p class="eyebrow">What we do</p>
-      <h2>Engineering <span class="hl">services</span></h2>
+      <h2>Building a plant, or <span class="hl">running one</span></h2>
       <p class="lede">
-        From the first feasibility question through to a commissioned plant and trained operators.
+        Almost every enquiry is one of those two. The engineering is related but the work is not, so
+        we keep them apart.
       </p>
 
-      <div class="grid grid--3 scards">
+      <div class="fork">
         {
-          engineeringServices.map((s, i) => (
-            <article class="card scard">
-              <span class="scard__num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
-              <h3>
-                <a href={`/services/${s.slug}`}>{s.navTitle ?? s.title}</a>
-              </h3>
-              <p>{s.summary}</p>
-              <ul class="scard__tags">
-                {s.covered.slice(0, 2).map(([term]) => <li>{term}</li>)}
-              </ul>
-              <a class="scard__more" href={`/services/${s.slug}`}>Read more &rarr;</a>
-            </article>
-          ))
+          pillars.map((p) => {
+            const members =
+              p.slug === 'project-engineering'
+                ? projectEngineering
+                : [...plantPerformance, roInsight];
+            return (
+              <article class="fork__card">
+                <p class="fork__strap">{p.strapline}</p>
+                <h3>
+                  <a href={`/${p.slug}`}>{p.title}</a>
+                </h3>
+                <p class="fork__summary">{p.summary}</p>
+                <ul class="fork__list">
+                  {members.map((s) => (
+                    <li>
+                      <a href={serviceHref(s)}>{s.navTitle ?? s.title}</a>
+                    </li>
+                  ))}
+                </ul>
+                <a class="btn btn--ghost" href={`/${p.slug}`}>
+                  {p.title} &rarr;
+                </a>
+              </article>
+            );
+          })
         }
       </div>
     </div>
@@ -107,28 +121,17 @@ const reasons = [
 
   <section class="digital">
     <div class="wrap">
-      <p class="eyebrow digital__eyebrow">Data &amp; digital</p>
-      <h2>We also read the data your plant already produces</h2>
-      <p class="digital__lede">
-        Every plant records more than enough to explain its own behaviour. Most of it is never read
-        against what the process ought to be doing.
-      </p>
+      <p class="eyebrow digital__eyebrow">Software platform</p>
+      <h2>{roInsight.title}</h2>
+      <p class="digital__lede">{roInsight.summary}</p>
 
-      <div class="grid grid--2 digital__grid">
-        {
-          digitalServices.map((s) => (
-            <article class="dcard">
-              {s.kind === 'product' && <p class="dcard__tag">Software platform</p>}
-              <h3>
-                <a href={`/services/${s.slug}`}>{s.title}</a>
-              </h3>
-              <p>{s.summary}</p>
-              <a class="dcard__more" href={`/services/${s.slug}`}>
-                Read more &rarr;
-              </a>
-            </article>
-          ))
-        }
+      <div class="digital__grid">
+        <ul class="digital__list">
+          {roInsight.covered.slice(0, 6).map(([term]) => <li>{term}</li>)}
+        </ul>
+        <div class="digital__cta">
+          <a class="btn btn--light" href={serviceHref(roInsight)}>About RO Insight&trade;</a>
+        </div>
       </div>
     </div>
   </section>
@@ -321,6 +324,40 @@ const reasons = [
 
   .digital__grid {
     margin-top: 2.25rem;
+    display: grid;
+    gap: 1.5rem;
+    align-items: start;
+  }
+
+  @media (min-width: 820px) {
+    .digital__grid {
+      grid-template-columns: 1.6fr 1fr;
+      gap: 2.5rem;
+    }
+  }
+
+  .digital__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  @media (min-width: 560px) {
+    .digital__list {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .digital__list :global(li) {
+    font-size: 0.93rem;
+    color: #fff;
+    padding: 0.55rem 0.8rem;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 3px;
+    margin: 0;
   }
 
   .dcard {
@@ -372,6 +409,88 @@ const reasons = [
 
   .dcard__more:hover {
     text-decoration: underline;
+  }
+
+  /* ---------- the fork ---------- */
+
+  .fork {
+    display: grid;
+    gap: 1.5rem;
+    margin-top: 2.25rem;
+  }
+
+  @media (min-width: 820px) {
+    .fork {
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+  }
+
+  .fork__card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--ember);
+    border-radius: 4px;
+    padding: 2rem;
+    box-shadow: var(--shadow-card);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .fork__strap {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+    color: var(--ember);
+    margin-bottom: 0.6rem;
+  }
+
+  .fork__card :global(h3) {
+    font-size: clamp(1.5rem, 2.6vw, 1.9rem);
+    margin-bottom: 0.6rem;
+  }
+
+  .fork__card :global(h3 a) {
+    text-decoration: none;
+    color: var(--ink);
+  }
+
+  .fork__card :global(h3 a:hover) {
+    color: var(--brand);
+  }
+
+  .fork__summary {
+    max-width: 46ch;
+  }
+
+  .fork__list {
+    list-style: none;
+    margin: 0.5rem 0 1.75rem;
+    padding: 0;
+    border-top: 1px solid var(--line);
+    flex: 1;
+  }
+
+  .fork__list :global(li) {
+    margin: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .fork__list :global(a) {
+    display: block;
+    padding: 0.65rem 0;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.97rem;
+  }
+
+  .fork__list :global(a:hover) {
+    text-decoration: underline;
+  }
+
+  .fork__card :global(.btn) {
+    align-self: flex-start;
   }
 
   /* ---------- numbered service cards ---------- */

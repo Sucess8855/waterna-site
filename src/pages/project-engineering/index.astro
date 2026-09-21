@@ -1,0 +1,12 @@
+---
+import Base from '../../layouts/Base.astro';
+import PillarPage from '../../components/PillarPage.astro';
+import { projectEngineering } from '../../data/services';
+import { pillarBySlug } from '../../data/pillars';
+
+const pillar = pillarBySlug('project-engineering')!;
+---
+
+<Base title={pillar.metaTitle} description={pillar.metaDescription}>
+  <PillarPage pillar={pillar} services={projectEngineering} />
+</Base>

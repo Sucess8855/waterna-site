@@ -5,4 +5,14 @@
 /contact-us    /contact   301
 /book-online   /contact   301
 
+# Services were reorganised into two pillars after the first build.
+/services/feasibility-studies      /project-engineering/feasibility-studies   301
+/services/design-services          /project-engineering/design-services       301
+/services/engineering-consultancy  /project-engineering/independent-review    301
+/services/hazop                    /project-engineering/hazop                 301
+/services/plant-optimisation       /plant-performance/plant-optimisation      301
+/services/data-analysis            /plant-performance/data-analysis           301
+/services/ro-insight               /ro-insight                                301
+/services/training                 /services                                  301
+
 # /blog and /post/* are preserved as-is once the blog is migrated.

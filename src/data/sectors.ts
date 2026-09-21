@@ -59,7 +59,7 @@ export const sectors: Sector[] = [
       'Oil/water separation',
       'Zero liquid discharge and evaporation',
     ],
-    relatedServices: ['feasibility-studies', 'design-services', 'engineering-consultancy'],
+    relatedServices: ['feasibility-studies', 'design-services', 'independent-review'],
   },
 
   {

@@ -1,6 +1,6 @@
 ---
-import { site, nav } from '../data/site';
-import { services } from '../data/services';
+import { site } from '../data/site';
+import { projectEngineering, plantPerformance, roInsight, serviceHref } from '../data/services';
 const year = new Date().getFullYear();
 ---
 
@@ -17,16 +17,27 @@ const year = new Date().getFullYear();
     </div>
 
     <div>
-      <h2 class="ftr__h">Services</h2>
+      <h2 class="ftr__h">Project Engineering</h2>
       <ul>
-        {services.map((s) => <li><a href={`/services/${s.slug}`}>{s.navTitle ?? s.title}</a></li>)}
+        {projectEngineering.map((s) => <li><a href={serviceHref(s)}>{s.navTitle ?? s.title}</a></li>)}
+      </ul>
+    </div>
+
+    <div>
+      <h2 class="ftr__h">Plant Performance</h2>
+      <ul>
+        {plantPerformance.map((s) => <li><a href={serviceHref(s)}>{s.navTitle ?? s.title}</a></li>)}
+        <li><a href={serviceHref(roInsight)}>{roInsight.navTitle ?? roInsight.title}</a></li>
       </ul>
     </div>
 
     <div>
       <h2 class="ftr__h">Company</h2>
       <ul>
-        {nav.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+        <li><a href="/services">What we do</a></li>
+        <li><a href="/sectors">Sectors</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/contact">Contact</a></li>
         <li><a href="/privacy">Privacy Policy</a></li>
       </ul>
     </div>
@@ -65,7 +76,7 @@ const year = new Date().getFullYear();
 
   @media (min-width: 700px) {
     .ftr__grid {
-      grid-template-columns: 1.4fr 1fr 1fr 1fr;
+      grid-template-columns: 1.3fr 1fr 1fr 0.9fr 1fr;
     }
   }
 

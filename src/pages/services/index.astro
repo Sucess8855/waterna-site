@@ -1,73 +1,55 @@
 ---
 import Base from '../../layouts/Base.astro';
 import { site } from '../../data/site';
-import { engineeringServices, digitalServices } from '../../data/services';
+import { pillars } from '../../data/pillars';
+import { projectEngineering, plantPerformance, roInsight, serviceHref } from '../../data/services';
+
+const counts: Record<string, number> = {
+  'project-engineering': projectEngineering.length,
+  'plant-performance': plantPerformance.length,
+};
+
+const members: Record<string, typeof projectEngineering> = {
+  'project-engineering': projectEngineering,
+  'plant-performance': [...plantPerformance, roInsight],
+};
 ---
 
 <Base
-  title="Water & Wastewater Treatment Services | Waterna"
-  description="Feasibility studies, process design, independent engineering consultancy, HAZOP, commissioning and optimisation, and operator training for water, effluent and sludge treatment."
+  title="What We Do | Waterna Water Treatment Consultants"
+  description="Project engineering for schemes that do not exist yet, and plant performance work for those that do — plus Waterna RO Insight, our desalination software platform."
 >
   <section class="phead">
     <div class="wrap">
       <p class="eyebrow">What we do</p>
-      <h1>Engineering <span class="hl">services</span></h1>
+      <h1>Two kinds of <span class="hl">work</span></h1>
       <p class="lede">
-        From the first feasibility question through to a commissioned plant and a trained team. We
-        specify no equipment and take no commission from suppliers, so the process route we
-        recommend is the one that fits your water — not the one that fits a catalogue.
+        Almost every enquiry we get is one of two things: someone building a plant, or someone
+        running one. The engineering is related but the work is not, so we keep them apart.
       </p>
     </div>
   </section>
 
   <section class="section">
     <div class="wrap">
-      <ol class="slist">
+      <div class="fork">
         {
-          engineeringServices.map((s, i) => (
-            <li class="slist__item">
-              <span class="slist__num" aria-hidden="true">
-                {String(i + 1).padStart(2, '0')}
-              </span>
-              <div class="slist__body">
-                <h2>
-                  <a href={`/services/${s.slug}`}>{s.title}</a>
-                </h2>
-                <p>{s.summary}</p>
-                <ul class="slist__tags">
-                  {s.covered.slice(0, 3).map(([term]) => <li>{term}</li>)}
-                </ul>
-                <a class="slist__more" href={`/services/${s.slug}`}>
-                  Read more about {s.navTitle ?? s.title} &rarr;
-                </a>
-              </div>
-            </li>
-          ))
-        }
-      </ol>
-    </div>
-  </section>
-
-  <section class="section section--band">
-    <div class="wrap">
-      <p class="eyebrow">Data &amp; digital</p>
-      <h2>Two more ways we <span class="hl">work</span></h2>
-      <p class="lede">
-        The same engineering judgement, applied to the data your plant already produces — as a
-        study, or as software that runs continuously.
-      </p>
-
-      <div class="grid grid--2 dgrid">
-        {
-          digitalServices.map((s) => (
-            <article class="card dcard">
-              {s.kind === 'product' && <p class="dcard__tag">Software platform</p>}
-              <h3>
-                <a href={`/services/${s.slug}`}>{s.title}</a>
-              </h3>
-              <p>{s.summary}</p>
-              <a class="slist__more" href={`/services/${s.slug}`}>
-                Read more &rarr;
+          pillars.map((p) => (
+            <article class="fork__card">
+              <p class="fork__strap">{p.strapline}</p>
+              <h2>
+                <a href={`/${p.slug}`}>{p.title}</a>
+              </h2>
+              <p class="fork__summary">{p.summary}</p>
+              <ul class="fork__list">
+                {members[p.slug].map((s) => (
+                  <li>
+                    <a href={serviceHref(s)}>{s.navTitle ?? s.title}</a>
+                  </li>
+                ))}
+              </ul>
+              <a class="btn btn--ghost" href={`/${p.slug}`}>
+                {p.title} &rarr;
               </a>
             </article>
           ))
@@ -76,13 +58,24 @@ import { engineeringServices, digitalServices } from '../../data/services';
     </div>
   </section>
 
+  <section class="product">
+    <div class="wrap product__inner">
+      <div>
+        <p class="eyebrow product__eyebrow">Software platform</p>
+        <h2>{roInsight.title}</h2>
+        <p class="product__lede">{roInsight.summary}</p>
+        <a class="btn btn--light" href={serviceHref(roInsight)}>About RO Insight&trade;</a>
+      </div>
+    </div>
+  </section>
+
   <section class="cta">
     <div class="wrap cta__inner">
       <div>
-        <h2>Not sure which of these you need?</h2>
+        <h2>Not sure which you need?</h2>
         <p>
           Most people are not, at the start. Describe the problem and we will tell you what the
-          right first step is — even when that step is not one we would be paid for.
+          right first step is.
         </p>
       </div>
       <div class="cta__actions">
@@ -100,118 +93,103 @@ import { engineeringServices, digitalServices } from '../../data/services';
     padding-block: clamp(2.5rem, 6vw, 4rem);
   }
 
-  .slist {
-    list-style: none;
-    margin: 0;
-    padding: 0;
+  .fork {
     display: grid;
-    gap: 0;
+    gap: 1.5rem;
   }
 
-  .slist__item {
-    display: grid;
-    gap: 1rem;
-    padding-block: 2rem;
-    border-bottom: 1px solid var(--line);
-    margin-bottom: 0;
-  }
-
-  .slist__item:first-child {
-    padding-top: 0;
-  }
-
-  @media (min-width: 720px) {
-    .slist__item {
-      grid-template-columns: 5rem minmax(0, 1fr);
-      gap: 1.5rem;
+  @media (min-width: 820px) {
+    .fork {
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
     }
   }
 
-  .slist__num {
-    font-size: 1.5rem;
+  .fork__card {
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--ember);
+    border-radius: 4px;
+    padding: 2rem;
+    box-shadow: var(--shadow-card);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .fork__strap {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
     font-weight: 700;
     color: var(--ember);
-    line-height: 1;
-    letter-spacing: -0.02em;
+    margin-bottom: 0.6rem;
   }
 
-  .slist__body h2 {
-    font-size: clamp(1.35rem, 2.4vw, 1.7rem);
-    margin-bottom: 0.4rem;
+  .fork__card h2 {
+    font-size: clamp(1.5rem, 2.6vw, 2rem);
+    margin-bottom: 0.6rem;
   }
 
-  .slist__body h2 a {
+  .fork__card h2 a {
     text-decoration: none;
     color: var(--ink);
   }
 
-  .slist__body h2 a:hover {
+  .fork__card h2 a:hover {
     color: var(--brand);
   }
 
-  .slist__body > p {
-    max-width: 64ch;
-    margin-bottom: 0.9rem;
+  .fork__summary {
+    max-width: 46ch;
   }
 
-  .slist__tags {
+  .fork__list {
     list-style: none;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-    margin: 0 0 1rem;
+    margin: 0.5rem 0 1.75rem;
     padding: 0;
+    border-top: 1px solid var(--line);
+    flex: 1;
   }
 
-  .slist__tags li {
-    font-size: 0.82rem;
-    color: var(--body);
-    background: var(--bg-alt);
-    border: 1px solid var(--line);
-    border-radius: 3px;
-    padding: 0.25rem 0.6rem;
+  .fork__list li {
     margin: 0;
+    border-bottom: 1px solid var(--line);
   }
 
-  .slist__more {
-    font-weight: 600;
-    font-size: 0.95rem;
+  .fork__list a {
+    display: block;
+    padding: 0.65rem 0;
     text-decoration: none;
+    font-weight: 600;
+    font-size: 0.97rem;
   }
 
-  .slist__more:hover {
+  .fork__list a:hover {
     text-decoration: underline;
   }
 
-  .dgrid {
-    margin-top: 2rem;
+  .fork__card .btn {
+    align-self: flex-start;
   }
 
-  .dcard h3 {
-    font-size: 1.3rem;
+  .product {
+    background: var(--brand-deep);
+    color: rgba(255, 255, 255, 0.86);
+    padding-block: clamp(3rem, 7vw, 4.5rem);
+  }
+
+  .product :global(h2) {
+    color: #fff;
     margin-bottom: 0.5rem;
   }
 
-  .dcard h3 a {
-    text-decoration: none;
-    color: var(--ink);
+  .product__eyebrow {
+    color: var(--accent);
   }
 
-  .dcard h3 a:hover {
-    color: var(--brand);
-  }
-
-  .dcard__tag {
-    display: inline-block;
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: #fff;
-    background: var(--brand-deep);
-    border-radius: 3px;
-    padding: 0.22rem 0.55rem;
-    margin: 0 0 0.7rem;
+  .product__lede {
+    font-size: 1.05rem;
+    max-width: 52ch;
+    margin-bottom: 1.6rem;
   }
 
   .cta {

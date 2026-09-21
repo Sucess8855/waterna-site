@@ -1,0 +1,18 @@
+---
+import Base from '../../layouts/Base.astro';
+import ServiceDetail from '../../components/ServiceDetail.astro';
+import { projectEngineering } from '../../data/services';
+
+export function getStaticPaths() {
+  return projectEngineering.map((service) => ({
+    params: { slug: service.slug },
+    props: { service },
+  }));
+}
+
+const { service } = Astro.props;
+---
+
+<Base title={service.metaTitle} description={service.metaDescription}>
+  <ServiceDetail service={service} />
+</Base>

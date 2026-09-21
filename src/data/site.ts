@@ -16,10 +16,10 @@ export const site = {
 } as const;
 
 export const nav = [
-  { label: 'Services', href: '/services' },
+  { label: 'Project Engineering', href: '/project-engineering' },
+  { label: 'Plant Performance', href: '/plant-performance' },
+  { label: 'RO Insight™', href: '/ro-insight' },
   { label: 'Sectors', href: '/sectors' },
-  { label: 'Case Studies', href: '/case-studies' },
   { label: 'About', href: '/about' },
-  { label: 'Blog', href: '/blog' },
   { label: 'Contact', href: '/contact' },
 ] as const;

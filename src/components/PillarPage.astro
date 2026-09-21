@@ -1,0 +1,335 @@
+---
+import { site } from '../data/site';
+import { serviceHref, type Service } from '../data/services';
+import type { Pillar } from '../data/pillars';
+
+interface Props {
+  pillar: Pillar;
+  services: Service[];
+  /** Optional product shown after the services, e.g. RO Insight on Plant Performance. */
+  product?: Service;
+}
+
+const { pillar, services, product } = Astro.props;
+---
+
+<section class="phead">
+  <div class="wrap">
+    <p class="eyebrow">{pillar.strapline}</p>
+    <h1>{pillar.title}</h1>
+    <p class="lede">{pillar.intro}</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap cols">
+    <div class="cols__main">
+      {pillar.body.map((para) => <p>{para}</p>)}
+    </div>
+    <aside class="cols__side">
+      <div class="signals">
+        <h2 class="signals__h">You might need this if</h2>
+        <ul>
+          {pillar.signals.map((s) => <li>{s}</li>)}
+        </ul>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<section class="section section--band">
+  <div class="wrap">
+    <h2>What that <span class="hl">involves</span></h2>
+
+    <ol class="slist">
+      {
+        services.map((s, i) => (
+          <li class="slist__item">
+            <span class="slist__num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+            <div class="slist__body">
+              <h3>
+                <a href={serviceHref(s)}>{s.title}</a>
+              </h3>
+              <p>{s.summary}</p>
+              <ul class="slist__tags">
+                {s.covered.slice(0, 3).map(([term]) => <li>{term}</li>)}
+              </ul>
+              <a class="slist__more" href={serviceHref(s)}>
+                Read more about {s.navTitle ?? s.title} &rarr;
+              </a>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+{
+  product && (
+    <section class="product">
+      <div class="wrap product__inner">
+        <div>
+          <p class="eyebrow product__eyebrow">Software platform</p>
+          <h2>{product.title}</h2>
+          <p class="product__lede">{product.summary}</p>
+          <a class="btn btn--light" href={serviceHref(product)}>
+            About {product.navTitle ?? product.title}
+          </a>
+        </div>
+        <ul class="product__list">
+          {product.covered.slice(0, 6).map(([term]) => <li>{term}</li>)}
+        </ul>
+      </div>
+    </section>
+  )
+}
+
+<section class="cta">
+  <div class="wrap cta__inner">
+    <div>
+      <h2>Not sure where to start?</h2>
+      <p>
+        Describe the problem and we will tell you what the right first step is — even when that step
+        is not one we would be paid for.
+      </p>
+    </div>
+    <div class="cta__actions">
+      <a class="btn btn--primary" href={site.phoneHref}>{site.phone}</a>
+      <a class="btn btn--ghost" href="/contact">Contact page</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .phead {
+    background: var(--brand-tint);
+    border-bottom: 1px solid var(--line);
+    padding-block: clamp(2.5rem, 6vw, 4rem);
+  }
+
+  .cols {
+    display: grid;
+    gap: 2.5rem;
+  }
+
+  @media (min-width: 900px) {
+    .cols {
+      grid-template-columns: minmax(0, 1fr) 19rem;
+      gap: 3.5rem;
+      align-items: start;
+    }
+  }
+
+  .cols__main p {
+    max-width: 68ch;
+    font-size: 1.05rem;
+  }
+
+  .signals {
+    border-left: 3px solid var(--ember);
+    padding-left: 1.25rem;
+  }
+
+  .signals__h {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    color: var(--muted);
+    margin-bottom: 0.75rem;
+  }
+
+  .signals ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .signals li {
+    font-size: 0.95rem;
+    color: var(--ink);
+    padding-block: 0.5rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .signals li:first-child {
+    border-top: 0;
+    padding-top: 0;
+  }
+
+  /* ---------- service list ---------- */
+
+  .slist {
+    list-style: none;
+    margin: 2rem 0 0;
+    padding: 0;
+  }
+
+  .slist__item {
+    display: grid;
+    gap: 1rem;
+    padding-block: 1.75rem;
+    border-bottom: 1px solid #bfe2f5;
+    margin-bottom: 0;
+  }
+
+  .slist__item:first-child {
+    padding-top: 0;
+  }
+
+  .slist__item:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  @media (min-width: 720px) {
+    .slist__item {
+      grid-template-columns: 4rem minmax(0, 1fr);
+      gap: 1.5rem;
+    }
+  }
+
+  .slist__num {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--ember);
+    line-height: 1;
+  }
+
+  .slist__body h3 {
+    font-size: clamp(1.25rem, 2.2vw, 1.55rem);
+    margin-bottom: 0.35rem;
+  }
+
+  .slist__body h3 a {
+    text-decoration: none;
+    color: var(--ink);
+  }
+
+  .slist__body h3 a:hover {
+    color: var(--brand);
+  }
+
+  .slist__body > p {
+    max-width: 64ch;
+    margin-bottom: 0.8rem;
+  }
+
+  .slist__tags {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0 0 0.9rem;
+    padding: 0;
+  }
+
+  .slist__tags li {
+    font-size: 0.78rem;
+    color: var(--body);
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid #bfe2f5;
+    border-radius: 3px;
+    padding: 0.22rem 0.55rem;
+    margin: 0;
+  }
+
+  .slist__more {
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+  }
+
+  .slist__more:hover {
+    text-decoration: underline;
+  }
+
+  /* ---------- product band ---------- */
+
+  .product {
+    background: var(--brand-deep);
+    color: rgba(255, 255, 255, 0.86);
+    padding-block: clamp(3rem, 7vw, 4.5rem);
+  }
+
+  .product__inner {
+    display: grid;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  @media (min-width: 860px) {
+    .product__inner {
+      grid-template-columns: 1.15fr 1fr;
+      gap: 3.5rem;
+    }
+  }
+
+  .product :global(h2) {
+    color: #fff;
+    margin-bottom: 0.5rem;
+  }
+
+  .product__eyebrow {
+    color: var(--accent);
+  }
+
+  .product__lede {
+    font-size: 1.05rem;
+    max-width: 48ch;
+    margin-bottom: 1.6rem;
+  }
+
+  .product__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .product__list li {
+    font-size: 0.95rem;
+    color: #fff;
+    padding: 0.6rem 0.85rem;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 3px;
+    margin: 0;
+  }
+
+  /* ---------- cta ---------- */
+
+  .cta {
+    background: var(--brand-tint);
+    padding-block: clamp(2.5rem, 6vw, 4rem);
+    border-top: 1px solid var(--line);
+  }
+
+  .cta__inner {
+    display: grid;
+    gap: 1.5rem;
+    align-items: center;
+  }
+
+  @media (min-width: 800px) {
+    .cta__inner {
+      grid-template-columns: 1.6fr 1fr;
+    }
+  }
+
+  .cta h2 {
+    margin-bottom: 0.4rem;
+  }
+
+  .cta p {
+    margin-bottom: 0;
+    max-width: 54ch;
+  }
+
+  .cta__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+</style>

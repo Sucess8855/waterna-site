@@ -2,7 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import { site } from '../../data/site';
 import { sectors } from '../../data/sectors';
-import { services } from '../../data/services';
+import { publishedServices, serviceHref } from '../../data/services';
 
 export function getStaticPaths() {
   return sectors.map((sector) => ({
@@ -13,7 +13,7 @@ export function getStaticPaths() {
 
 const { sector } = Astro.props;
 const related = sector.relatedServices
-  .map((slug) => services.find((s) => s.slug === slug))
+  .map((slug) => publishedServices.find((s) => s.slug === slug))
   .filter((s) => s !== undefined);
 ---
 
@@ -78,7 +78,7 @@ const related = sector.relatedServices
             {
               related.map((r) => (
                 <li>
-                  <a href={`/services/${r!.slug}`}>{r!.navTitle ?? r!.title}</a>
+                  <a href={serviceHref(r!)}>{r!.navTitle ?? r!.title}</a>
                 </li>
               ))
             }
