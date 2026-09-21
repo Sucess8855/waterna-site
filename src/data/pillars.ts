@@ -9,6 +9,8 @@ export interface Pillar {
   body: string[];
   /** Short prompts a visitor can recognise themselves in. */
   signals: string[];
+  /** Heading above the list. Defaults to "What that involves". */
+  listHeading?: { lead: string; accent: string };
 }
 
 export const pillars: Pillar[] = [
@@ -79,6 +81,7 @@ export const softwarePillar: Pillar = {
     'So we build the recurring parts into tools. The engineering underneath is the same engineering we would apply in a study; the difference is that it runs continuously, on your own data, and surfaces a finding when there is one rather than waiting to be asked.',
     'Everything we build is vendor-neutral. It works with whatever equipment is already on your site, and nothing in it steers you toward a particular supplier.',
   ],
+  listHeading: { lead: 'What we', accent: 'build' },
   signals: [
     'You want continuous monitoring rather than periodic studies',
     'Your team is troubleshooting reactively',

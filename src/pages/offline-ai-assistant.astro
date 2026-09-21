@@ -1,0 +1,11 @@
+---
+import Base from '../layouts/Base.astro';
+import ServiceDetail from '../components/ServiceDetail.astro';
+import { services } from '../data/services';
+
+const service = services.find((s) => s.slug === 'offline-ai-assistant')!;
+---
+
+<Base title={service.metaTitle} description={service.metaDescription}>
+  <ServiceDetail service={service} />
+</Base>

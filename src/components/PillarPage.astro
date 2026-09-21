@@ -11,6 +11,7 @@ interface Props {
 }
 
 const { pillar, services, product } = Astro.props;
+const listHeading = pillar.listHeading ?? { lead: 'What that', accent: 'involves' };
 ---
 
 <section class="phead">
@@ -39,7 +40,7 @@ const { pillar, services, product } = Astro.props;
 
 <section class="section section--band">
   <div class="wrap">
-    <h2>What that <span class="hl">involves</span></h2>
+    <h2>{listHeading.lead} <span class="hl">{listHeading.accent}</span></h2>
 
     <ol class="slist">
       {
