@@ -67,7 +67,7 @@ export const pillars: Pillar[] = [
 
 export const softwarePillar: Pillar = {
   slug: 'software',
-  title: 'Software',
+  title: 'Software & Analytics',
   strapline: 'Turn operating data into informed decisions',
   summary:
     'Process engineering methods combined with data analysis, so operating teams can track performance, recognise developing problems and plan corrective action.',

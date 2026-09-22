@@ -206,12 +206,13 @@ li {
 }
 
 .btn--ghost {
-  border-color: var(--line);
+  border-color: var(--brand-deep);
   color: var(--brand-deep);
   background: #fff;
 }
 .btn--ghost:hover {
-  border-color: var(--brand);
+  background: var(--brand-deep);
+  color: #fff;
 }
 
 .card {
