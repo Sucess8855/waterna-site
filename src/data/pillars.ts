@@ -17,9 +17,9 @@ export const pillars: Pillar[] = [
   {
     slug: 'project-engineering',
     title: 'Project Engineering',
-    strapline: 'Before it is built',
+    strapline: 'Developing new plants and upgrading existing systems',
     summary:
-      'Feasibility, process design, independent review and hazard studies — the engineering that decides whether a scheme works before anyone pours concrete.',
+      'We establish the right treatment approach and translate it into practical engineering requirements, covering feasibility, process design, independent design review and risk studies.',
     metaTitle: 'Project Engineering for Water & Wastewater Treatment | Waterna',
     metaDescription:
       'Feasibility studies, process design, independent design review and HAZOP for water, effluent and sludge treatment schemes — vendor-neutral, with no equipment sales.',
@@ -42,9 +42,9 @@ export const pillars: Pillar[] = [
   {
     slug: 'plant-performance',
     title: 'Plant Performance',
-    strapline: 'Once it is running',
+    strapline: 'Supporting commissioning and day-to-day operation',
     summary:
-      'Diagnosing and fixing plant that already exists, starting from the operating data it already produces — as a study, or continuously as software.',
+      'We assess process conditions and operating data to identify performance constraints and recommend practical improvements, supporting reliable operation and efficient resource use.',
     metaTitle: 'Plant Performance, Optimisation & Data Analysis | Waterna',
     metaDescription:
       'Troubleshooting, optimisation and data analysis for water and wastewater plant — diagnose why a works is failing its consent and fix the cause, not the symptom.',
@@ -68,9 +68,9 @@ export const pillars: Pillar[] = [
 export const softwarePillar: Pillar = {
   slug: 'software',
   title: 'Software',
-  strapline: 'Built in-house',
+  strapline: 'Turn operating data into informed decisions',
   summary:
-    'Engineering judgement packaged as software, so a plant is monitored continuously rather than only when someone is looking.',
+    'Process engineering methods combined with data analysis, so operating teams can track performance, recognise developing problems and plan corrective action.',
   metaTitle: 'Waterna Software | Water Treatment Performance Platforms',
   metaDescription:
     'Software built by Waterna for water treatment performance — starting with Waterna RO Insight, a decision-support platform for reverse osmosis desalination.',

@@ -3,47 +3,27 @@ import Base from '../layouts/Base.astro';
 import { site } from '../data/site';
 import { projectEngineering, plantPerformance, softwareProducts, serviceHref } from '../data/services';
 import { pillars } from '../data/pillars';
-
-const sectors = [
-  {
-    slug: 'industrial-water-treatment',
-    title: 'Industrial Water Treatment',
-    summary:
-      'Process water that meets specification consistently — clarification, filtration, reverse osmosis, ion exchange and disinfection.',
-  },
-  {
-    slug: 'wastewater-treatment',
-    title: 'Wastewater Treatment',
-    summary:
-      'Effluent schemes that hold their discharge consent, from primary settlement and biological treatment through to tertiary polishing.',
-  },
-  {
-    slug: 'anaerobic-digestion',
-    title: 'Anaerobic Digestion & Sludge',
-    summary:
-      'Digestion, thermal hydrolysis, dewatering and sludge disposal routes — assessed on whole-life cost, not headline capex.',
-  },
-];
+import { sectors } from '../data/sectors';
 
 const reasons = [
   {
-    title: 'We specify no equipment',
-    body: 'We hold no vendor agreements and take no commission from suppliers. Our own software is the one thing we sell, it is entirely optional, and it works with any manufacturer’s membranes.',
+    title: 'Independent of equipment suppliers',
+    body: 'We hold no vendor agreements and receive no supplier commissions. Our recommendations are based on your process requirements, operating conditions and project objectives. Our own software is optional, and available separately from our consultancy services.',
   },
   {
-    title: 'Whole-life cost, not headline capex',
-    body: 'Chemical dose, energy, membrane replacement and sludge disposal usually dwarf the purchase price. We model the cost you will actually live with.',
+    title: 'Whole-life cost in focus',
+    body: 'We assess capital and operating costs together — energy, chemicals, maintenance, membrane replacement and sludge disposal — so you can compare options over the life of the plant rather than at the point of purchase.',
   },
   {
-    title: 'Compliance built in from the start',
-    body: 'Discharge consents, trade effluent agreements and environmental permitting are designed into the scheme, not retrofitted after commissioning.',
+    title: 'Compliance considered from the outset',
+    body: 'Discharge limits, water quality specifications and permitting requirements are built into process assessment and design, so the constraints surface early rather than at commissioning.',
   },
 ];
 ---
 
 <Base
-  title="Water & Wastewater Treatment Consultants | Waterna"
-  description="Independent UK water and wastewater treatment consultancy. Feasibility studies, process design, HAZOP and plant optimisation — vendor-neutral advice, no equipment sales."
+  title="Water Treatment Consultants | UF &amp; RO Desalination | Waterna"
+  description="Independent UK water and wastewater consultancy with specialist expertise in ultrafiltration and RO desalination. Feasibility, process design, HAZOP, plant optimisation and RO Insight software."
 >
   <section class="hero">
     <picture>
@@ -64,16 +44,28 @@ const reasons = [
     <div class="hero__scrim"></div>
 
     <div class="wrap hero__inner">
-      <p class="eyebrow hero__eyebrow">Independent UK consultancy</p>
-      <h1 class="hero__title">Water treatment without a vendor agenda</h1>
-      <p class="hero__lede">
-        Independent process engineering for water, effluent and sludge. More than 15 years designing
-        new plant, fixing plant that underperforms, and saying so when you do not need to spend the
-        money.
-      </p>
-      <a class="btn btn--primary hero__cta" href={site.phoneHref}>Call {site.phone}</a>
+      <p class="eyebrow hero__eyebrow">Independent water and wastewater consultancy</p>
+      <h1 class="hero__title">
+        Water treatment expertise.<br />
+        <span class="hl hl--light">UF and RO desalination insight.</span>
+      </h1>
+      <div class="hero__copy">
+        <p>
+          We help clients design, operate and improve water, wastewater and sludge treatment systems,
+          with specialist expertise in ultrafiltration (UF) and reverse osmosis (RO) desalination.
+        </p>
+        <p>
+          Drawing on more than 20 years of process engineering experience, we combine practical
+          engineering with data-driven performance analysis. Our Waterna RO Insight™ software brings
+          that expertise into day-to-day RO operation — monitoring membrane performance, identifying
+          developing fouling and scaling risks, evaluating cleaning effectiveness and improving
+          energy efficiency.
+        </p>
+      </div>
+      <a class="btn btn--primary hero__cta" href="/contact">Discuss your project</a>
       <p class="hero__note">
-        Or email <a href={`mailto:${site.email}`}>{site.email}</a> — no charge for an initial conversation.
+        Call <a href={site.phoneHref}>{site.phone}</a> or email{' '}
+        <a href={`mailto:${site.email}`}>{site.email}</a> for a no-obligation initial discussion.
       </p>
     </div>
   </section>
@@ -81,10 +73,10 @@ const reasons = [
   <section class="section">
     <div class="wrap">
       <p class="eyebrow">What we do</p>
-      <h2>Building a plant, or <span class="hl">running one</span></h2>
+      <h2>From project development to <span class="hl">plant performance</span></h2>
       <p class="lede">
-        Almost every enquiry is one of those two. The engineering is related but the work is not, so
-        we keep them apart.
+        Whether you are developing a new treatment scheme or improving an existing plant, we provide
+        engineering support to help you assess options, resolve problems and make informed decisions.
       </p>
 
       <div class="fork">
@@ -106,7 +98,7 @@ const reasons = [
                   ))}
                 </ul>
                 <a class="btn btn--ghost" href={`/${p.slug}`}>
-                  {p.title} &rarr;
+                  Explore {p.title}
                 </a>
               </article>
             );
@@ -119,10 +111,10 @@ const reasons = [
   <section class="digital">
     <div class="wrap">
       <p class="eyebrow digital__eyebrow">Software</p>
-      <h2>Engineering judgement, running <span class="hl hl--light">continuously</span></h2>
+      <h2>Turn operating data into <span class="hl hl--light">informed decisions</span></h2>
       <p class="digital__lede">
-        Where a method is well enough understood to automate, we build it as software — so a plant is
-        watched every day rather than only during a study.
+        Our software combines process engineering methods with data analysis, so operating teams can
+        track performance, recognise developing problems and plan corrective action.
       </p>
 
       <div class="digital__products">
@@ -138,7 +130,7 @@ const reasons = [
                 {s.covered.slice(0, 6).map(([term]) => <li>{term}</li>)}
               </ul>
               <a class="btn btn--light" href={serviceHref(s)}>
-                About {s.navTitle ?? s.title}
+                Explore {s.navTitle ?? s.title}
               </a>
             </article>
           ))
@@ -150,7 +142,7 @@ const reasons = [
   <section class="section section--alt">
     <div class="wrap">
       <p class="eyebrow">Why Waterna</p>
-      <h2>Independent means <span class="hl">independent</span></h2>
+      <h2>Independent advice. <span class="hl">Practical engineering.</span></h2>
 
       <div class="grid grid--3">
         {
@@ -167,16 +159,36 @@ const reasons = [
 
   <section class="section">
     <div class="wrap">
-      <p class="eyebrow">Where we work</p>
-      <h2>Where we <span class="hl">work</span></h2>
+      <p class="eyebrow">Sectors</p>
+      <h2>Expertise across water, wastewater and <span class="hl">sludge treatment</span></h2>
 
-      <div class="grid grid--3">
+      <div class="grid grid--2 secgrid">
         {
           sectors.map((s) => (
-            <article class="card">
+            <article class:list={['card', 'seccard', s.slug === 'uf-ro-desalination' && 'seccard--lead']}>
+              {s.slug === 'uf-ro-desalination' && <p class="seccard__tag">Specialist focus</p>}
               <h3>{s.title}</h3>
               <p>{s.summary}</p>
-              <a href={`/sectors/${s.slug}`}>Read more &rarr;</a>
+              {
+                s.slug === 'uf-ro-desalination' && (
+                  <p class="seccard__extra">
+                    For RO plants, Waterna RO Insight™ adds ongoing performance monitoring and
+                    diagnostics to support cleaning decisions, energy optimisation and membrane
+                    management.
+                  </p>
+                )
+              }
+              <p class="seccard__links">
+                <a href={`/sectors/${s.slug}`}>Explore {s.navTitle ?? s.title}</a>
+                {
+                  s.slug === 'uf-ro-desalination' && (
+                    <>
+                      <span aria-hidden="true"> · </span>
+                      <a href="/ro-insight">Discover RO Insight™</a>
+                    </>
+                  )
+                }
+              </p>
             </article>
           ))
         }
@@ -202,8 +214,11 @@ const reasons = [
     </picture>
     <div class="photoband__scrim"></div>
     <div class="wrap photoband__inner">
-      <h2>Talk to an <span class="hl hl--light">engineer</span></h2>
-      <p>Not a sales desk. The first conversation costs nothing.</p>
+      <h2>Discuss your project with an <span class="hl hl--light">engineer</span></h2>
+      <p>
+        Speak directly with a process engineer about your treatment requirements, operating
+        challenges or planned investment.
+      </p>
       <a class="btn btn--primary" href={site.phoneHref}>Call {site.phone}</a>
     </div>
   </section>
@@ -211,15 +226,15 @@ const reasons = [
   <section class="cta">
     <div class="wrap cta__inner">
       <div>
-        <h2>Got a treatment problem worth a second opinion?</h2>
+        <h2>Let’s discuss your water treatment <span class="hl">challenge</span></h2>
         <p>
-          Tell us the water, the flow and the consent you are working to. We will tell you whether
-          there is a project here — and roughly what it should cost.
+          Tell us about your plant, project or operating concern. We can help clarify the problem,
+          identify the information needed and agree a practical next step.
         </p>
       </div>
       <div class="cta__actions">
-        <a class="btn btn--primary" href={site.phoneHref}>{site.phone}</a>
-        <a class="btn btn--ghost" href="/contact">Contact page</a>
+        <a class="btn btn--primary" href="/contact">Contact us</a>
+        <a class="btn btn--ghost" href={`mailto:${site.email}`}>Email us</a>
       </div>
     </div>
   </section>
@@ -264,8 +279,8 @@ const reasons = [
   }
 
   .hero__inner {
-    padding-block: clamp(3rem, 8vw, 5rem);
-    max-width: 60rem;
+    padding-block: clamp(3rem, 7vw, 4.5rem);
+    max-width: 70rem;
   }
 
   .hero__eyebrow {
@@ -278,20 +293,30 @@ const reasons = [
     /* h1 sets text-wrap: balance, which evens the lines into four.
        Fill naturally instead so the measure controls the break. */
     text-wrap: wrap;
-    font-size: clamp(2.4rem, 6.2vw, 4.6rem);
-    line-height: 0.98;
-    letter-spacing: -0.03em;
+    /* Two full sentences, so the scale is set to fit them on two lines
+       rather than the four the display size produced. */
+    font-size: clamp(1.85rem, 4vw, 2.95rem);
+    line-height: 1.04;
+    letter-spacing: -0.025em;
     font-weight: 800;
     text-transform: uppercase;
-    max-width: 52rem;
-    margin-bottom: 1.1rem;
+    max-width: 100%;
+    margin-bottom: 1.25rem;
   }
 
-  .hero__lede {
-    color: rgba(255, 255, 255, 0.9);
-    font-size: clamp(1.05rem, 1.6vw, 1.25rem);
-    max-width: 48ch;
+  .hero__copy {
     margin-bottom: 1.9rem;
+  }
+
+  .hero__copy p {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: clamp(1rem, 1.4vw, 1.125rem);
+    max-width: 56ch;
+    margin-bottom: 0.85rem;
+  }
+
+  .hero__copy p:last-child {
+    margin-bottom: 0;
   }
 
   .hero__cta {
@@ -451,6 +476,56 @@ const reasons = [
   }
 
   .dcard__more:hover {
+    text-decoration: underline;
+  }
+
+  /* ---------- sector cards ---------- */
+
+  .secgrid {
+    margin-top: 2.25rem;
+  }
+
+  .seccard {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .seccard--lead {
+    border-top: 3px solid var(--ember);
+  }
+
+  .seccard__tag {
+    display: inline-block;
+    align-self: flex-start;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ember);
+    margin-bottom: 0.6rem;
+  }
+
+  .seccard :global(h3) {
+    font-size: 1.25rem;
+  }
+
+  .seccard__extra {
+    font-size: 0.95rem;
+    color: var(--muted);
+  }
+
+  .seccard__links {
+    margin-top: auto;
+    margin-bottom: 0;
+    font-size: 0.95rem;
+    font-weight: 600;
+  }
+
+  .seccard__links :global(a) {
+    text-decoration: none;
+  }
+
+  .seccard__links :global(a:hover) {
     text-decoration: underline;
   }
 

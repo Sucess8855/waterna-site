@@ -14,13 +14,69 @@ export interface Sector {
 
 export const sectors: Sector[] = [
   {
+    slug: 'uf-ro-desalination',
+    title: 'Ultrafiltration & RO Desalination',
+    navTitle: 'UF & RO Desalination',
+    summary:
+      'Specialist engineering for UF and RO systems — pretreatment, process design, commissioning, troubleshooting and performance optimisation.',
+    metaTitle: 'UF & RO Desalination Consultants | Waterna',
+    metaDescription:
+      'Specialist engineering support for ultrafiltration and reverse osmosis desalination — pretreatment, process design, commissioning, troubleshooting and performance optimisation.',
+    intro:
+      'Membrane plant rewards attention to detail and punishes assumptions. Pretreatment that is adequate on paper, a recovery target set slightly too high, a cleaning regime inherited from a different feed water — each shows up later as lost flux, shortened membrane life, or an energy bill nobody budgeted for.',
+    body: [
+      'This is where most of our work sits. We support UF and RO systems across their life: establishing what the feed water actually requires, sizing pretreatment properly, setting recovery and flux against the limits the water imposes rather than the limits the equipment allows, then commissioning and troubleshooting the result.',
+      'The engineering that matters here is unglamorous — a defensible water analysis, honest fouling and scaling indices, and a normalised baseline taken at commissioning so that later performance can be judged against something real. Plants that skip those steps spend years guessing why flux is falling.',
+      'For RO plants already running, Waterna RO Insight™ applies the same engineering method continuously, supporting cleaning decisions, energy optimisation and membrane management between studies.',
+    ],
+    challenges: [
+      [
+        'Pretreatment adequacy',
+        'Most RO problems are pretreatment problems. SDI, turbidity and organic load determine what the membranes will tolerate, and a pretreatment train sized on average conditions will fail on the bad days.',
+      ],
+      [
+        'Recovery and flux limits',
+        'Pushing recovery raises scaling potential and concentrate strength. The right operating point is set by the water chemistry, not by what the skid is rated for.',
+      ],
+      [
+        'Fouling and scaling',
+        'Biofouling, colloidal fouling, organic fouling and mineral scaling each present differently and each need a different response. Treating them as one problem wastes cleaning chemicals and membrane life.',
+      ],
+      [
+        'Cleaning effectiveness',
+        'A clean that does not restore normalised performance has cost money and achieved nothing. Whether it worked is measurable, and worth measuring.',
+      ],
+      [
+        'Energy and recovery devices',
+        'Specific energy consumption is the dominant operating cost in seawater RO. Feed pressure above what the duty requires is money spent continuously.',
+      ],
+      [
+        'Baselines and normalisation',
+        'Without a normalised baseline from commissioning, later performance cannot be judged — temperature and feed variation mask the trend that matters.',
+      ],
+    ],
+    technologies: [
+      'Ultrafiltration and microfiltration',
+      'Seawater and brackish reverse osmosis',
+      'Nanofiltration',
+      'Coagulation and media pretreatment',
+      'Cartridge filtration',
+      'Antiscalant and chemical dosing',
+      'Energy recovery devices',
+      'CIP systems and cleaning regimes',
+      'Permeate remineralisation',
+    ],
+    relatedServices: ['ro-insight', 'plant-optimisation', 'design-services'],
+  },
+
+  {
     slug: 'industrial-water-treatment',
     title: 'Industrial Water Treatment',
     summary:
-      'Process water that meets specification consistently — clarification, filtration, reverse osmosis, ion exchange and disinfection.',
+      'Process water treatment built around the quality your process actually needs — clarification, filtration, ion exchange and disinfection.',
     metaTitle: 'Industrial Water Treatment Consultants | Waterna',
     metaDescription:
-      'Independent process engineering for industrial water treatment — boiler and cooling water, process water, reverse osmosis and ion exchange, produced water and water reuse.',
+      'Independent process engineering for industrial water treatment — boiler and cooling water, process water, ion exchange and softening, produced water and water reuse.',
     intro:
       'Industrial water has to arrive at a specification a process can tolerate, at a flow the process cannot be allowed to outrun. Get either wrong and the cost shows up somewhere else — in boiler chemistry, in membrane replacement, in product quality, or in a production stop.',
     body: [
@@ -52,7 +108,6 @@ export const sectors: Sector[] = [
     technologies: [
       'Clarification and dissolved air flotation',
       'Media and cartridge filtration',
-      'Reverse osmosis and nanofiltration',
       'Ion exchange and softening',
       'Degassing and de-aeration',
       'UV and chemical disinfection',
@@ -66,7 +121,7 @@ export const sectors: Sector[] = [
     slug: 'wastewater-treatment',
     title: 'Wastewater Treatment',
     summary:
-      'Effluent schemes that hold their discharge consent, from primary settlement and biological treatment through to tertiary polishing.',
+      'Assessment and design of wastewater treatment systems, from primary and biological treatment through to tertiary polishing, focused on discharge requirements and reliable operation.',
     metaTitle: 'Wastewater & Effluent Treatment Consultants | Waterna',
     metaDescription:
       'Independent design and troubleshooting for industrial effluent and wastewater treatment — biological treatment, tertiary polishing, trade effluent consent and permitting.',
@@ -116,7 +171,7 @@ export const sectors: Sector[] = [
     title: 'Anaerobic Digestion & Sludge',
     navTitle: 'Anaerobic Digestion',
     summary:
-      'Digestion, thermal hydrolysis, dewatering and sludge disposal routes — assessed on whole-life cost, not headline capex.',
+      'Engineering support for digestion, thermal hydrolysis, dewatering and sludge management, with options evaluated against process performance and whole-life cost.',
     metaTitle: 'Anaerobic Digestion & Sludge Treatment Consultants | Waterna',
     metaDescription:
       'Independent engineering for anaerobic digestion, thermal hydrolysis, sludge dewatering and disposal — including digestate liquor, biogas safety and HAZOP.',

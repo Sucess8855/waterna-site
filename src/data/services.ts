@@ -118,7 +118,8 @@ export const services: Service[] = [
   {
     slug: 'independent-review',
     pillar: 'project-engineering',
-    title: 'Independent Review',
+    title: 'Independent Design Review',
+    navTitle: 'Independent Design Review',
     summary:
       'Independent technical review, vendor-neutral equipment evaluation and design-stage support for your project team.',
     metaTitle: 'Independent Design Review & Technical Audit | Waterna',
@@ -362,35 +363,35 @@ export const services: Service[] = [
       deliverables: 'How you get it',
     },
     summary:
-      'A decision-support platform for reverse osmosis desalination — over 100 engineering KPIs, fouling and scaling diagnostics, CIP forecasting, energy optimisation, and a built-in AI assistant that runs offline.',
+      'A performance monitoring and decision-support platform for reverse osmosis desalination — over 100 engineering indicators, with a built-in AI assistant that runs offline.',
     metaTitle: 'Waterna RO Insight™ | RO Desalination Performance Software',
     metaDescription:
       'Waterna RO Insight™ converts routine RO plant data into over 100 engineering KPIs, fouling and scaling diagnostics, CIP forecasting, fleet benchmarking and energy optimisation — with an AI assistant that runs on-premise, so no plant data leaves your network.',
     intro:
-      'Waterna RO Insight™ is a decision-support and performance optimisation platform built specifically for reverse osmosis desalination. It converts routine plant operating data into more than 100 engineering KPIs, diagnostics, alarms and predictive indicators.',
+      'Waterna RO Insight™ is a performance monitoring and decision-support platform for reverse osmosis desalination. It converts routine plant data into more than 100 engineering indicators, helping teams assess membrane condition, evaluate cleaning performance and identify opportunities to improve energy efficiency.',
     why: [
       'RO plants are instrumented heavily and interrogated lightly. Everything needed to see fouling developing, to judge whether the last clean actually worked, or to tell whether a train is drifting from its own baseline is usually already being recorded — but normalising it, trending it and reading it takes engineering time operations teams rarely have.',
       'RO Insight™ does that continuously. It moves a team from reactive troubleshooting — cleaning once flux has already fallen, replacing membranes once rejection has already failed — to deciding from evidence, ahead of the problem.',
     ],
     covered: [
       [
-        'Membrane performance',
+        'Membrane performance monitoring',
         'Normalised permeate flow, salt rejection and differential pressure, tracked per train against its own baseline rather than a generic target.',
       ],
       [
-        'Fouling and scaling',
+        'Fouling and scaling diagnostics',
         'Developing fouling and scaling conditions identified from their performance signatures, before they force an unplanned shutdown.',
       ],
       [
-        'CIP effectiveness and forecasting',
+        'Cleaning effectiveness and planning',
         'Whether a clean achieved what it should have, and a forecast of when the next one will be needed.',
       ],
       [
-        'Energy and operating cost',
+        'Energy and operating cost analysis',
         'Specific energy consumption, and the cost consequence of running away from the optimum.',
       ],
       [
-        'Benchmarking',
+        'Train and fleet benchmarking',
         'Each train measured against its own commissioning baseline and against the wider fleet.',
       ],
       [
