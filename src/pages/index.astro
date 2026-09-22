@@ -45,7 +45,7 @@ const reasons = [
 
     <div class="wrap hero__inner">
       <p class="eyebrow hero__eyebrow">Independent water and wastewater consultancy</p>
-      <h1 class="hero__title">Water treatment expertise.</h1>
+      <h1 class="hero__title">Water treatment expertise</h1>
       <div class="hero__copy">
         <p>
           We help clients design, operate and improve water, wastewater and sludge treatment systems,
@@ -282,22 +282,8 @@ const reasons = [
 
   .hero__eyebrow {
     color: #fff;
-    font-size: 0.82rem;
     white-space: nowrap;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
     margin-bottom: 1rem;
-  }
-
-  /* Short rule instead of an underline — an underline on non-link text
-     reads as a broken link. */
-  .hero__eyebrow::before {
-    content: '';
-    width: 2.25rem;
-    height: 2px;
-    background: currentColor;
-    flex: none;
   }
 
   .hero__title {
@@ -570,7 +556,7 @@ const reasons = [
     text-transform: uppercase;
     letter-spacing: 0.1em;
     font-weight: 700;
-    color: var(--ember);
+    color: var(--muted);
     margin-bottom: 0.6rem;
   }
 

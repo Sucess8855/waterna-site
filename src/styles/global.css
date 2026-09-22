@@ -26,6 +26,10 @@
      links or buttons, which stay navy. */
   --ember: #c7502f;
 
+  /* Small text needs more contrast than --ember gives on tinted grounds:
+     #C7502F measures 3.79:1 on --band, below the 4.5:1 needed at 14px. */
+  --ember-deep: #b0441f;
+
   /* Full-bleed light band, a step stronger than --brand-tint. */
   --band: #d7eefb;
 
@@ -129,14 +133,15 @@ li {
   max-width: 62ch;
 }
 
-/* Neutral, not accent — accent colour is reserved for clickable things. */
+/* Section label. Rust means "notice this", which is what an eyebrow is for;
+   navy stays reserved for things you can click. */
 .eyebrow {
   text-transform: uppercase;
-  letter-spacing: 0.12em;
-  font-size: 0.78rem;
-  font-weight: 600;
-  color: var(--muted);
-  margin: 0 0 0.85rem;
+  letter-spacing: 0.1em;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--ember-deep);
+  margin: 0 0 0.9rem;
 }
 
 /* Highlight a word or phrase inside a heading. */
