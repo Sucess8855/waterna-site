@@ -45,21 +45,17 @@ const reasons = [
 
     <div class="wrap hero__inner">
       <p class="eyebrow hero__eyebrow">Independent water and wastewater consultancy</p>
-      <h1 class="hero__title">
-        Water treatment expertise.<br />
-        <span class="hl hl--light">UF and RO desalination insight.</span>
-      </h1>
+      <h1 class="hero__title">Water treatment expertise.</h1>
       <div class="hero__copy">
         <p>
           We help clients design, operate and improve water, wastewater and sludge treatment systems,
-          with specialist expertise in ultrafiltration (UF) and reverse osmosis (RO) desalination.
+          with specialist expertise in ultrafiltration&nbsp;(UF) and reverse osmosis&nbsp;(RO)
+          desalination.
         </p>
         <p>
-          Drawing on more than 20 years of process engineering experience, we combine practical
-          engineering with data-driven performance analysis. Our Waterna RO Insight™ software brings
-          that expertise into day-to-day RO operation — monitoring membrane performance, identifying
-          developing fouling and scaling risks, evaluating cleaning effectiveness and improving
-          energy efficiency.
+          Drawing on more than 20 years of process engineering experience, we combine technical
+          expertise with practical operational insight to improve plant performance, guide investment
+          decisions and reduce whole-life costs.
         </p>
       </div>
       <a class="btn btn--primary hero__cta" href="/contact">Discuss your project</a>
@@ -272,9 +268,10 @@ const reasons = [
     z-index: -1;
     background: linear-gradient(
       100deg,
-      rgba(0, 22, 44, 0.88) 0%,
-      rgba(0, 22, 44, 0.66) 42%,
-      rgba(0, 22, 44, 0.14) 78%
+      rgba(0, 22, 44, 0.9) 0%,
+      rgba(0, 22, 44, 0.8) 45%,
+      rgba(0, 22, 44, 0.48) 74%,
+      rgba(0, 22, 44, 0.18) 100%
     );
   }
 
@@ -293,11 +290,9 @@ const reasons = [
     /* h1 sets text-wrap: balance, which evens the lines into four.
        Fill naturally instead so the measure controls the break. */
     text-wrap: wrap;
-    /* Two full sentences, so the scale is set to fit them on two lines
-       rather than the four the display size produced. */
-    font-size: clamp(1.85rem, 4vw, 2.95rem);
-    line-height: 1.04;
-    letter-spacing: -0.025em;
+    font-size: clamp(2.2rem, 5.2vw, 4.2rem);
+    line-height: 1;
+    letter-spacing: -0.03em;
     font-weight: 800;
     text-transform: uppercase;
     max-width: 100%;
@@ -311,8 +306,8 @@ const reasons = [
   .hero__copy p {
     color: rgba(255, 255, 255, 0.9);
     font-size: clamp(1rem, 1.4vw, 1.125rem);
-    max-width: 56ch;
-    margin-bottom: 0.85rem;
+    max-width: 44rem;
+    margin-bottom: 0.9rem;
   }
 
   .hero__copy p:last-child {
