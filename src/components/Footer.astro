@@ -2,18 +2,51 @@
 import { site } from '../data/site';
 import { projectEngineering, plantPerformance, softwareProducts, serviceHref } from '../data/services';
 const year = new Date().getFullYear();
+
+const accreditations = [
+  { name: 'IChemE', file: 'icheme' },
+  { name: 'CIWEM', file: 'ciwem' },
+  { name: 'ADBA', file: 'adba' },
+];
+
+/** Plant Performance and Software share a column — both concern running plant. */
+const performanceAndSoftware = [...plantPerformance, ...softwareProducts];
 ---
 
 <footer class="ftr">
+  <div class="wrap ftr__accred">
+    <p class="ftr__accred-label">We are proudly Chartered member of</p>
+    <ul class="ftr__logos">
+      {
+        accreditations.map((a) => (
+          <li>
+            <img
+              src={`/img/accreditations/${a.file}.png`}
+              alt={a.name}
+              height="120"
+              loading="lazy"
+              decoding="async"
+            />
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+
   <div class="wrap ftr__grid">
-    <div>
-      <p class="ftr__brand">{site.name}</p>
-      <p class="ftr__small">{site.tagline}</p>
-      <p class="ftr__small">
+    <div class="ftr__brand">
+      <img src="/logo.png" alt={site.name} width="113" height="44" />
+      <p class="ftr__tagline">Design for a Sustainable Future</p>
+      <address>
         {site.address.street}<br />
         {site.address.city} {site.address.postcode}<br />
         {site.address.country}
-      </p>
+      </address>
+      <ul class="ftr__contact">
+        <li><a href={site.phoneHref}>{site.phone}</a></li>
+        <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
+        <li><a href={site.linkedin} rel="noopener">LinkedIn</a></li>
+      </ul>
     </div>
 
     <div>
@@ -24,16 +57,9 @@ const year = new Date().getFullYear();
     </div>
 
     <div>
-      <h2 class="ftr__h">Plant Performance</h2>
+      <h2 class="ftr__h">Plant Performance &amp; Software</h2>
       <ul>
-        {plantPerformance.map((s) => <li><a href={serviceHref(s)}>{s.navTitle ?? s.title}</a></li>)}
-      </ul>
-    </div>
-
-    <div>
-      <h2 class="ftr__h">Software</h2>
-      <ul>
-        {softwareProducts.map((s) => <li><a href={serviceHref(s)}>{s.navTitle ?? s.title}</a></li>)}
+        {performanceAndSoftware.map((s) => <li><a href={serviceHref(s)}>{s.navTitle ?? s.title}</a></li>)}
       </ul>
     </div>
 
@@ -47,63 +73,121 @@ const year = new Date().getFullYear();
         <li><a href="/privacy">Privacy Policy</a></li>
       </ul>
     </div>
-
-    <div>
-      <h2 class="ftr__h">Get in touch</h2>
-      <ul>
-        <li><a href={site.phoneHref}>{site.phone}</a></li>
-        <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
-        <li><a href={site.linkedin} rel="noopener">LinkedIn</a></li>
-      </ul>
-    </div>
   </div>
 
-  <div class="wrap ftr__legal">
-    <p>
-      &copy; {year} {site.legalName}. Registered in England &amp; Wales, company no. {site.companyNumber}.
-    </p>
+  <div class="ftr__legal">
+    <div class="wrap ftr__legal-inner">
+      <p>
+        {site.legalName} is a limited company registered in the United Kingdom, registration number {
+          site.companyNumber
+        }.
+      </p>
+      <p>&copy; {year} Waterna. All rights reserved.</p>
+    </div>
   </div>
 </footer>
 
 <style>
+  /* Warm stone rather than another band of blue. It also gives the
+     accreditation marks the light ground they were drawn for. */
   .ftr {
-    background: var(--brand-deep);
-    color: #cdd7ea;
-    padding-top: 3.5rem;
-    margin-top: 0;
+    background: #f0ede8;
+    color: var(--body);
   }
+
+  /* ---------- accreditations ---------- */
+
+  .ftr__accred {
+    display: grid;
+    gap: 1.25rem;
+    align-items: center;
+    padding-block: 2.25rem;
+    border-bottom: 1px solid #ddd8d1;
+  }
+
+  @media (min-width: 820px) {
+    .ftr__accred {
+      grid-template-columns: auto 1fr;
+      gap: 2.5rem;
+    }
+  }
+
+  .ftr__accred-label {
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  .ftr__logos {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 2.5rem;
+  }
+
+  .ftr__logos li {
+    margin: 0;
+  }
+
+  .ftr__logos img {
+    height: 42px;
+    width: auto;
+    /* The marks are drawn for white, so multiply blends them into the
+       stone instead of leaving three visible white boxes. */
+    mix-blend-mode: multiply;
+  }
+
+  /* ---------- columns ---------- */
 
   .ftr__grid {
     display: grid;
     gap: 2rem;
     grid-template-columns: 1fr;
-    padding-bottom: 2.5rem;
+    padding-block: 2.5rem;
   }
 
   @media (min-width: 700px) {
     .ftr__grid {
-      grid-template-columns: 1.2fr 1fr 1fr 0.8fr 0.9fr 1fr;
+      grid-template-columns: repeat(2, 1fr);
     }
   }
 
-  .ftr__brand {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: #fff;
-    margin-bottom: 0.35rem;
+  @media (min-width: 1000px) {
+    .ftr__grid {
+      grid-template-columns: 1.4fr 1fr 1.2fr 1fr;
+      gap: 2.5rem;
+    }
+  }
+
+  .ftr__brand img {
+    height: 44px;
+    width: auto;
+    margin-bottom: 0.75rem;
+  }
+
+  .ftr__tagline {
+    font-size: 0.92rem;
+    font-style: italic;
+    color: var(--brand);
+    margin-bottom: 1rem;
+  }
+
+  address {
+    font-style: normal;
+    font-size: 0.92rem;
+    margin-bottom: 0.9rem;
   }
 
   .ftr__h {
-    font-size: 0.78rem;
+    font-size: 0.8rem;
     text-transform: uppercase;
-    letter-spacing: 0.09em;
-    color: #fff;
-    margin: 0 0 0.85rem;
-  }
-
-  .ftr__small {
-    font-size: 0.92rem;
-    margin-bottom: 0.9rem;
+    letter-spacing: 0.08em;
+    color: var(--ink);
+    margin: 0 0 0.9rem;
   }
 
   .ftr ul {
@@ -117,24 +201,42 @@ const year = new Date().getFullYear();
   }
 
   .ftr a {
-    color: #cdd7ea;
+    color: var(--body);
     text-decoration: none;
-    font-size: 0.94rem;
+    font-size: 0.93rem;
   }
 
   .ftr a:hover {
-    color: #fff;
+    color: var(--brand-deep);
     text-decoration: underline;
   }
 
+  .ftr__contact a {
+    font-weight: 600;
+  }
+
+  /* ---------- legal ---------- */
+
   .ftr__legal {
-    border-top: 1px solid rgba(255, 255, 255, 0.15);
-    padding-block: 1.25rem;
+    background: var(--ink);
+    color: rgba(255, 255, 255, 0.72);
+    padding-block: 1.1rem;
+  }
+
+  .ftr__legal-inner {
+    display: grid;
+    gap: 0.3rem;
+  }
+
+  @media (min-width: 760px) {
+    .ftr__legal-inner {
+      grid-template-columns: 1fr auto;
+      gap: 2rem;
+    }
   }
 
   .ftr__legal p {
     margin: 0;
     font-size: 0.85rem;
-    color: #a9b6d0;
   }
 </style>
