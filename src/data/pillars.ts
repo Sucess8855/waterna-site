@@ -11,11 +11,14 @@ export interface Pillar {
   signals: string[];
   /** Heading above the list. Defaults to "What that involves". */
   listHeading?: { lead: string; accent: string };
+  /** Basename in public/img/pillars, for the homepage card. */
+  image?: string;
 }
 
 export const pillars: Pillar[] = [
   {
     slug: 'project-engineering',
+    image: 'project-engineering',
     title: 'Project Engineering',
     strapline: 'Developing new plants and upgrading existing systems',
     summary:
@@ -41,6 +44,7 @@ export const pillars: Pillar[] = [
 
   {
     slug: 'plant-performance',
+    image: 'plant-performance',
     title: 'Plant Performance',
     strapline: 'Supporting commissioning and day-to-day operation',
     summary:

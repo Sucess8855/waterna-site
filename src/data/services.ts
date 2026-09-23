@@ -121,6 +121,16 @@ export const services: Service[] = [
   },
 
   {
+    // Listed only for now — no intro, so no page is generated.
+    slug: 'technical-procurement-support',
+    pillar: 'project-engineering',
+    title: 'Technical Procurement Support',
+    navTitle: 'Procurement Support',
+    summary:
+      'Turning a design into a tender package and a supplier into a contract — specifications, bid evaluation, technical clarifications and factory acceptance testing.',
+  },
+
+  {
     slug: 'independent-review',
     pillar: 'project-engineering',
     title: 'Independent Design Review',
