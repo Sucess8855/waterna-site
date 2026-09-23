@@ -1,6 +1,6 @@
 ---
 import { site } from '../data/site';
-import { serviceHref, type Service } from '../data/services';
+import { hasPage, serviceHref, type Service } from '../data/services';
 import type { Pillar } from '../data/pillars';
 
 interface Props {
@@ -49,15 +49,25 @@ const listHeading = pillar.listHeading ?? { lead: 'What that', accent: 'involves
             <span class="slist__num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
             <div class="slist__body">
               <h3>
-                <a href={serviceHref(s)}>{s.title}</a>
+                {hasPage(s) ? <a href={serviceHref(s)}>{s.title}</a> : s.title}
               </h3>
               <p>{s.summary}</p>
-              <ul class="slist__tags">
-                {s.covered.slice(0, 3).map(([term]) => <li>{term}</li>)}
-              </ul>
-              <a class="slist__more" href={serviceHref(s)}>
-                Read more about {s.navTitle ?? s.title} &rarr;
-              </a>
+              {
+                s.covered && (
+                  <ul class="slist__tags">
+                    {s.covered.slice(0, 3).map(([term]) => (
+                      <li>{term}</li>
+                    ))}
+                  </ul>
+                )
+              }
+              {
+                hasPage(s) && (
+                  <a class="slist__more" href={serviceHref(s)}>
+                    Read more about {s.navTitle ?? s.title} &rarr;
+                  </a>
+                )
+              }
             </div>
           </li>
         ))

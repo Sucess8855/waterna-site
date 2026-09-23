@@ -2,7 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import { site } from '../../data/site';
 import { pillars, softwarePillar } from '../../data/pillars';
-import { projectEngineering, plantPerformance, softwareProducts, serviceHref } from '../../data/services';
+import { projectEngineering, plantPerformance, softwareProducts, serviceHref, hasPage } from '../../data/services';
 
 const counts: Record<string, number> = {
   'project-engineering': projectEngineering.length,
@@ -47,7 +47,11 @@ const members: Record<string, typeof projectEngineering> = {
               <ul class="fork__list">
                 {members[p.slug].map((s) => (
                   <li>
-                    <a href={serviceHref(s)}>{s.navTitle ?? s.title}</a>
+                    {hasPage(s) ? (
+                      <a href={serviceHref(s)}>{s.navTitle ?? s.title}</a>
+                    ) : (
+                      <span>{s.navTitle ?? s.title}</span>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -147,12 +151,20 @@ const members: Record<string, typeof projectEngineering> = {
     border-bottom: 1px solid var(--line);
   }
 
-  .fork__list a {
+  .fork__list a,
+  .fork__list span {
     display: block;
     padding: 0.65rem 0;
     text-decoration: none;
     font-weight: 600;
     font-size: 0.97rem;
+  }
+
+  /* Listed but not yet written up — muted so it does not read as a
+     dead link. */
+  .fork__list span {
+    color: var(--body);
+    font-weight: 500;
   }
 
   .fork__list a:hover {

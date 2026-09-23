@@ -31,7 +31,7 @@ const { service, detail } = Astro.props;
   <div class="wrap">
     <h2>Why it <span class="hl">exists</span></h2>
     <div class="prose">
-      {service.why.map((para) => <p>{para}</p>)}
+      {service.why!.map((para) => <p>{para}</p>)}
     </div>
   </div>
 </section>

@@ -1,6 +1,6 @@
 ---
 import { site } from '../data/site';
-import { projectEngineering, plantPerformance, softwareProducts, serviceHref } from '../data/services';
+import { projectEngineering, plantPerformance, softwareProducts, serviceHref, hasPage } from '../data/services';
 const year = new Date().getFullYear();
 
 const accreditations = [
@@ -47,14 +47,14 @@ const performanceAndSoftware = [...plantPerformance, ...softwareProducts];
     <div>
       <h2 class="ftr__h">Project Engineering</h2>
       <ul>
-        {projectEngineering.map((s) => <li><a href={serviceHref(s)}>{s.navTitle ?? s.title}</a></li>)}
+        {projectEngineering.map((s) => <li>{hasPage(s) ? <a href={serviceHref(s)}>{s.navTitle ?? s.title}</a> : <span>{s.navTitle ?? s.title}</span>}</li>)}
       </ul>
     </div>
 
     <div>
       <h2 class="ftr__h">Plant Performance</h2>
       <ul>
-        {performanceAndSoftware.map((s) => <li><a href={serviceHref(s)}>{s.navTitle ?? s.title}</a></li>)}
+        {performanceAndSoftware.map((s) => <li>{hasPage(s) ? <a href={serviceHref(s)}>{s.navTitle ?? s.title}</a> : <span>{s.navTitle ?? s.title}</span>}</li>)}
       </ul>
     </div>
 

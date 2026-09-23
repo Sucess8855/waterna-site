@@ -1,10 +1,10 @@
 ---
 import Base from '../../layouts/Base.astro';
 import ServiceDetail from '../../components/ServiceDetail.astro';
-import { plantPerformance } from '../../data/services';
+import { plantPerformance, hasPage } from '../../data/services';
 
 export function getStaticPaths() {
-  return plantPerformance.map((service) => ({
+  return plantPerformance.filter(hasPage).map((service) => ({
     params: { slug: service.slug },
     props: { service },
   }));

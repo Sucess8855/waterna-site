@@ -1,10 +1,10 @@
 ---
 import Base from '../../layouts/Base.astro';
 import ServiceDetail from '../../components/ServiceDetail.astro';
-import { projectEngineering } from '../../data/services';
+import { projectEngineering, hasPage } from '../../data/services';
 
 export function getStaticPaths() {
-  return projectEngineering.map((service) => ({
+  return projectEngineering.filter(hasPage).map((service) => ({
     params: { slug: service.slug },
     props: { service },
   }));

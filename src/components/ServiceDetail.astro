@@ -30,12 +30,12 @@ const isProduct = service.kind === 'product';
   <div class="wrap cols">
     <div class="cols__main">
       <h2>{headings.why}</h2>
-      {service.why.map((para) => <p>{para}</p>)}
+      {service.why!.map((para) => <p>{para}</p>)}
 
       <h2>{headings.covered}</h2>
       <dl class="deflist">
         {
-          service.covered.map(([term, def]) => (
+          service.covered!.map(([term, def]) => (
             <div>
               <dt>{term}</dt>
               <dd>{def}</dd>

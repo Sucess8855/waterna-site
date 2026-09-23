@@ -13,13 +13,18 @@ export interface Service {
   /** Override the three section headings on the detail page. */
   headings?: { why: string; covered: string; deliverables: string };
   summary: string;
-  metaTitle: string;
-  metaDescription: string;
-  intro: string;
-  why: string[];
-  covered: [string, string][];
-  deliverables: string;
-  related: string[];
+  /**
+   * Page content. A service with no intro is listed across the site but has
+   * no page of its own yet, so it is rendered as plain text rather than a
+   * link. Fill these in and the route appears automatically.
+   */
+  metaTitle?: string;
+  metaDescription?: string;
+  intro?: string;
+  why?: string[];
+  covered?: [string, string][];
+  deliverables?: string;
+  related?: string[];
 }
 
 export const services: Service[] = [
@@ -211,8 +216,8 @@ export const services: Service[] = [
   {
     slug: 'plant-optimisation',
     pillar: 'plant-performance',
-    title: 'Plant Operation, Commissioning & Optimisation',
-    navTitle: 'Plant Optimisation',
+    title: 'Plant Troubleshooting & Optimisation',
+    navTitle: 'Troubleshooting & Optimisation',
     summary:
       'Get an underperforming plant back within consent — or commission a new one properly the first time.',
     metaTitle: 'Plant Commissioning & Process Optimisation | Waterna',
@@ -300,6 +305,33 @@ export const services: Service[] = [
     deliverables:
       'A training package written around your site, delivered on site or remotely, with written material your team keeps. Where useful we produce operating procedures alongside it, so the knowledge stays after the session ends.',
     related: ['plant-optimisation', 'data-analysis', 'independent-review'],
+  },
+
+  {
+    // Listed only for now — no intro, so no page is generated.
+    slug: 'uf-ro-performance-assessment',
+    pillar: 'plant-performance',
+    title: 'UF & RO Performance Assessment',
+    summary:
+      'A point-in-time engineering assessment of membrane performance — normalisation, fouling and scaling indices, recovery and specific energy, with a baseline later operation can be judged against.',
+  },
+
+  {
+    slug: 'chemical-dosing-cip',
+    pillar: 'plant-performance',
+    title: 'Chemical Dosing & CIP Optimisation',
+    navTitle: 'Chemical Dosing & CIP',
+    summary:
+      'Getting dose rates and cleaning regimes right — antiscalant, coagulant and biocide selection, CIP chemistry and frequency, judged on what actually restores performance.',
+  },
+
+  {
+    slug: 'commissioning-performance-testing',
+    pillar: 'plant-performance',
+    title: 'Commissioning & Performance Testing',
+    navTitle: 'Commissioning & Testing',
+    summary:
+      'Proving a new plant does what it was bought to do, with a performance test protocol agreed before the contractor leaves site.',
   },
 
   {
@@ -419,14 +451,21 @@ export const softwareProducts = publishedServices.filter((s) => s.pillar === 'so
 
 export const roInsight = services.find((s) => s.slug === 'ro-insight')!;
 
+/** A service has a page once it has page content written for it. */
+export function hasPage(s: Service): boolean {
+  return Boolean(s.intro);
+}
+
+export const pagedServices = publishedServices.filter(hasPage);
+
 /** Products sit at their own top-level URL; everything else nests under its pillar. */
 export function serviceHref(s: Service): string {
   return s.standalone ? `/${s.slug}` : `/${s.pillar}/${s.slug}`;
 }
 
 export function relatedTo(s: Service): Service[] {
-  return s.related
-    .map((slug) => publishedServices.find((x) => x.slug === slug))
+  return (s.related ?? [])
+    .map((slug) => pagedServices.find((x) => x.slug === slug))
     .filter((x): x is Service => x !== undefined);
 }
 

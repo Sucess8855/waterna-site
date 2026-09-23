@@ -1,7 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import { site } from '../data/site';
-import { projectEngineering, plantPerformance, softwareProducts, serviceHref } from '../data/services';
+import { projectEngineering, plantPerformance, softwareProducts, serviceHref, hasPage } from '../data/services';
 import { pillars } from '../data/pillars';
 import { sectors } from '../data/sectors';
 
@@ -89,7 +89,11 @@ const reasons = [
                 <ul class="fork__list">
                   {members.map((s) => (
                     <li>
-                      <a href={serviceHref(s)}>{s.navTitle ?? s.title}</a>
+                      {hasPage(s) ? (
+                        <a href={serviceHref(s)}>{s.navTitle ?? s.title}</a>
+                      ) : (
+                        <span>{s.navTitle ?? s.title}</span>
+                      )}
                     </li>
                   ))}
                 </ul>
@@ -653,12 +657,20 @@ const reasons = [
     border-bottom: 1px solid var(--line);
   }
 
-  .fork__list :global(a) {
+  .fork__list :global(a),
+  .fork__list :global(span) {
     display: block;
     padding: 0.65rem 0;
     text-decoration: none;
     font-weight: 600;
     font-size: 0.97rem;
+  }
+
+  /* Listed but not yet written up — muted so it does not read as a
+     dead link. */
+  .fork__list :global(span) {
+    color: var(--body);
+    font-weight: 500;
   }
 
   .fork__list :global(a:hover) {
