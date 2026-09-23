@@ -38,7 +38,7 @@ const members: Record<string, typeof projectEngineering> = {
       <div class="fork">
         {
           forks.map((p) => (
-            <article class="fork__card">
+            <article class="fork__card card--lift">
               <p class="fork__strap">{p.strapline}</p>
               <h2>
                 <a href={`/${p.slug}`}>{p.title}</a>

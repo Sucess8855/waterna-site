@@ -80,7 +80,7 @@ const reasons = [
           pillars.map((p) => {
             const members = p.slug === 'project-engineering' ? projectEngineering : plantPerformance;
             return (
-              <article class="fork__card">
+              <article class="fork__card card--lift">
                 <p class="fork__strap">{p.strapline}</p>
                 <h3>
                   <a href={`/${p.slug}`}>{p.title}</a>
@@ -162,30 +162,48 @@ const reasons = [
       <div class="grid grid--2 secgrid">
         {
           sectors.map((s) => (
-            <article class:list={['card', 'seccard', s.slug === 'uf-ro-desalination' && 'seccard--lead']}>
-              {s.slug === 'uf-ro-desalination' && <p class="seccard__tag">Specialist focus</p>}
-              <h3>{s.title}</h3>
-              <p>{s.summary}</p>
-              {
-                s.slug === 'uf-ro-desalination' && (
-                  <p class="seccard__extra">
-                    For RO plants, Waterna RO Insight™ adds ongoing performance monitoring and
-                    diagnostics to support cleaning decisions, energy optimisation and membrane
-                    management.
-                  </p>
-                )
-              }
-              <p class="seccard__links">
-                <a href={`/sectors/${s.slug}`}>Explore {s.navTitle ?? s.title}</a>
+            <article class="seccard card--lift">
+              <a class="seccard__media" href={`/sectors/${s.slug}`} tabindex="-1" aria-hidden="true">
+                <picture>
+                  <source
+                    type="image/webp"
+                    srcset={`/img/sectors/${s.image}-600.webp 600w, /img/sectors/${s.image}-1200.webp 1200w`}
+                    sizes="(min-width: 820px) 46vw, 100vw"
+                  />
+                  <img
+                    src={`/img/sectors/${s.image}-1200.jpg`}
+                    alt=""
+                    width="1200"
+                    height="674"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </picture>
+              </a>
+              <div class="seccard__body">
+                <h3>{s.title}</h3>
+                <p>{s.summary}</p>
                 {
                   s.slug === 'uf-ro-desalination' && (
-                    <>
-                      <span aria-hidden="true"> · </span>
-                      <a href="/ro-insight">Discover RO Insight™</a>
-                    </>
+                    <p class="seccard__extra">
+                      For RO plants, Waterna RO Insight™ adds ongoing performance monitoring and
+                      diagnostics to support cleaning decisions, energy optimisation and membrane
+                      management.
+                    </p>
                   )
                 }
-              </p>
+                <p class="seccard__links">
+                  <a href={`/sectors/${s.slug}`}>Explore {s.navTitle ?? s.title}</a>
+                  {
+                    s.slug === 'uf-ro-desalination' && (
+                      <>
+                        <span aria-hidden="true"> · </span>
+                        <a href="/ro-insight">Discover RO Insight™</a>
+                      </>
+                    )
+                  }
+                </p>
+              </div>
             </article>
           ))
         }
@@ -516,25 +534,38 @@ const reasons = [
   .seccard {
     display: flex;
     flex-direction: column;
-  }
-
-  .seccard--lead {
+    background: #fff;
+    border: 1px solid var(--line);
     border-top: 3px solid var(--ember);
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
   }
 
-  .seccard__tag {
-    display: inline-block;
-    align-self: flex-start;
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--ember);
-    margin-bottom: 0.6rem;
+  .seccard__media {
+    display: block;
+  }
+
+  .seccard__media :global(img) {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+  }
+
+  .seccard__body {
+    padding: 1.5rem 1.6rem 1.6rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
   }
 
   .seccard :global(h3) {
     font-size: 1.25rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .seccard__body > p {
+    font-size: 0.98rem;
   }
 
   .seccard__extra {

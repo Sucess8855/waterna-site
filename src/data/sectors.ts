@@ -10,11 +10,14 @@ export interface Sector {
   challenges: [string, string][];
   technologies: string[];
   relatedServices: string[];
+  /** Basename in public/img/sectors. */
+  image: string;
 }
 
 export const sectors: Sector[] = [
   {
     slug: 'uf-ro-desalination',
+    image: 'uf-ro',
     title: 'Ultrafiltration & RO Desalination',
     navTitle: 'UF & RO Desalination',
     summary:
@@ -71,6 +74,7 @@ export const sectors: Sector[] = [
 
   {
     slug: 'industrial-water-treatment',
+    image: 'industrial',
     title: 'Industrial Water Treatment',
     summary:
       'Process water treatment built around the quality your process actually needs — clarification, filtration, ion exchange and disinfection.',
@@ -119,6 +123,7 @@ export const sectors: Sector[] = [
 
   {
     slug: 'wastewater-treatment',
+    image: 'wastewater',
     title: 'Wastewater Treatment',
     summary:
       'Assessment and design of wastewater treatment systems, from primary and biological treatment through to tertiary polishing, focused on discharge requirements and reliable operation.',
@@ -168,6 +173,7 @@ export const sectors: Sector[] = [
 
   {
     slug: 'anaerobic-digestion',
+    image: 'anaerobic',
     title: 'Anaerobic Digestion & Sludge',
     navTitle: 'Anaerobic Digestion',
     summary:

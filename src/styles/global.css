@@ -233,6 +233,19 @@ li {
   box-shadow: var(--shadow-card);
 }
 
+/* Applied only to cards that lead somewhere — a lift on a static card
+   implies a click that does not exist. */
+.card--lift {
+  transition:
+    transform 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.card--lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 40px -16px rgba(0, 63, 118, 0.34);
+}
+
 .card h3 {
   margin-bottom: 0.4rem;
 }
