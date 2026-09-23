@@ -33,6 +33,11 @@
   /* Full-bleed light band, a step stronger than --brand-tint. */
   --band: #d7eefb;
 
+  /* Soft green. The only warm-neutral break from the blues in the page
+     body, and it nods to the "sustainable future" line. Holds
+     --ember-deep at 4.85:1 and --body at 7.51:1. */
+  --sage: #e7efe9;
+
   /* single brand-tinted shadow — never plain black (see CLAUDE.md) */
   --shadow-card: 0 2px 48px -12px rgba(0, 63, 118, 0.20);
 
@@ -157,6 +162,11 @@ li {
 .section--band {
   background: var(--band);
   border-block: 1px solid #bfe2f5;
+}
+
+.section--sage {
+  background: var(--sage);
+  border-block: 1px solid #d3e1d7;
 }
 
 .grid {

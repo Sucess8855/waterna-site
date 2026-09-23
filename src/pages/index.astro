@@ -135,18 +135,19 @@ const reasons = [
     </div>
   </section>
 
-  <section class="section section--alt">
+  <section class="section section--sage">
     <div class="wrap">
       <p class="eyebrow">Why Waterna</p>
       <h2>Independent advice. <span class="hl">Practical engineering.</span></h2>
 
-      <div class="grid grid--3">
+      <div class="grid grid--3 reasons">
         {
-          reasons.map((r) => (
-            <div>
+          reasons.map((r, i) => (
+            <article class="reason">
+              <span class="reason__num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
               <h3>{r.title}</h3>
               <p>{r.body}</p>
-            </div>
+            </article>
           ))
         }
       </div>
@@ -217,9 +218,6 @@ const reasons = [
         needed and agree a practical next step.
       </p>
       <a class="btn btn--light" href="/contact">Contact us</a>
-      <p class="photoband__note">
-        Or call <a href={site.phoneHref}>{site.phone}</a>
-      </p>
     </div>
   </section>
 
@@ -463,6 +461,50 @@ const reasons = [
 
   .dcard__more:hover {
     text-decoration: underline;
+  }
+
+  /* ---------- why waterna ---------- */
+
+  .reasons {
+    margin-top: 2.25rem;
+  }
+
+  .reason {
+    position: relative;
+    background: #fff;
+    border: 1px solid #d3e1d7;
+    border-radius: 4px;
+    padding: 1.9rem 1.75rem 1.75rem;
+    box-shadow: 0 2px 40px -16px rgba(0, 63, 118, 0.22);
+    transition:
+      transform 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .reason:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 40px -16px rgba(0, 63, 118, 0.34);
+  }
+
+  .reason__num {
+    display: block;
+    font-size: 2.1rem;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--ember);
+    opacity: 0.3;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.9rem;
+  }
+
+  .reason :global(h3) {
+    font-size: 1.15rem;
+    margin-bottom: 0.45rem;
+  }
+
+  .reason p {
+    margin-bottom: 0;
+    font-size: 0.97rem;
   }
 
   /* ---------- sector cards ---------- */
@@ -709,16 +751,6 @@ const reasons = [
     color: rgba(255, 255, 255, 0.88);
     margin-bottom: 1.6rem;
     max-width: 58ch;
-  }
-
-  .photoband__note {
-    margin: 1rem 0 0;
-    font-size: 0.95rem;
-    color: rgba(255, 255, 255, 0.78);
-  }
-
-  .photoband__note :global(a) {
-    color: #fff;
   }
 
   .photoband :global(.hl--light) {
