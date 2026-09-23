@@ -123,13 +123,9 @@ const members: Record<string, typeof projectEngineering> = {
       gap: 1.75rem;
     }
 
-    /* Titles and summaries differ in length, which pushed each card's
-       service list to a different height. Reserving the taller of each
-       lines the three cards up. */
-    .fork__card h2 {
-      min-height: 2.3em;
-    }
-
+    /* Insurance against a longer summary pushing one card's service
+       list out of line with the others. Titles now fit one line each,
+       so reserving space for two only added a gap. */
     .fork__summary {
       min-height: 8.3em;
     }

@@ -72,11 +72,11 @@ export const pillars: Pillar[] = [
 export const softwarePillar: Pillar = {
   slug: 'software',
   image: 'software',
-  title: 'Software & Analytics',
+  title: 'Analytics Software',
   strapline: 'Turn operating data into informed decisions',
   summary:
     'Process engineering methods combined with data analysis, so operating teams can track performance, recognise developing problems and plan corrective action.',
-  metaTitle: 'Waterna Software | Water Treatment Performance Platforms',
+  metaTitle: 'Analytics Software for Water Treatment | Waterna',
   metaDescription:
     'Software built by Waterna for water treatment performance — starting with Waterna RO Insight, a decision-support platform for reverse osmosis desalination.',
   intro:
