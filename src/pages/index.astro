@@ -104,56 +104,6 @@ const reasons = [
     </div>
   </section>
 
-  <section class="digital">
-    <div class="wrap">
-      <p class="eyebrow digital__eyebrow">Software &amp; Analytics</p>
-      <h2>Turn operating data into <span class="hl hl--light">informed decisions</span></h2>
-      <p class="digital__lede">
-        Our software combines process engineering methods with data analysis, so operating teams can
-        track performance, recognise developing problems and plan corrective action.
-      </p>
-
-      <div class="digital__products">
-        {
-          softwareProducts.map((s) => (
-            <article class="pcard">
-              <p class="pcard__tag">Software platform</p>
-              <h3>
-                <a href={serviceHref(s)}>{s.title}</a>
-              </h3>
-              <p>{s.summary}</p>
-              <ul class="pcard__list">
-                {s.covered.slice(0, 6).map(([term]) => <li>{term}</li>)}
-              </ul>
-              <a class="btn btn--light" href={serviceHref(s)}>
-                Explore {s.navTitle ?? s.title}
-              </a>
-            </article>
-          ))
-        }
-      </div>
-    </div>
-  </section>
-
-  <section class="section section--sage">
-    <div class="wrap">
-      <p class="eyebrow">Why Waterna</p>
-      <h2>Independent advice. <span class="hl">Practical engineering.</span></h2>
-
-      <div class="grid grid--3 reasons">
-        {
-          reasons.map((r, i) => (
-            <article class="reason">
-              <span class="reason__num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
-              <h3>{r.title}</h3>
-              <p>{r.body}</p>
-            </article>
-          ))
-        }
-      </div>
-    </div>
-  </section>
-
   <section class="section">
     <div class="wrap">
       <p class="eyebrow">Sectors</p>
@@ -204,6 +154,56 @@ const reasons = [
                   }
                 </p>
               </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="digital">
+    <div class="wrap">
+      <p class="eyebrow digital__eyebrow">Software &amp; Analytics</p>
+      <h2>Turn operating data into <span class="hl hl--light">informed decisions</span></h2>
+      <p class="digital__lede">
+        Our software combines process engineering methods with data analysis, so operating teams can
+        track performance, recognise developing problems and plan corrective action.
+      </p>
+
+      <div class="digital__products">
+        {
+          softwareProducts.map((s) => (
+            <article class="pcard">
+              <p class="pcard__tag">Software platform</p>
+              <h3>
+                <a href={serviceHref(s)}>{s.title}</a>
+              </h3>
+              <p>{s.summary}</p>
+              <ul class="pcard__list">
+                {s.covered.slice(0, 6).map(([term]) => <li>{term}</li>)}
+              </ul>
+              <a class="btn btn--light" href={serviceHref(s)}>
+                Explore {s.navTitle ?? s.title}
+              </a>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--sage">
+    <div class="wrap">
+      <p class="eyebrow">Why Waterna</p>
+      <h2>Independent advice. <span class="hl">Practical engineering.</span></h2>
+
+      <div class="grid grid--3 reasons">
+        {
+          reasons.map((r, i) => (
+            <article class="reason">
+              <span class="reason__num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+              <h3>{r.title}</h3>
+              <p>{r.body}</p>
             </article>
           ))
         }
@@ -536,7 +536,6 @@ const reasons = [
     flex-direction: column;
     background: #fff;
     border: 1px solid var(--line);
-    border-top: 3px solid var(--ember);
     border-radius: 4px;
     overflow: hidden;
     box-shadow: var(--shadow-card);
