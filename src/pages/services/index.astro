@@ -122,6 +122,17 @@ const members: Record<string, typeof projectEngineering> = {
       grid-template-columns: repeat(3, 1fr);
       gap: 1.75rem;
     }
+
+    /* Titles and summaries differ in length, which pushed each card's
+       service list to a different height. Reserving the taller of each
+       lines the three cards up. */
+    .fork__card h2 {
+      min-height: 2.3em;
+    }
+
+    .fork__summary {
+      min-height: 8.3em;
+    }
   }
 
   .fork__card {
