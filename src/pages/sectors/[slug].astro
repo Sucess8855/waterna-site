@@ -2,7 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import { site } from '../../data/site';
 import { sectors } from '../../data/sectors';
-import { publishedServices, serviceHref } from '../../data/services';
+import { pagedServices, serviceHref } from '../../data/services';
 
 export function getStaticPaths() {
   return sectors.map((sector) => ({
@@ -13,19 +13,36 @@ export function getStaticPaths() {
 
 const { sector } = Astro.props;
 const related = sector.relatedServices
-  .map((slug) => publishedServices.find((s) => s.slug === slug))
+  .map((slug) => pagedServices.find((s) => s.slug === slug))
   .filter((s) => s !== undefined);
 ---
 
 <Base title={sector.metaTitle} description={sector.metaDescription}>
   <section class="phead">
-    <div class="wrap">
-      <nav class="crumbs" aria-label="Breadcrumb">
-        <a href="/sectors">Sectors</a> <span aria-hidden="true">&rsaquo;</span>
-        <span>{sector.navTitle ?? sector.title}</span>
-      </nav>
-      <h1>{sector.title}</h1>
-      <p class="lede">{sector.intro}</p>
+    <div class="wrap phead__grid">
+      <div>
+        <nav class="crumbs" aria-label="Breadcrumb">
+          <a href="/sectors">Sectors</a> <span aria-hidden="true">&rsaquo;</span>
+          <span>{sector.navTitle ?? sector.title}</span>
+        </nav>
+        <h1>{sector.title}</h1>
+        <p class="lede">{sector.intro}</p>
+      </div>
+      <picture class="phead__media">
+        <source
+          type="image/webp"
+          srcset={`/img/sectors/${sector.image}-600.webp 600w, /img/sectors/${sector.image}-1200.webp 1200w`}
+          sizes="(min-width: 960px) 45vw, 100vw"
+        />
+        <img
+          src={`/img/sectors/${sector.image}-1200.jpg`}
+          alt=""
+          width="1200"
+          height="674"
+          fetchpriority="high"
+          decoding="async"
+        />
+      </picture>
     </div>
   </section>
 
@@ -94,6 +111,27 @@ const related = sector.relatedServices
     background: var(--brand-tint);
     border-bottom: 1px solid var(--line);
     padding-block: clamp(2.5rem, 6vw, 4rem);
+  }
+
+  .phead__grid {
+    display: grid;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  @media (min-width: 960px) {
+    .phead__grid {
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+      gap: 3.5rem;
+    }
+  }
+
+  .phead__media img {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    border-radius: 4px;
+    box-shadow: var(--shadow-card);
   }
 
   .crumbs {

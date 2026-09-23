@@ -6,7 +6,7 @@ import { sectors } from '../../data/sectors';
 
 <Base
   title="Sectors We Work In | Waterna"
-  description="Industrial water treatment, wastewater and effluent treatment, and anaerobic digestion and sludge — independent process engineering across each."
+  description="UF and RO desalination, industrial water treatment, wastewater and effluent treatment, and anaerobic digestion and sludge — independent process engineering across each."
 >
   <section class="phead">
     <div class="wrap">
@@ -25,19 +25,38 @@ import { sectors } from '../../data/sectors';
       <div class="grid grid--2">
         {
           sectors.map((s) => (
-            <article class="card scard card--lift">
-              <h2>
-                <a href={`/sectors/${s.slug}`}>{s.title}</a>
-              </h2>
-              <p>{s.summary}</p>
-              <ul class="scard__list">
-                {s.technologies.slice(0, 4).map((t) => (
-                  <li>{t}</li>
-                ))}
-              </ul>
-              <a class="scard__more" href={`/sectors/${s.slug}`}>
-                Read more &rarr;
+            <article class="scard card--lift">
+              <a class="scard__media" href={`/sectors/${s.slug}`} tabindex="-1" aria-hidden="true">
+                <picture>
+                  <source
+                    type="image/webp"
+                    srcset={`/img/sectors/${s.image}-600.webp 600w, /img/sectors/${s.image}-1200.webp 1200w`}
+                    sizes="(min-width: 700px) 46vw, 100vw"
+                  />
+                  <img
+                    src={`/img/sectors/${s.image}-1200.jpg`}
+                    alt=""
+                    width="1200"
+                    height="674"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </picture>
               </a>
+              <div class="scard__body">
+                <h2>
+                  <a href={`/sectors/${s.slug}`}>{s.title}</a>
+                </h2>
+                <p>{s.summary}</p>
+                <ul class="scard__list">
+                  {s.technologies.slice(0, 4).map((t) => (
+                    <li>{t}</li>
+                  ))}
+                </ul>
+                <a class="scard__more" href={`/sectors/${s.slug}`}>
+                  Explore {s.navTitle ?? s.title} &rarr;
+                </a>
+              </div>
             </article>
           ))
         }
@@ -67,6 +86,37 @@ import { sectors } from '../../data/sectors';
     background: var(--brand-tint);
     border-bottom: 1px solid var(--line);
     padding-block: clamp(2.5rem, 6vw, 4rem);
+  }
+
+  .scard {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+  }
+
+  .scard__media {
+    display: block;
+  }
+
+  .scard__media img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+  }
+
+  .scard__body {
+    padding: 1.5rem 1.6rem 1.6rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .scard__more {
+    margin-top: auto;
   }
 
   .scard h2 {
