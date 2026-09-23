@@ -71,6 +71,7 @@ export const pillars: Pillar[] = [
 
 export const softwarePillar: Pillar = {
   slug: 'software',
+  image: 'software',
   title: 'Software & Analytics',
   strapline: 'Turn operating data into informed decisions',
   summary:

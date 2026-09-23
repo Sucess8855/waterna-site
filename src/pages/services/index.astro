@@ -39,6 +39,28 @@ const members: Record<string, typeof projectEngineering> = {
         {
           forks.map((p) => (
             <article class="fork__card card--lift">
+              {
+                p.image && (
+                  <a class="fork__media" href={`/${p.slug}`} tabindex="-1" aria-hidden="true">
+                    <picture>
+                      <source
+                        type="image/webp"
+                        srcset={`/img/pillars/${p.image}-600.webp 600w, /img/pillars/${p.image}-1200.webp 1200w`}
+                        sizes="(min-width: 900px) 31vw, 100vw"
+                      />
+                      <img
+                        src={`/img/pillars/${p.image}-1200.jpg`}
+                        alt=""
+                        width="1200"
+                        height="462"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </picture>
+                  </a>
+                )
+              }
+              <div class="fork__body">
               <p class="fork__strap">{p.strapline}</p>
               <h2>
                 <a href={`/${p.slug}`}>{p.title}</a>
@@ -58,6 +80,7 @@ const members: Record<string, typeof projectEngineering> = {
               <a class="btn btn--ghost" href={`/${p.slug}`}>
                 {p.title} &rarr;
               </a>
+              </div>
             </article>
           ))
         }
@@ -102,13 +125,30 @@ const members: Record<string, typeof projectEngineering> = {
   }
 
   .fork__card {
+    background: #fff;
     border: 1px solid var(--line);
-    border-top: 3px solid var(--ember);
     border-radius: 4px;
-    padding: 2rem;
+    overflow: hidden;
     box-shadow: var(--shadow-card);
     display: flex;
     flex-direction: column;
+  }
+
+  .fork__media {
+    display: block;
+  }
+
+  .fork__media img {
+    width: 100%;
+    aspect-ratio: 2.6 / 1;
+    object-fit: cover;
+  }
+
+  .fork__body {
+    padding: 1.6rem 1.7rem 1.7rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
   }
 
   .fork__strap {
