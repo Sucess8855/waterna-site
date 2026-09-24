@@ -699,10 +699,8 @@ import { sectors } from '../data/sectors';
 
   /* ---------- why waterna ---------- */
 
-  /* Deliberately blue rather than rust in this section, to the supplied
-     design. Shades chosen by measurement against the ground: eyebrow
-     #0A6FB0 at 4.81:1 (small text needs 4.5), headline gradient
-     #0A6FB8 to #1789CC, both above the 3:1 large text needs. */
+  /* Rust label and highlight, matching every other section. On this
+     ground --ember-deep holds 5.10:1 and --ember 4.08:1. */
   .why {
     background: #eef3f9;
     padding-block: clamp(3.5rem, 7vw, 5.5rem);
@@ -714,7 +712,7 @@ import { sectors } from '../data/sectors';
     font-weight: 700;
     letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: #0a6fb0;
+    color: var(--ember-deep);
   }
 
   .why__title {
@@ -727,10 +725,7 @@ import { sectors } from '../data/sectors';
   }
 
   .why__title span {
-    background: linear-gradient(90deg, #0a6fb8, #1789cc);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+    color: var(--ember);
   }
 
   .why__lede {
