@@ -207,7 +207,8 @@ const reasons = [
           <ul class="ro__chips">
             <li><svg class="ro__chip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>100+ KPIs</li>
             <li><svg class="ro__chip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 14 4-4"/><path d="M3.34 19a10 10 0 1 1 17.32 0"/></svg>Performance benchmarking</li>
-            <li><svg class="ro__chip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M15 2v2M15 20v2M2 15h2M2 9h2M20 15h2M20 9h2M9 2v2M9 20v2"/></svg>Offline AI · Machine learning</li>
+            <li><svg class="ro__chip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M15 2v2M15 20v2M2 15h2M2 9h2M20 15h2M20 9h2M9 2v2M9 20v2"/></svg>Offline AI</li>
+            <li><svg class="ro__chip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="16" y="16" width="6" height="6" rx="1"/><rect x="2" y="16" width="6" height="6" rx="1"/><rect x="9" y="2" width="6" height="6" rx="1"/><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"/><path d="M12 12V8"/></svg>Machine learning</li>
           </ul>
           <a class="btn btn--light ro__btn" href="/ro-insight">
             Explore RO Insight™ <svg class="ro__btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
@@ -489,9 +490,15 @@ const reasons = [
     list-style: none;
     margin: 0 0 2.2rem;
     padding: 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem 2rem;
+    display: grid;
+    grid-template-columns: repeat(2, max-content);
+    gap: 0.85rem 2.5rem;
+  }
+
+  @media (max-width: 480px) {
+    .ro__chips {
+      grid-template-columns: 1fr;
+    }
   }
 
   .ro__chips li {
