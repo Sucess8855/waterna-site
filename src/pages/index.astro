@@ -1,7 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import { site } from '../data/site';
-import { projectEngineering, plantPerformance, softwareProducts, serviceHref, hasPage } from '../data/services';
+import { projectEngineering, plantPerformance, softwareProducts, roInsight, serviceHref, hasPage } from '../data/services';
 import { pillars, softwarePillar } from '../data/pillars';
 import { sectors } from '../data/sectors';
 
@@ -69,7 +69,7 @@ const reasons = [
   <section class="section">
     <div class="wrap">
       <p class="eyebrow">What we do</p>
-      <h2>From project development to <span class="hl">plant performance</span></h2>
+      <h2>From project development to <span class="hl">plant performance and beyond</span></h2>
       <p class="lede">
         Whether you are developing a new treatment scheme or improving an existing plant, we provide
         engineering support to help you assess options, resolve problems and make informed decisions.
@@ -195,32 +195,42 @@ const reasons = [
 
   <section class="digital">
     <div class="wrap">
-      <p class="eyebrow digital__eyebrow">Analytics Software</p>
-      <h2>Turn operating data into <span class="hl hl--light">informed decisions</span></h2>
-      <p class="digital__lede">
-        Our software combines process engineering methods with data analysis, so operating teams can
-        track performance, recognise developing problems and plan corrective action.
-      </p>
-
-      <div class="digital__products">
-        {
-          softwareProducts.map((s) => (
-            <article class="pcard">
-              <p class="pcard__tag">Software platform</p>
-              <h3>
-                <a href={serviceHref(s)}>{s.title}</a>
-              </h3>
-              <p>{s.summary}</p>
-              <ul class="pcard__list">
-                {s.covered.slice(0, 6).map(([term]) => <li>{term}</li>)}
-              </ul>
-              <a class="btn btn--light" href={serviceHref(s)}>
-                Explore {s.navTitle ?? s.title}
-              </a>
-            </article>
-          ))
-        }
+      <div class="digital__head">
+        <div>
+          <p class="eyebrow digital__eyebrow">Our software</p>
+          <h2>Waterna <span class="hl hl--light">RO Insight™</span></h2>
+          <p class="digital__lede">
+            A performance monitoring and decision-support platform for reverse osmosis desalination.
+            It converts routine plant data into more than 100 engineering indicators, helping teams
+            assess membrane condition, evaluate cleaning performance and identify opportunities to
+            improve energy efficiency — with a built-in AI assistant that runs offline, on your own
+            network.
+          </p>
+          <a class="btn btn--light" href="/ro-insight">Explore RO Insight™</a>
+        </div>
+        <ul class="digital__caps">
+          {roInsight.covered!.slice(0, 6).map(([term]) => <li>{term}</li>)}
+        </ul>
       </div>
+
+      <figure class="shot">
+        <picture>
+          <source
+            type="image/webp"
+            srcset="/img/ro-insight/dashboard-900.webp 900w, /img/ro-insight/dashboard-1600.webp 1600w"
+            sizes="(min-width: 1160px) 1120px, 100vw"
+          />
+          <img
+            src="/img/ro-insight/dashboard-1600.jpg"
+            alt="RO Insight live dashboard showing plant status, a fleet KPI snapshot and the diagnostic overview"
+            width="1600"
+            height="596"
+            loading="lazy"
+            decoding="async"
+          />
+        </picture>
+        <figcaption>RO Live Dashboard — plant status, fleet KPI snapshot and diagnostic overview</figcaption>
+      </figure>
     </div>
   </section>
 
@@ -381,136 +391,79 @@ const reasons = [
     max-width: 22ch;
   }
 
+  .digital__head {
+    display: grid;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  @media (min-width: 900px) {
+    .digital__head {
+      grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+      gap: 3.5rem;
+    }
+  }
+
+  .digital__caps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.55rem;
+  }
+
+  @media (min-width: 560px) {
+    .digital__caps {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .digital__caps :global(li) {
+    margin: 0;
+    font-size: 0.92rem;
+    color: #fff;
+    padding: 0.6rem 0.8rem;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 3px;
+  }
+
+  /* The real product, framed so a dark UI still separates from the navy. */
+  .shot {
+    margin: 2.75rem 0 0;
+  }
+
+  /* Inner margin in the UI's own background, since the capture starts
+     at pixel zero and would otherwise sit flush against the frame. */
+  .shot :global(picture) {
+    display: block;
+    padding: 0.9rem;
+    background: #0a0e19;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 185, 245, 0.35);
+    box-shadow: 0 30px 60px -24px rgba(0, 0, 0, 0.6);
+  }
+
+  .shot :global(img) {
+    width: 100%;
+    height: auto;
+    border-radius: 3px;
+  }
+
+  .shot figcaption {
+    margin-top: 0.85rem;
+    font-size: 0.88rem;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
   .digital__eyebrow {
     color: var(--accent);
   }
 
   .digital__lede {
-    font-size: 1.125rem;
-    max-width: 56ch;
-    margin-bottom: 0;
-  }
-
-  .digital__products {
-    margin-top: 2.25rem;
-    display: grid;
-    gap: 1.5rem;
-  }
-
-  .pcard {
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    border-radius: 4px;
-    padding: 1.75rem;
-  }
-
-  .pcard__tag {
-    display: inline-block;
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--accent);
-    background: transparent;
-    border: 1px solid var(--accent);
-    border-radius: 3px;
-    padding: 0.22rem 0.55rem;
-    margin: 0 0 0.8rem;
-  }
-
-  .pcard :global(h3) {
-    color: #fff;
-    font-size: clamp(1.4rem, 2.4vw, 1.75rem);
-    margin-bottom: 0.5rem;
-  }
-
-  .pcard :global(h3 a) {
-    color: #fff;
-    text-decoration: none;
-  }
-
-  .pcard :global(h3 a:hover) {
-    color: var(--accent);
-  }
-
-  .pcard > p {
-    max-width: 62ch;
-    margin-bottom: 1.25rem;
-  }
-
-  .pcard__list {
-    list-style: none;
-    margin: 0 0 1.5rem;
-    padding: 0;
-    display: grid;
-    gap: 0.5rem;
-  }
-
-  @media (min-width: 620px) {
-    .pcard__list {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
-
-  .pcard__list :global(li) {
-    font-size: 0.9rem;
-    color: #fff;
-    padding: 0.5rem 0.75rem;
-    background: rgba(255, 255, 255, 0.07);
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    border-radius: 3px;
-    margin: 0;
-  }
-
-  .dcard {
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.16);
-    border-radius: 4px;
-    padding: 1.6rem;
-  }
-
-  .dcard :global(h3) {
-    color: #fff;
-    font-size: 1.3rem;
-    margin-bottom: 0.5rem;
-  }
-
-  .dcard :global(h3 a) {
-    color: #fff;
-    text-decoration: none;
-  }
-
-  .dcard :global(h3 a:hover) {
-    color: var(--accent);
-  }
-
-  .dcard p {
-    font-size: 0.98rem;
-    margin-bottom: 0.9rem;
-  }
-
-  .dcard__tag {
-    display: inline-block;
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--brand-deep);
-    background: var(--accent);
-    border-radius: 3px;
-    padding: 0.22rem 0.55rem;
-    margin: 0 0 0.7rem;
-  }
-
-  .dcard__more {
-    color: var(--accent);
-    font-weight: 600;
-    font-size: 0.95rem;
-    text-decoration: none;
-  }
-
-  .dcard__more:hover {
-    text-decoration: underline;
+    font-size: 1.05rem;
+    max-width: 58ch;
+    margin-bottom: 1.6rem;
   }
 
   /* ---------- why waterna ---------- */
