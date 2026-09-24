@@ -5,20 +5,6 @@ import { projectEngineering, plantPerformance, softwareProducts, serviceHref, ha
 import { pillars, softwarePillar } from '../data/pillars';
 import { sectors } from '../data/sectors';
 
-const reasons = [
-  {
-    title: 'Independent of equipment suppliers',
-    body: 'We hold no vendor agreements and receive no supplier commissions. Our recommendations are based on your process requirements, operating conditions and project objectives. Our own software is optional, and available separately from our consultancy services.',
-  },
-  {
-    title: 'Whole-life cost in focus',
-    body: 'We assess capital and operating costs together — energy, chemicals, maintenance, membrane replacement and sludge disposal — so you can compare options over the life of the plant rather than at the point of purchase.',
-  },
-  {
-    title: 'Compliance considered from the outset',
-    body: 'Discharge limits, water quality specifications and permitting requirements are built into process assessment and design, so the constraints surface early rather than at commissioning.',
-  },
-];
 ---
 
 <Base
@@ -271,21 +257,38 @@ const reasons = [
     </div>
   </section>
 
-  <section class="section section--sage">
+  <section class="why">
     <div class="wrap">
-      <p class="eyebrow">Why Waterna</p>
-      <h2>Independent advice. <span class="hl">Practical engineering.</span></h2>
+      <p class="why__eyebrow">Why Waterna</p>
+      <h2 class="why__title">Independent advice. <span>Practical engineering.</span></h2>
+      <p class="why__lede">Clear recommendations, grounded in your plant’s needs.</p>
 
-      <div class="grid grid--3 reasons">
-        {
-          reasons.map((r, i) => (
-            <article class="reason">
-              <span class="reason__num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
-              <h3>{r.title}</h3>
-              <p>{r.body}</p>
-            </article>
-          ))
-        }
+      <div class="why__grid">
+        <article class="why__card">
+          <svg class="why__icon" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><g stroke="var(--brand-deep)"><circle cx="12" cy="12" r="10"/><path d="M12 2.8v1.4M12 19.8v1.4M2.8 12h1.4M19.8 12h1.4"/></g><g stroke="#1789cc"></g><polygon points="16.2 7.8 13.4 13.4 7.8 16.2 10.6 10.6" fill="#1789cc" stroke="#1789cc" stroke-width="1"/><circle cx="12" cy="12" r="1.1" fill="#fff" stroke="none"/></svg>
+          <h3>Independent advice</h3>
+          <p>
+            No vendor agreements or supplier commissions. Recommendations based on your process
+            requirements and operating goals.
+          </p>
+          <p>Our software is optional and available separately.</p>
+        </article>
+        <article class="why__card">
+          <svg class="why__icon" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><g stroke="var(--brand-deep)"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></g><g stroke="#1789cc"><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></g></svg>
+          <h3>Whole-life value</h3>
+          <p>
+            Assess capital and operating costs together — including energy, chemicals, maintenance and
+            replacement — to compare the true cost of each option.
+          </p>
+        </article>
+        <article class="why__card">
+          <svg class="why__icon" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><g stroke="var(--brand-deep)"><path d="M13 21H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8l5 5v5"/><path d="M14 2v5h5"/><path d="M8 9h3M8 13h7M8 17h3"/></g><g stroke="#1789cc"><circle cx="17.5" cy="17.5" r="4.5" fill="#fff"/><path d="m15.6 17.6 1.4 1.4 2.6-2.8"/></g></svg>
+          <h3>Compliance from the outset</h3>
+          <p>
+            Consider discharge limits, water quality specifications and permitting requirements early
+            in process assessment and design.
+          </p>
+        </article>
       </div>
     </div>
   </section>
@@ -696,46 +699,95 @@ const reasons = [
 
   /* ---------- why waterna ---------- */
 
-  .reasons {
-    margin-top: 2.25rem;
+  /* Deliberately blue rather than rust in this section, to the supplied
+     design. Shades chosen by measurement against the ground: eyebrow
+     #0A6FB0 at 4.81:1 (small text needs 4.5), headline gradient
+     #0A6FB8 to #1789CC, both above the 3:1 large text needs. */
+  .why {
+    background: #eef3f9;
+    padding-block: clamp(3.5rem, 7vw, 5.5rem);
   }
 
-  .reason {
-    position: relative;
+  .why__eyebrow {
+    margin: 0 0 0.9rem;
+    font-size: 0.875rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #0a6fb0;
+  }
+
+  .why__title {
+    color: var(--ink);
+    font-size: clamp(2.1rem, 4.4vw, 3.3rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.08;
+    margin-bottom: 0.9rem;
+  }
+
+  .why__title span {
+    background: linear-gradient(90deg, #0a6fb8, #1789cc);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .why__lede {
+    font-size: clamp(1.1rem, 1.6vw, 1.35rem);
+    color: var(--body);
+    margin-bottom: 0;
+  }
+
+  .why__grid {
+    display: grid;
+    gap: 1.5rem;
+    margin-top: clamp(2.25rem, 4vw, 3rem);
+  }
+
+  @media (min-width: 820px) {
+    .why__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .why__card {
     background: #fff;
-    border: 1px solid #d3e1d7;
-    border-radius: 4px;
-    padding: 1.9rem 1.75rem 1.75rem;
-    box-shadow: 0 2px 40px -16px rgba(0, 63, 118, 0.22);
+    border: 1px solid #dde7f1;
+    border-radius: 6px;
+    padding: 2.1rem 2rem 2rem;
+    box-shadow: 0 2px 24px -12px rgba(0, 63, 118, 0.18);
     transition:
       transform 0.22s cubic-bezier(0.22, 1, 0.36, 1),
       box-shadow 0.22s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
-  .reason:hover {
+  .why__card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 14px 40px -16px rgba(0, 63, 118, 0.34);
+    box-shadow: 0 16px 40px -18px rgba(0, 63, 118, 0.32);
   }
 
-  .reason__num {
+  .why__icon {
+    width: 3.4rem;
+    height: 3.4rem;
     display: block;
-    font-size: 2.1rem;
-    font-weight: 800;
-    line-height: 1;
-    color: var(--ember);
-    opacity: 0.3;
-    letter-spacing: -0.02em;
-    margin-bottom: 0.9rem;
+    margin-bottom: 1.4rem;
   }
 
-  .reason :global(h3) {
-    font-size: 1.15rem;
-    margin-bottom: 0.45rem;
+  .why__card :global(h3) {
+    font-size: 1.3rem;
+    color: var(--brand-deep);
+    margin-bottom: 0.7rem;
   }
 
-  .reason p {
+  .why__card p {
+    color: var(--body);
+    font-size: 1rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .why__card p:last-child {
     margin-bottom: 0;
-    font-size: 0.97rem;
   }
 
   /* ---------- sector cards ---------- */
