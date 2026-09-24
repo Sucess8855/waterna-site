@@ -1,7 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import { site } from '../data/site';
-import { projectEngineering, plantPerformance, softwareProducts, roInsight, serviceHref, hasPage } from '../data/services';
+import { projectEngineering, plantPerformance, softwareProducts, serviceHref, hasPage } from '../data/services';
 import { pillars, softwarePillar } from '../data/pillars';
 import { sectors } from '../data/sectors';
 
@@ -193,44 +193,79 @@ const reasons = [
     </div>
   </section>
 
-  <section class="digital">
-    <div class="wrap">
-      <div class="digital__head">
-        <div>
-          <p class="eyebrow digital__eyebrow">Our software</p>
-          <h2>Waterna <span class="hl hl--light">RO Insight™</span></h2>
-          <p class="digital__lede">
-            A performance monitoring and decision-support platform for reverse osmosis desalination.
-            It converts routine plant data into more than 100 engineering indicators, helping teams
-            assess membrane condition, evaluate cleaning performance and identify opportunities to
-            improve energy efficiency — with a built-in AI assistant that runs offline, on your own
-            network.
+  <section class="ro">
+    <div class="wrap ro__wrap">
+      <div class="ro__grid">
+        <div class="ro__copy">
+          <p class="ro__eyebrow">Analytics Software</p>
+          <p class="ro__product">Waterna <span>RO Insight™</span></p>
+          <h2 class="ro__title"><span>Understand performance.</span> <span>Plan your next move.</span></h2>
+          <p class="ro__lede">
+            Turn plant data into practical insights for membrane health, cleaning decisions and
+            energy efficiency.
           </p>
-          <a class="btn btn--light" href="/ro-insight">Explore RO Insight™</a>
+          <ul class="ro__chips">
+            <li><svg class="ro__chip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>100+ engineering indicators</li>
+            <li><svg class="ro__chip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M15 2v2M15 20v2M2 15h2M2 9h2M20 15h2M20 9h2M9 2v2M9 20v2"/></svg>Offline AI assistant</li>
+          </ul>
+          <a class="btn btn--light ro__btn" href="/ro-insight">
+            Explore RO Insight™ <svg class="ro__btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
         </div>
-        <ul class="digital__caps">
-          {roInsight.covered!.slice(0, 6).map(([term]) => <li>{term}</li>)}
-        </ul>
+
+        <figure class="ro__visual">
+          <div class="ro__frame">
+            <div class="ro__bar" aria-hidden="true"><span></span><span></span><span></span></div>
+            <picture>
+              <source
+                type="image/webp"
+                srcset="/img/ro-insight/dash-full-900.webp 900w, /img/ro-insight/dash-full-1400.webp 1400w"
+                sizes="(min-width: 900px) 58vw, 100vw"
+              />
+              <img
+                src="/img/ro-insight/dash-full-1400.jpg"
+                alt="RO Insight live dashboard: plant status, fleet KPI snapshot and diagnostic overview"
+                width="1400"
+                height="795"
+                loading="lazy"
+                decoding="async"
+              />
+            </picture>
+          </div>
+
+          <div class="ro__card">
+            <p class="ro__card-head"><svg class="ro__card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M15 2v2M15 20v2M2 15h2M2 9h2M20 15h2M20 9h2M9 2v2M9 20v2"/></svg>Offline AI assistant</p>
+            <picture>
+              <source type="image/webp" srcset="/img/ro-insight/assistant-card.webp" />
+              <img
+                src="/img/ro-insight/assistant-card.png"
+                alt="The offline assistant answering: give me a concise summary of the current plant status"
+                width="560"
+                height="300"
+                loading="lazy"
+                decoding="async"
+              />
+            </picture>
+          </div>
+
+          <figcaption>Real screens: the RO Live Dashboard and the offline AI assistant</figcaption>
+        </figure>
       </div>
 
-      <figure class="shot">
-        <picture>
-          <source
-            type="image/webp"
-            srcset="/img/ro-insight/dashboard-900.webp 900w, /img/ro-insight/dashboard-1600.webp 1600w"
-            sizes="(min-width: 1160px) 1120px, 100vw"
-          />
-          <img
-            src="/img/ro-insight/dashboard-1600.jpg"
-            alt="RO Insight live dashboard showing plant status, a fleet KPI snapshot and the diagnostic overview"
-            width="1600"
-            height="596"
-            loading="lazy"
-            decoding="async"
-          />
-        </picture>
-        <figcaption>RO Live Dashboard — plant status, fleet KPI snapshot and diagnostic overview</figcaption>
-      </figure>
+      <ul class="ro__features">
+        <li>
+          <svg class="ro__feat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
+          <div><h3>Membrane health</h3><p>Monitor performance, fouling and scaling.</p></div>
+        </li>
+        <li>
+          <svg class="ro__feat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"/></svg>
+          <div><h3>Cleaning decisions</h3><p>Assess cleaning effectiveness and plan ahead.</p></div>
+        </li>
+        <li>
+          <svg class="ro__feat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+          <div><h3>Operating efficiency</h3><p>Compare trains and identify energy opportunities.</p></div>
+        </li>
+      </ul>
     </div>
   </section>
 
@@ -378,92 +413,277 @@ const reasons = [
     text-decoration: underline;
   }
 
-  /* ---------- data & digital ---------- */
+  /* ---------- RO Insight showcase ---------- */
 
-  .digital {
-    background: var(--brand-deep);
-    color: rgba(255, 255, 255, 0.86);
-    padding-block: clamp(3rem, 7vw, 5rem);
-  }
-
-  .digital :global(h2) {
+  .ro {
+    position: relative;
+    overflow: hidden;
     color: #fff;
-    max-width: 22ch;
+    padding-block: clamp(3.5rem, 8vw, 6rem);
+    background:
+      radial-gradient(ellipse 55% 60% at 78% 42%, rgba(0, 185, 245, 0.2), transparent 62%),
+      linear-gradient(118deg, transparent 52%, rgba(255, 255, 255, 0.035) 52%, rgba(255, 255, 255, 0.035) 74%, transparent 74%),
+      linear-gradient(160deg, #06224a 0%, #0a2f63 55%, #051d40 100%);
   }
 
-  .digital__head {
+  .ro__wrap {
+    width: min(100% - 2.5rem, 1300px);
+  }
+
+  .ro__grid {
     display: grid;
-    gap: 2rem;
+    gap: 3rem;
     align-items: center;
   }
 
-  @media (min-width: 900px) {
-    .digital__head {
-      grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
-      gap: 3.5rem;
+  @media (min-width: 960px) {
+    .ro__grid {
+      grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+      gap: 3rem;
     }
   }
 
-  .digital__caps {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: grid;
-    gap: 0.55rem;
-  }
-
-  @media (min-width: 560px) {
-    .digital__caps {
-      grid-template-columns: 1fr 1fr;
-    }
-  }
-
-  .digital__caps :global(li) {
-    margin: 0;
-    font-size: 0.92rem;
-    color: #fff;
-    padding: 0.6rem 0.8rem;
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.16);
-    border-radius: 3px;
-  }
-
-  /* The real product, framed so a dark UI still separates from the navy. */
-  .shot {
-    margin: 2.75rem 0 0;
-  }
-
-  /* Inner margin in the UI's own background, since the capture starts
-     at pixel zero and would otherwise sit flush against the frame. */
-  .shot :global(picture) {
-    display: block;
-    padding: 0.9rem;
-    background: #0a0e19;
-    border-radius: 8px;
-    border: 1px solid rgba(0, 185, 245, 0.35);
-    box-shadow: 0 30px 60px -24px rgba(0, 0, 0, 0.6);
-  }
-
-  .shot :global(img) {
-    width: 100%;
-    height: auto;
-    border-radius: 3px;
-  }
-
-  .shot figcaption {
-    margin-top: 0.85rem;
-    font-size: 0.88rem;
-    color: rgba(255, 255, 255, 0.7);
-  }
-
-  .digital__eyebrow {
+  .ro__eyebrow {
+    margin: 0 0 1rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
     color: var(--accent);
   }
 
-  .digital__lede {
+  .ro__product {
+    margin: 0 0 1.4rem;
+    font-size: clamp(1.8rem, 3.2vw, 2.5rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+
+  .ro__product span {
+    color: var(--accent);
+  }
+
+  .ro__title span {
+    display: block;
+  }
+
+  .ro__title {
+    color: #fff;
+    font-size: clamp(2rem, 3.3vw, 2.75rem);
+    font-weight: 800;
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.4rem;
+  }
+
+  .ro__lede {
+    color: #a9cdf0;
+    font-size: clamp(1.05rem, 1.5vw, 1.25rem);
+    max-width: 34ch;
+    margin-bottom: 1.8rem;
+  }
+
+  .ro__chips {
+    list-style: none;
+    margin: 0 0 2.2rem;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 2rem;
+  }
+
+  .ro__chips li {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 1.02rem;
+    color: #e6f1fb;
+  }
+
+  .ro__chip-icon {
+    width: 1.6rem;
+    height: 1.6rem;
+    color: var(--accent);
+    flex: none;
+  }
+
+  .ro__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 1rem 1.7rem;
     font-size: 1.05rem;
-    max-width: 58ch;
-    margin-bottom: 1.6rem;
+  }
+
+  .ro__btn-icon {
+    width: 1.15rem;
+    height: 1.15rem;
+    transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .ro__btn:hover .ro__btn-icon {
+    transform: translateX(3px);
+  }
+
+  /* ---- the tilted screen ---- */
+
+  .ro__visual {
+    position: relative;
+    margin: 0;
+  }
+
+  .ro__frame {
+    background: #0a0e19;
+    border: 1px solid rgba(0, 185, 245, 0.35);
+    border-radius: 12px;
+    padding: 0 0.7rem 0.7rem;
+    box-shadow:
+      0 40px 80px -24px rgba(0, 0, 0, 0.65),
+      0 0 70px -10px rgba(0, 185, 245, 0.3);
+  }
+
+  .ro__bar {
+    display: flex;
+    gap: 0.4rem;
+    padding: 0.7rem 0.2rem;
+  }
+
+  .ro__bar span {
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: 50%;
+    background: #33415a;
+  }
+
+  .ro__bar span:first-child {
+    background: #e0564f;
+  }
+
+  .ro__frame img {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+  }
+
+  .ro__card {
+    background: #0b1426;
+    border: 1px solid rgba(0, 185, 245, 0.55);
+    border-radius: 10px;
+    padding: 0.8rem 0.8rem 0.9rem;
+    margin-top: 1rem;
+    box-shadow: 0 24px 50px -16px rgba(0, 0, 0, 0.7), 0 0 40px -12px rgba(0, 185, 245, 0.45);
+  }
+
+  .ro__card-head {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0 0 0.6rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .ro__card-icon {
+    width: 1.2rem;
+    height: 1.2rem;
+    color: var(--accent);
+  }
+
+  .ro__card img {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+  }
+
+  .ro__visual figcaption {
+    margin-top: 1rem;
+    text-align: center;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  /* Perspective only where there is room for it; flat and stacked below. */
+  @media (min-width: 960px) {
+    /* The tilt enlarges the near (right) edge, so the screen is pulled in
+       from the column edge to keep its frame inside the viewport. */
+    .ro__visual {
+      margin-right: 2.5rem;
+    }
+
+    .ro__frame {
+      transform: perspective(1600px) rotateY(-17deg) rotateX(4deg);
+      transform-origin: left center;
+    }
+
+    .ro__card {
+      position: absolute;
+      right: -2.25rem;
+      bottom: 2.2rem;
+      width: 46%;
+      margin: 0;
+    }
+
+    .ro__visual figcaption {
+      margin-top: 1.6rem;
+    }
+  }
+
+  /* ---- feature row ---- */
+
+  .ro__features {
+    list-style: none;
+    margin: clamp(3rem, 6vw, 4.5rem) 0 0;
+    padding: 0;
+    display: grid;
+    gap: 2rem;
+  }
+
+  @media (min-width: 820px) {
+    .ro__features {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+    }
+
+    .ro__features li + li {
+      border-left: 1px solid rgba(255, 255, 255, 0.18);
+    }
+
+    .ro__features li {
+      padding-inline: 2rem;
+    }
+
+    .ro__features li:first-child {
+      padding-left: 0;
+    }
+  }
+
+  .ro__features li {
+    margin: 0;
+    display: flex;
+    gap: 1.25rem;
+    align-items: flex-start;
+  }
+
+  .ro__feat-icon {
+    width: 3rem;
+    height: 3rem;
+    color: var(--accent);
+    flex: none;
+  }
+
+  .ro__features h3 {
+    color: #fff;
+    font-size: 1.2rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .ro__features p {
+    color: #a9cdf0;
+    margin: 0;
+    font-size: 1rem;
   }
 
   /* ---------- why waterna ---------- */
