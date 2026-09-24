@@ -30,12 +30,6 @@
      #C7502F measures 3.79:1 on --band, below the 4.5:1 needed at 14px. */
   --ember-deep: #b0441f;
 
-  /* Section labels and heading highlights. #0A67A3 clears 4.5:1 on every
-     light ground including --band (5.03:1); #0A6FB0 fell short there. */
-  --label-blue: #0a67a3;
-  --hl-from: #0a6fb8;
-  --hl-to: #1789cc;
-
   /* Full-bleed light band, a step stronger than --brand-tint. */
   --band: #d7eefb;
 
@@ -151,26 +145,18 @@ li {
   letter-spacing: 0.1em;
   font-size: 0.875rem;
   font-weight: 700;
-  color: var(--label-blue);
+  color: var(--ember-deep);
   margin: 0 0 0.9rem;
 }
 
 /* Highlight a word or phrase inside a heading. */
-/* Blue gradient on the highlighted words; the colour fallback covers
-   browsers without background-clip: text. */
 .hl {
-  color: var(--hl-from);
-  background: linear-gradient(90deg, var(--hl-from), var(--hl-to));
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--ember);
 }
 
 /* On dark bands rust drops to 2.3:1 — use cyan, which reaches 4.7:1 on navy. */
 .hl--light {
   color: var(--accent);
-  background: none;
-  -webkit-text-fill-color: var(--accent);
 }
 
 .section--band {
