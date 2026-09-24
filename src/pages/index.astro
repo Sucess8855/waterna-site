@@ -2,7 +2,7 @@
 import Base from '../layouts/Base.astro';
 import { site } from '../data/site';
 import { projectEngineering, plantPerformance, softwareProducts, serviceHref, hasPage } from '../data/services';
-import { pillars } from '../data/pillars';
+import { pillars, softwarePillar } from '../data/pillars';
 import { sectors } from '../data/sectors';
 
 const reasons = [
@@ -77,8 +77,13 @@ const reasons = [
 
       <div class="fork">
         {
-          pillars.map((p) => {
-            const members = p.slug === 'project-engineering' ? projectEngineering : plantPerformance;
+          [...pillars, softwarePillar].map((p) => {
+            const members =
+              p.slug === 'project-engineering'
+                ? projectEngineering
+                : p.slug === 'plant-performance'
+                  ? plantPerformance
+                  : softwareProducts;
             return (
               <article class="fork__card card--lift">
                 {
@@ -622,10 +627,15 @@ const reasons = [
     margin-top: 2.25rem;
   }
 
-  @media (min-width: 820px) {
+  @media (min-width: 900px) {
     .fork {
-      grid-template-columns: 1fr 1fr;
-      gap: 2rem;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.75rem;
+    }
+
+    /* Keeps the three service lists level if one summary runs short. */
+    .fork__summary {
+      min-height: 8.3em;
     }
   }
 
@@ -650,7 +660,7 @@ const reasons = [
   }
 
   .fork__body {
-    padding: 1.75rem 1.85rem 1.85rem;
+    padding: 1.6rem 1.7rem 1.7rem;
     display: flex;
     flex-direction: column;
     flex: 1;
@@ -666,7 +676,7 @@ const reasons = [
   }
 
   .fork__card :global(h3) {
-    font-size: clamp(1.5rem, 2.6vw, 1.9rem);
+    font-size: clamp(1.4rem, 2vw, 1.65rem);
     margin-bottom: 0.6rem;
   }
 
