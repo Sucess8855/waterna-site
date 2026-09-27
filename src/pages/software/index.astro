@@ -1,10 +1,338 @@
 ---
 import Base from '../../layouts/Base.astro';
-import PillarPage from '../../components/PillarPage.astro';
-import { softwareProducts } from '../../data/services';
+import PillarLanding from '../../components/PillarLanding.astro';
+import { roInsight, serviceHref } from '../../data/services';
 import { softwarePillar } from '../../data/pillars';
+
+const roHref = serviceHref(roInsight);
+
+const helpWith = [
+  'Reduce repetitive manual analysis',
+  'Track changes against a baseline',
+  'Compare train performance',
+  'Support timely operating decisions',
+];
+
+const features = [
+  {
+    title: 'Membrane health',
+    text: 'Review performance, fouling and scaling risks.',
+    icon: '<path d="M4 20h16"/><rect x="5" y="13" width="3" height="7"/><rect x="10.5" y="8" width="3" height="12"/><rect x="16" y="3" width="3" height="17"/>',
+  },
+  {
+    title: 'Cleaning decisions',
+    text: 'Assess cleaning effectiveness and plan ahead.',
+    icon: '<path d="M10 2v7.31"/><path d="M14 9.3V2"/><path d="M8.5 2h7"/><path d="M14 9.3a6.5 6.5 0 1 1-4 0"/><path d="M5.52 16h12.96"/>',
+  },
+  {
+    title: 'Operating efficiency',
+    text: 'Compare trains and investigate energy use.',
+    icon: '<path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/>',
+  },
+];
+
+const dataPoints = [
+  {
+    title: 'Data inputs',
+    text: 'Use plant records or configured live connections.',
+    icon: '<ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.66 3.58 3 8 3s8-1.34 8-3V5"/><path d="M4 12c0 1.66 3.58 3 8 3s8-1.34 8-3"/>',
+  },
+  {
+    title: 'Deployment',
+    text: 'Review data availability and infrastructure requirements.',
+    icon: '<rect x="3" y="3" width="18" height="5" rx="1.5"/><rect x="3" y="9.5" width="18" height="5" rx="1.5"/><rect x="3" y="16" width="18" height="5" rx="1.5"/><path d="M6.5 5.5h.01M6.5 12h.01M6.5 18.5h.01"/>',
+  },
+  {
+    title: 'Engineering support',
+    text: 'Combine software with specialist performance reviews.',
+    icon: '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+  },
+];
+
+/* Decorative wave lines for the RO band: a fan of sine curves. */
+const waves = Array.from({ length: 9 }, (_, i) => {
+  const amp = 40 + i * 9;
+  const y = 150 + i * 14;
+  const pts: string[] = [];
+  for (let x = 0; x <= 700; x += 10) {
+    pts.push(`${x},${(y + amp * Math.sin((x / 700) * Math.PI * 2 + i * 0.22)).toFixed(1)}`);
+  }
+  return `M${pts.join(' L')}`;
+});
+
+const arrow =
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>';
 ---
 
 <Base title={softwarePillar.metaTitle} description={softwarePillar.metaDescription}>
-  <PillarPage pillar={softwarePillar} services={softwareProducts} />
+  <PillarLanding
+    eyebrow="Engineering insight. Informed decisions."
+    title="Analytics Software"
+    sub={['Make more of your operating data.']}
+    lede="Software built around process engineering to help teams assess performance, recognise developing problems and make informed operating decisions."
+    heroCta="Explore RO Insight™"
+    heroHref={roHref}
+    image={{ base: 'as-hero', alt: 'An engineer reviewing performance trends on a desktop monitor' }}
+    introTitle="Engineering methods, applied consistently"
+    intro={[
+      'Bring recurring calculations, trends and diagnostic checks into one place. Software supports day-to-day review and complements specialist engineering assessments.',
+    ]}
+    helpWith={helpWith}
+    helpTitle="When software can help"
+    ctaTitle="Discuss your software requirements"
+    ctaText="Tell us about your plant, available data and monitoring objectives."
+    ctaTone="light"
+  >
+    <section class="as-ro">
+      <svg class="as-ro__waves" viewBox="0 0 700 400" preserveAspectRatio="none" aria-hidden="true">
+        {waves.map((d) => <path d={d} />)}
+      </svg>
+      <div class="wrap as-ro__inner">
+        <p class="as-ro__eyebrow">Our software</p>
+        <h2>Waterna RO Insight™</h2>
+        <p class="as-ro__sub">
+          Performance monitoring and decision support for reverse osmosis desalination.
+        </p>
+
+        <ul class="as-ro__stats">
+          <li><strong>100+</strong> engineering indicators</li>
+          <li><strong>Offline</strong> AI assistant</li>
+        </ul>
+
+        <ul class="as-ro__features">
+          {
+            features.map((f) => (
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={f.icon} />
+                <div>
+                  <h3>{f.title}</h3>
+                  <p>{f.text}</p>
+                </div>
+              </li>
+            ))
+          }
+        </ul>
+
+        <a class="btn btn--light as-btn" href={roHref}>
+          Explore RO Insight™ <Fragment set:html={arrow} />
+        </a>
+      </div>
+    </section>
+
+    <section class="as-data">
+      <div class="wrap">
+        <h2>Built around your data</h2>
+        <ul class="as-data__list">
+          {
+            dataPoints.map((d) => (
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={d.icon} />
+                <div>
+                  <h3>{d.title}</h3>
+                  <p>{d.text}</p>
+                </div>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </section>
+  </PillarLanding>
 </Base>
+
+<style>
+  /* ---------- RO Insight band ---------- */
+
+  .as-ro {
+    position: relative;
+    overflow: hidden;
+    background: var(--brand-deep);
+    color: #fff;
+    padding-block: clamp(3rem, 6vw, 4.5rem);
+  }
+
+  .as-ro__waves {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: min(55%, 760px);
+    height: 70%;
+    fill: none;
+    stroke: var(--accent);
+    stroke-width: 1;
+    opacity: 0.35;
+    pointer-events: none;
+  }
+
+  .as-ro__inner {
+    position: relative;
+  }
+
+  /* Rust drops to 2.3:1 on navy; cyan holds 4.7:1. */
+  .as-ro__eyebrow {
+    margin: 0 0 0.8rem;
+    font-size: 0.875rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .as-ro h2 {
+    color: #fff;
+    font-size: clamp(2.2rem, 4.5vw, 3.2rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 0.6rem;
+  }
+
+  .as-ro__sub {
+    font-size: clamp(1.15rem, 1.8vw, 1.4rem);
+    color: #d6e6f5;
+    max-width: 36ch;
+    margin-bottom: 1.6rem;
+  }
+
+  .as-ro__stats {
+    list-style: none;
+    margin: 0 0 2.4rem;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.8rem 2rem;
+  }
+
+  .as-ro__stats li {
+    margin: 0;
+    color: #d6e6f5;
+    font-size: 1.05rem;
+  }
+
+  .as-ro__stats li + li {
+    padding-left: 2rem;
+    border-left: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .as-ro__stats strong {
+    color: #fff;
+    font-size: clamp(1.6rem, 2.6vw, 2rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-right: 0.35rem;
+  }
+
+  .as-ro__features,
+  .as-data__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 1.8rem;
+  }
+
+  .as-ro__features {
+    margin-bottom: 2.4rem;
+  }
+
+  @media (min-width: 820px) {
+    .as-ro__features,
+    .as-data__list {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+    }
+
+    .as-ro__features li,
+    .as-data__list li {
+      padding-inline: 2rem;
+    }
+
+    .as-ro__features li:first-child,
+    .as-data__list li:first-child {
+      padding-left: 0;
+    }
+
+    .as-ro__features li + li {
+      border-left: 1px solid rgba(255, 255, 255, 0.22);
+    }
+
+    .as-data__list li + li {
+      border-left: 1px solid var(--line);
+    }
+  }
+
+  .as-ro__features li,
+  .as-data__list li {
+    margin: 0;
+    display: flex;
+    gap: 1.2rem;
+    align-items: flex-start;
+  }
+
+  .as-ro__features svg,
+  .as-data__list svg {
+    width: 2.8rem;
+    height: 2.8rem;
+    flex: none;
+  }
+
+  .as-ro__features svg {
+    color: #fff;
+  }
+
+  .as-ro__features h3 {
+    color: #fff;
+    font-size: 1.15rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .as-ro__features p {
+    color: #c4daee;
+    font-size: 0.98rem;
+    margin: 0;
+  }
+
+  .as-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+  }
+
+  .as-btn :global(svg) {
+    width: 1.1rem;
+    height: 1.1rem;
+    transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .as-btn:hover :global(svg) {
+    transform: translateX(3px);
+  }
+
+  /* ---------- built around your data ---------- */
+
+  .as-data {
+    padding-block: clamp(3rem, 6vw, 4.5rem);
+  }
+
+  .as-data h2 {
+    color: var(--brand-deep);
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    font-weight: 800;
+    margin-bottom: 1.8rem;
+  }
+
+  .as-data__list svg {
+    color: var(--brand-deep);
+  }
+
+  .as-data__list h3 {
+    color: var(--brand-deep);
+    font-size: 1.15rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .as-data__list p {
+    font-size: 0.98rem;
+    margin: 0;
+  }
+</style>

@@ -19,24 +19,32 @@ interface Props {
   sub: string[];
   lede: string;
   heroCta: string;
+  /** Where the hero button goes. Defaults to the contact page. */
+  heroHref?: string;
   image: { base: string; alt: string };
   introTitle: string;
   intro: string[];
   helpWith: string[];
-  servicesTitle: string;
-  services: Service[];
+  /** Heading on the help panel. Defaults to "When we can help". */
+  helpTitle?: string;
+  /** The service list is left out when there are no services. */
+  servicesTitle?: string;
+  services?: Service[];
   /** One-line descriptions, keyed by service slug. */
-  lines: Record<string, string>;
+  lines?: Record<string, string>;
   /** SVG path markup, keyed by service slug. */
-  icons: Record<string, string>;
+  icons?: Record<string, string>;
   extra?: ExtraRow;
   ctaTitle: string;
   ctaText: string;
+  /** "light" puts the closing band on a pale ground instead of navy. */
+  ctaTone?: 'navy' | 'light';
 }
 
 const {
-  eyebrow, title, sub, lede, heroCta, image, introTitle, intro, helpWith,
-  servicesTitle, services, lines, icons, extra, ctaTitle, ctaText,
+  eyebrow, title, sub, lede, heroCta, heroHref = '/contact', image, introTitle, intro,
+  helpWith, helpTitle = 'When we can help', servicesTitle, services = [], lines = {},
+  icons = {}, extra, ctaTitle, ctaText, ctaTone = 'navy',
 } = Astro.props;
 ---
 
@@ -47,7 +55,7 @@ const {
       <h1>{title}</h1>
       <p class="pl-hero__sub">{sub.map((line) => <span>{line}</span>)}</p>
       <p class="pl-hero__lede">{lede}</p>
-      <a class="btn btn--primary btn--arrow" href="/contact">
+      <a class="btn btn--primary btn--arrow" href={heroHref}>
         {heroCta}
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
       </a>
@@ -77,7 +85,7 @@ const {
       {intro.map((p) => <p>{p}</p>)}
     </div>
     <aside class="pl-help">
-      <h3>When we can help</h3>
+      <h3>{helpTitle}</h3>
       <ul>
         {
           helpWith.map((item) => (
@@ -95,6 +103,8 @@ const {
   </div>
 </section>
 
+{
+  (services.length > 0 || extra) && (
 <section class="pl-services">
   <div class="wrap">
     <h2>{servicesTitle}</h2>
@@ -149,13 +159,17 @@ const {
     </ul>
   </div>
 </section>
+  )
+}
 
-<section class="pl-cta">
+<slot />
+
+<section class={`pl-cta pl-cta--${ctaTone}`}>
   <div class="wrap">
     <h2>{ctaTitle}</h2>
     <p>{ctaText}</p>
     <div class="pl-cta__actions">
-      <a class="btn btn--light btn--arrow" href="/contact">
+      <a class={`btn btn--arrow ${ctaTone === 'light' ? 'btn--primary' : 'btn--light'}`} href="/contact">
         Contact us
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
       </a>
@@ -488,6 +502,21 @@ const {
 
   .pl-cta__phone:hover {
     text-decoration: underline;
+  }
+
+  .pl-cta--light {
+    background: #eaf2fa;
+    color: var(--body);
+    border-top: 1px solid var(--line);
+  }
+
+  .pl-cta--light h2,
+  .pl-cta--light .pl-cta__phone {
+    color: var(--brand-deep);
+  }
+
+  .pl-cta--light .pl-cta__rule {
+    background: var(--line);
   }
 
   .pl-cta__phone svg {
