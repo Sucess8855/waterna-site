@@ -29,8 +29,13 @@ export interface ServicePageContent {
   receive: { text: string; items: string[]; note?: string; divider?: boolean };
   /** "split" puts the actions beside the text; "stacked" below it. */
   cta: { title: string; text: string; layout?: 'split' | 'stacked' };
-  /** "icons" shows icon, link and blurb; "tiles" shows bordered link tiles. */
-  relatedLayout?: 'icons' | 'tiles';
+  /**
+   * "icons" shows icon, link and blurb; "large" is the same at a bigger
+   * size; "tiles" shows bordered link tiles.
+   */
+  relatedLayout?: 'icons' | 'large' | 'tiles';
+  /** Per-page icon and wording for related links, keyed by service slug. */
+  relatedItems?: Record<string, { icon?: Glyph; blurb?: string }>;
 }
 
 export interface Service {
@@ -254,7 +259,18 @@ export const services: Service[] = [
         text: 'Tell us about your treatment system, project stage and required deliverables.',
         layout: 'stacked',
       },
-      relatedLayout: 'tiles',
+      relatedLayout: 'large',
+      relatedItems: {
+        'feasibility-studies': {
+          icon: 'clipboardCheck',
+          blurb: 'Compare treatment options and establish a basis for investment.',
+        },
+        'independent-review': {
+          icon: 'search',
+          blurb: 'Assess your design against process and operating requirements.',
+        },
+        hazop: { icon: 'shieldAlert', blurb: 'Identify process hazards and operability issues.' },
+      },
     },
   },
 

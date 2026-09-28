@@ -27,6 +27,20 @@ const fitsRow = page.fitsLayout === 'row';
 const numbered = page.coversNumbered !== false;
 const ctaStacked = page.cta.layout === 'stacked';
 const tiles = page.relatedLayout === 'tiles';
+const largeRelated = page.relatedLayout === 'large';
+
+/** A related link's icon and wording, letting the page override both. */
+function relatedIcon(r: Service): string {
+  const own = page.relatedItems?.[r.slug]?.icon;
+  return own ? glyphs[own] : (serviceIcons[r.slug] ?? '');
+}
+function relatedBlurb(r: Service): string | undefined {
+  return page.relatedItems?.[r.slug]?.blurb ?? r.blurb;
+}
+
+// Split a title so its last word can be kept on a line with the arrow.
+const headOf = (t: string) => t.slice(0, t.lastIndexOf(' ') + 1);
+const lastWord = (t: string) => t.slice(t.lastIndexOf(' ') + 1);
 ---
 
 <section class="sp-hero">
@@ -159,7 +173,7 @@ const tiles = page.relatedLayout === 'tiles';
     <section class="sp-related">
       <div class="wrap">
         <h2>Related services</h2>
-        <ul class:list={['sp-related__list', { 'sp-related__list--tiles': tiles }]}>
+        <ul class:list={['sp-related__list', { 'sp-related__list--tiles': tiles, 'sp-related__list--large': largeRelated }]}>
           {related.map((r) => tiles ? (
             <li>
               <a class="sp-tile" href={serviceHref(r)}>
@@ -168,12 +182,19 @@ const tiles = page.relatedLayout === 'tiles';
             </li>
           ) : (
             <li>
-              <svg class="sp-related__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={serviceIcons[r.slug] ?? ''} />
+              <svg class="sp-related__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={relatedIcon(r)} />
               <div>
-                <a href={serviceHref(r)}>
-                  {r.navTitle ?? r.title} <Fragment set:html={arrow} />
-                </a>
-                {r.blurb && <p>{r.blurb}</p>}
+                {largeRelated ? (
+                  <a href={serviceHref(r)}>
+                    {headOf(r.navTitle ?? r.title)}
+                    <span class="sp-nowrap">{lastWord(r.navTitle ?? r.title)}<Fragment set:html={arrow} /></span>
+                  </a>
+                ) : (
+                  <a href={serviceHref(r)}>
+                    {r.navTitle ?? r.title} <Fragment set:html={arrow} />
+                  </a>
+                )}
+                {relatedBlurb(r) && <p>{relatedBlurb(r)}</p>}
               </div>
             </li>
           ))}
@@ -823,5 +844,48 @@ const tiles = page.relatedLayout === 'tiles';
   .sp-tile :global(svg) {
     flex: none;
     color: #1a9fe0;
+  }
+
+  /* ---- related services, larger ---- */
+
+  .sp-related__list--large li {
+    gap: 1.4rem;
+  }
+
+  .sp-related__list--large .sp-related__icon {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .sp-nowrap {
+    white-space: nowrap;
+  }
+
+  /* Inline so a wrapped title keeps its arrow after the last word. */
+  .sp-related__list--large a {
+    display: inline;
+    font-size: 1.2rem;
+    line-height: 1.3;
+  }
+
+  .sp-related__list--large a :global(svg) {
+    display: inline-block;
+    vertical-align: -0.15em;
+    margin-left: 0.35rem;
+    color: #1a9fe0;
+    width: 1.15rem;
+    height: 1.15rem;
+  }
+
+  .sp-related__list--large p {
+    margin-top: 0.4rem;
+    font-size: 1rem;
+    max-width: 30ch;
+  }
+
+  @media (min-width: 820px) {
+    .sp-related__list--large li {
+      padding-inline: 2.5rem;
+    }
   }
 </style>
