@@ -34,8 +34,11 @@ export interface ServicePageContent {
    * size; "tiles" shows bordered link tiles.
    */
   relatedLayout?: 'icons' | 'large' | 'tiles';
-  /** Per-page icon and wording for related links, keyed by service slug. */
-  relatedItems?: Record<string, { icon?: Glyph; blurb?: string }>;
+  /**
+   * Per-page wording for related links, keyed by service slug. Icons are
+   * not overridable: a service shows the same icon wherever it appears.
+   */
+  relatedItems?: Record<string, { blurb: string }>;
 }
 
 export interface Service {
@@ -262,14 +265,12 @@ export const services: Service[] = [
       relatedLayout: 'large',
       relatedItems: {
         'feasibility-studies': {
-          icon: 'clipboardCheck',
           blurb: 'Compare treatment options and establish a basis for investment.',
         },
         'independent-review': {
-          icon: 'search',
           blurb: 'Assess your design against process and operating requirements.',
         },
-        hazop: { icon: 'shieldAlert', blurb: 'Identify process hazards and operability issues.' },
+        hazop: { blurb: 'Identify process hazards and operability issues.' },
       },
     },
   },

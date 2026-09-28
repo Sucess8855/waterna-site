@@ -29,11 +29,7 @@ const ctaStacked = page.cta.layout === 'stacked';
 const tiles = page.relatedLayout === 'tiles';
 const largeRelated = page.relatedLayout === 'large';
 
-/** A related link's icon and wording, letting the page override both. */
-function relatedIcon(r: Service): string {
-  const own = page.relatedItems?.[r.slug]?.icon;
-  return own ? glyphs[own] : (serviceIcons[r.slug] ?? '');
-}
+/** A related link's wording; the page may override it. */
 function relatedBlurb(r: Service): string | undefined {
   return page.relatedItems?.[r.slug]?.blurb ?? r.blurb;
 }
@@ -182,7 +178,7 @@ const lastWord = (t: string) => t.slice(t.lastIndexOf(' ') + 1);
             </li>
           ) : (
             <li>
-              <svg class="sp-related__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={relatedIcon(r)} />
+              <svg class="sp-related__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={serviceIcons[r.slug] ?? ''} />
               <div>
                 {largeRelated ? (
                   <a href={serviceHref(r)}>
