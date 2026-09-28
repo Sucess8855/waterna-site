@@ -49,17 +49,6 @@ const dataPoints = [
   },
 ];
 
-/* Decorative wave lines for the RO band: a fan of sine curves. */
-const waves = Array.from({ length: 9 }, (_, i) => {
-  const amp = 40 + i * 9;
-  const y = 150 + i * 14;
-  const pts: string[] = [];
-  for (let x = 0; x <= 700; x += 10) {
-    pts.push(`${x},${(y + amp * Math.sin((x / 700) * Math.PI * 2 + i * 0.22)).toFixed(1)}`);
-  }
-  return `M${pts.join(' L')}`;
-});
-
 const arrow =
   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>';
 ---
@@ -84,20 +73,67 @@ const arrow =
     ctaTone="light"
   >
     <section class="as-ro">
-      <svg class="as-ro__waves" viewBox="0 0 700 400" preserveAspectRatio="none" aria-hidden="true">
-        {waves.map((d) => <path d={d} />)}
-      </svg>
       <div class="wrap as-ro__inner">
-        <p class="as-ro__eyebrow">Our software</p>
-        <h2>Waterna RO Insight™</h2>
-        <p class="as-ro__sub">
-          Performance monitoring and decision support for reverse osmosis desalination.
-        </p>
+        <div class="as-ro__grid">
+          <div>
+            <p class="as-ro__eyebrow">Our software</p>
+            <h2>Waterna RO Insight™</h2>
+            <p class="as-ro__sub">
+              Performance monitoring and decision support for reverse osmosis desalination.
+            </p>
 
-        <ul class="as-ro__stats">
-          <li><strong>100+</strong> engineering indicators</li>
-          <li><strong>Offline</strong> AI assistant</li>
-        </ul>
+            <ul class="as-ro__stats">
+              <li><strong>100+</strong> engineering indicators</li>
+              <li><strong>Offline</strong> AI assistant</li>
+            </ul>
+
+            <a class="btn btn--light as-btn" href={roHref}>
+              Explore RO Insight™ <Fragment set:html={arrow} />
+            </a>
+          </div>
+
+          <!-- The same real screens as the homepage RO Insight section. -->
+          <figure class="as-ro__visual">
+            <div class="as-ro__frame">
+              <div class="as-ro__bar" aria-hidden="true"><span></span><span></span><span></span></div>
+              <picture>
+                <source
+                  type="image/webp"
+                  srcset="/img/ro-insight/dash-full-900.webp 900w, /img/ro-insight/dash-full-1400.webp 1400w"
+                  sizes="(min-width: 960px) 55vw, 100vw"
+                />
+                <img
+                  src="/img/ro-insight/dash-full-1400.jpg"
+                  alt="RO Insight live dashboard: plant status, fleet KPI snapshot and diagnostic overview"
+                  width="1400"
+                  height="795"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </picture>
+            </div>
+
+            <div class="as-ro__card">
+              <p class="as-ro__card-head">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M15 2v2M15 20v2M2 15h2M2 9h2M20 15h2M20 9h2M9 2v2M9 20v2"/></svg>
+                Offline AI assistant
+              </p>
+              <picture>
+                <source type="image/webp" srcset="/img/ro-insight/assistant-card.webp" />
+                <img
+                  src="/img/ro-insight/assistant-card.png"
+                  alt="The offline assistant answering: give me a concise summary of the current plant status"
+                  width="560"
+                  height="300"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </picture>
+            </div>
+
+            <figcaption>Real screens: the RO Live Dashboard and the offline AI assistant</figcaption>
+          </figure>
+        </div>
 
         <ul class="as-ro__features">
           {
@@ -112,10 +148,6 @@ const arrow =
             ))
           }
         </ul>
-
-        <a class="btn btn--light as-btn" href={roHref}>
-          Explore RO Insight™ <Fragment set:html={arrow} />
-        </a>
       </div>
     </section>
 
@@ -151,21 +183,120 @@ const arrow =
     padding-block: clamp(3rem, 6vw, 4.5rem);
   }
 
-  .as-ro__waves {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: min(55%, 760px);
-    height: 70%;
-    fill: none;
-    stroke: var(--accent);
-    stroke-width: 1;
-    opacity: 0.35;
-    pointer-events: none;
-  }
-
   .as-ro__inner {
     position: relative;
+  }
+
+  .as-ro__grid {
+    display: grid;
+    gap: 3rem;
+    align-items: center;
+    margin-bottom: clamp(3rem, 6vw, 4rem);
+  }
+
+  @media (min-width: 960px) {
+    .as-ro__grid {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 3.5rem;
+    }
+  }
+
+  /* ---- the tilted screen, as on the homepage ---- */
+
+  .as-ro__visual {
+    position: relative;
+    margin: 0;
+  }
+
+  .as-ro__frame {
+    background: #0a0e19;
+    border: 1px solid rgba(0, 185, 245, 0.35);
+    border-radius: 12px;
+    padding: 0 0.7rem 0.7rem;
+    box-shadow:
+      0 40px 80px -24px rgba(0, 0, 0, 0.65),
+      0 0 70px -10px rgba(0, 185, 245, 0.3);
+  }
+
+  .as-ro__bar {
+    display: flex;
+    gap: 0.4rem;
+    padding: 0.7rem 0.2rem;
+  }
+
+  .as-ro__bar span {
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: 50%;
+    background: #33415a;
+  }
+
+  .as-ro__bar span:first-child {
+    background: #e0564f;
+  }
+
+  .as-ro__frame img,
+  .as-ro__card img {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+  }
+
+  .as-ro__card {
+    background: #0b1426;
+    border: 1px solid rgba(0, 185, 245, 0.55);
+    border-radius: 10px;
+    padding: 0.8rem 0.8rem 0.9rem;
+    margin-top: 1rem;
+    box-shadow: 0 24px 50px -16px rgba(0, 0, 0, 0.7), 0 0 40px -12px rgba(0, 185, 245, 0.45);
+  }
+
+  .as-ro__card-head {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0 0 0.6rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .as-ro__card-head svg {
+    width: 1.2rem;
+    height: 1.2rem;
+    color: var(--accent);
+  }
+
+  .as-ro__visual figcaption {
+    margin-top: 1rem;
+    text-align: center;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  @media (min-width: 960px) {
+    /* The tilt enlarges the near edge, so the screen is pulled in from the
+       column edge to keep its frame inside the viewport. */
+    .as-ro__visual {
+      margin-right: 2.5rem;
+    }
+
+    .as-ro__frame {
+      transform: perspective(1600px) rotateY(-17deg) rotateX(4deg);
+      transform-origin: left center;
+    }
+
+    .as-ro__card {
+      position: absolute;
+      right: -2.25rem;
+      bottom: 2.2rem;
+      width: 46%;
+      margin: 0;
+    }
+
+    .as-ro__visual figcaption {
+      margin-top: 1.6rem;
+    }
   }
 
   /* Rust drops to 2.3:1 on navy; cyan holds 4.7:1. */
@@ -180,7 +311,7 @@ const arrow =
 
   .as-ro h2 {
     color: #fff;
-    font-size: clamp(2.2rem, 4.5vw, 3.2rem);
+    font-size: clamp(2.1rem, 3.6vw, 2.75rem);
     font-weight: 800;
     letter-spacing: -0.03em;
     margin-bottom: 0.6rem;
@@ -195,12 +326,12 @@ const arrow =
 
   .as-ro__stats {
     list-style: none;
-    margin: 0 0 2.4rem;
+    margin: 0 0 2rem;
     padding: 0;
     display: flex;
     flex-wrap: wrap;
     align-items: baseline;
-    gap: 0.8rem 2rem;
+    gap: 0.8rem 1.5rem;
   }
 
   .as-ro__stats li {
@@ -210,13 +341,13 @@ const arrow =
   }
 
   .as-ro__stats li + li {
-    padding-left: 2rem;
+    padding-left: 1.5rem;
     border-left: 1px solid rgba(255, 255, 255, 0.3);
   }
 
   .as-ro__stats strong {
     color: #fff;
-    font-size: clamp(1.6rem, 2.6vw, 2rem);
+    font-size: clamp(1.5rem, 2.2vw, 1.75rem);
     font-weight: 800;
     letter-spacing: -0.02em;
     margin-right: 0.35rem;
@@ -229,10 +360,6 @@ const arrow =
     padding: 0;
     display: grid;
     gap: 1.8rem;
-  }
-
-  .as-ro__features {
-    margin-bottom: 2.4rem;
   }
 
   @media (min-width: 820px) {
