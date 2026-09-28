@@ -11,14 +11,26 @@ export interface ServicePageContent {
   scope?: string;
   /** Basename in public/img/services. */
   image: { base: string; alt: string };
+  /** Hero button label. Defaults to "Discuss your project". */
+  heroCta?: string;
   leadTitle: string;
   leadText: string;
   /** Situations the service fits, shown as a short checklist. */
   fits: string[];
+  /** "side" puts the checklist beside the lead; "row" runs it beneath. */
+  fitsLayout?: 'side' | 'row';
+  /** Optional numbered band of project stages, after the lead. */
+  stages?: { title: string; items: { title: string; text: string }[] };
   coversTitle: string;
   covers: { title: string; text: string; icon: Glyph }[];
-  receive: { text: string; items: string[]; note?: string };
-  cta: { title: string; text: string };
+  /** Number the scope cards 01, 02… Defaults to true. */
+  coversNumbered?: boolean;
+  /** divider: set the note off with a rule above it. */
+  receive: { text: string; items: string[]; note?: string; divider?: boolean };
+  /** "split" puts the actions beside the text; "stacked" below it. */
+  cta: { title: string; text: string; layout?: 'split' | 'stacked' };
+  /** "icons" shows icon, link and blurb; "tiles" shows bordered link tiles. */
+  relatedLayout?: 'icons' | 'tiles';
 }
 
 export interface Service {
@@ -188,6 +200,62 @@ export const services: Service[] = [
       'A design package matched to your project stage — from a concept report and block flow diagram through to a full FEED deliverable set with P&IDs, datasheets, mass balance and basis of design. Everything is written so a third party can tender against it without depending on us to interpret it.',
     related: ['feasibility-studies', 'independent-review', 'hazop'],
     blurb: 'From feasibility to detailed design.',
+    page: {
+      sub: 'Turn treatment concepts into practical engineering.',
+      lede: 'Process engineering for new plants and system upgrades, from concept development through to front-end engineering design.',
+      scope: 'Water, wastewater and sludge treatment, including UF and RO desalination.',
+      image: {
+        base: 'design-services',
+        alt: 'A scale model of a treatment works on a desk covered with process drawings',
+      },
+      heroCta: 'Discuss your design requirements',
+      leadTitle: 'A sound design basis. Clear engineering deliverables.',
+      leadText:
+        'We translate treatment requirements into calculations, drawings and specifications that support the next stage of your project.',
+      fits: [
+        'Defined operating conditions',
+        'Practical operation and maintenance',
+        'Clear equipment and discipline interfaces',
+      ],
+      fitsLayout: 'row',
+      stages: {
+        title: 'Support at each project stage',
+        items: [
+          { title: 'Concept design', text: 'Establish the treatment approach and preliminary process requirements.' },
+          { title: 'Pre-FEED', text: 'Develop the preferred option and resolve key design uncertainties.' },
+          { title: 'FEED', text: 'Define process requirements for tendering and further engineering.' },
+        ],
+      },
+      coversTitle: 'What our design services cover',
+      coversNumbered: false,
+      covers: [
+        { icon: 'doc', title: 'Basis of design', text: 'Define flows, loads, treatment targets and operating scenarios.' },
+        { icon: 'bars', title: 'Mass and water balances', text: 'Quantify process streams, recycles, residuals and utility demands.' },
+        { icon: 'hierarchy', title: 'Process diagrams and controls', text: 'Develop flow diagrams, P&IDs and process control requirements.' },
+        { icon: 'drop', title: 'Hydraulics and process sizing', text: 'Assess head losses, hydraulic profiles and treatment capacities.' },
+        { icon: 'gear', title: 'Equipment specifications', text: 'Define equipment duties and prepare process datasheets.' },
+        { icon: 'link', title: 'Integration and design interfaces', text: 'Coordinate tie-ins, utilities and requirements for other disciplines.' },
+      ],
+      receive: {
+        text: 'A process engineering package matched to your project stage and agreed scope.',
+        items: [
+          'Design basis and calculations',
+          'Mass and water balances',
+          'Process diagrams and P&IDs',
+          'Hydraulic and sizing calculations',
+          'Equipment duty specifications',
+          'Control philosophy and interfaces',
+        ],
+        note: 'Deliverables, design maturity and discipline responsibilities are agreed at the outset.',
+        divider: true,
+      },
+      cta: {
+        title: 'Let’s define your design requirements.',
+        text: 'Tell us about your treatment system, project stage and required deliverables.',
+        layout: 'stacked',
+      },
+      relatedLayout: 'tiles',
+    },
   },
 
   {
