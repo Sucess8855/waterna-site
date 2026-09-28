@@ -13,8 +13,10 @@ export interface ServicePageContent {
   image: { base: string; alt: string };
   /** Hero button label. Defaults to "Discuss your project". */
   heroCta?: string;
-  /** Show the service's own icon above the title. */
+  /** Show the service's own icon beside the title. */
   heroIcon?: boolean;
+  /** Set the title's line breaks, one entry per line, on wide screens. */
+  titleLines?: string[];
   leadTitle: string;
   leadText: string;
   /** Situations the service fits, shown as a short checklist. */
@@ -22,14 +24,17 @@ export interface ServicePageContent {
   /** "side" puts the checklist beside the lead; "row" runs it beneath. */
   fitsLayout?: 'side' | 'row';
   /** Optional numbered band of project stages, after the lead. */
-  /** layout "inline" sets each number beside its text on a white card. */
+  /**
+   * "inline" sets each number beside its text on a white card; "plain" is
+   * a white card with no number.
+   */
   stages?: {
     title: string;
     items: { title: string; text: string }[];
-    layout?: 'stacked' | 'inline';
+    layout?: 'stacked' | 'inline' | 'plain';
   };
   coversTitle: string;
-  covers: { title: string; text: string; icon: Glyph }[];
+  covers: { title: string; text: string; icon?: Glyph }[];
   /** Number the scope cards 01, 02… Defaults to true. */
   coversNumbered?: boolean;
   /** "top" puts each card's icon above its title; "side" beside it. */
@@ -40,7 +45,15 @@ export interface ServicePageContent {
    * "split" puts the actions in a row beside the text; "stacked" below it;
    * "aside" beside it with the phone under the button.
    */
-  cta: { title: string; text: string; layout?: 'split' | 'stacked' | 'aside' };
+  cta: {
+    title: string;
+    text: string;
+    layout?: 'split' | 'stacked' | 'aside';
+    /** Button label. Defaults to "Discuss your project". */
+    button?: string;
+  };
+  /** Optional numbered steps with arrows between, before the call to action. */
+  process?: { title: string; items: { title: string; text: string }[] };
   /**
    * "icons" shows icon, link and blurb; "large" is the same at a bigger
    * size; "tiles" shows bordered link tiles; "rows" makes each whole item
@@ -439,8 +452,78 @@ export const services: Service[] = [
     ],
     deliverables:
       'A written technical opinion with findings ranked by consequence, the evidence behind each, and a clear recommendation. Where we disagree with an existing design we say why, and what we would do instead.',
-    related: ['feasibility-studies', 'design-services', 'plant-optimisation'],
+    related: ['design-services', 'technical-procurement-support', 'hazop'],
     blurb: 'An expert view on your design.',
+    page: {
+      titleLines: ['Independent', 'Design Review'],
+      heroIcon: true,
+      sub: 'An independent assessment of your treatment design.',
+      lede: 'Review design assumptions, process sizing and operating requirements before key project decisions.',
+      scope: 'Water, wastewater and sludge treatment, including UF and RO desalination.',
+      image: {
+        base: 'independent-review',
+        alt: 'A process drawing marked up with review comments, beside a calculation sheet and a tablet listing design review items',
+      },
+      heroCta: 'Discuss your design review',
+      leadTitle: 'Understand the design. Identify what needs attention.',
+      leadText:
+        'We assess the proposed design against its intended duty, explain the significance of our findings and recommend practical next steps.',
+      fits: [
+        'Check assumptions and calculations',
+        'Identify constraints and omissions',
+        'Prioritise review actions',
+      ],
+      fitsLayout: 'row',
+      stages: {
+        title: 'When an independent review helps',
+        layout: 'plain',
+        items: [
+          { title: 'Before a design milestone', text: 'Resolve key questions before the project progresses.' },
+          { title: 'Before an upgrade', text: 'Assess existing capacity and proposed changes.' },
+          { title: 'When specialist input is needed', text: 'Investigate a defined process engineering concern.' },
+        ],
+      },
+      coversTitle: 'What we review',
+      covers: [
+        { title: 'Design basis and assumptions', text: 'Flows, loads, treatment targets and operating scenarios.' },
+        { title: 'Process selection and sizing', text: 'Treatment suitability, calculations and equipment capacity.' },
+        { title: 'Hydraulics and interfaces', text: 'Head losses, recycles, tie-ins and utility requirements.' },
+        { title: 'Operability and maintenance', text: 'Control philosophy, standby arrangements and cleaning needs.' },
+        { title: 'Performance and technical risks', text: 'Design evidence, stated commitments and unresolved issues.' },
+        { title: 'Existing assets and upgrades', text: 'Capacity constraints and integration of proposed changes.' },
+      ],
+      receive: {
+        text: 'A clear technical report with evidence, priorities and recommended actions.',
+        items: [
+          'Review scope and documents assessed',
+          'Findings and supporting evidence',
+          'Prioritised technical actions',
+          'Recommended checks or changes',
+          'Assumptions and information gaps',
+          'Responses and closure status, where agreed',
+        ],
+        note: 'The review depth and assessment criteria are agreed at the outset.',
+      },
+      process: {
+        title: 'A structured review, with clear follow-up',
+        items: [
+          { title: 'Agree the scope', text: 'Define objectives, key questions and documents to be reviewed.' },
+          { title: 'Assess the design', text: 'Review the design, calculations and supporting information.' },
+          { title: 'Discuss findings and actions', text: 'Explain the results and agree recommended next steps.' },
+        ],
+      },
+      cta: {
+        title: 'Let’s review your treatment design.',
+        text: 'Share your project stage, available documents and the questions you need answered.',
+        button: 'Discuss your review',
+      },
+      relatedLayout: 'rows',
+      relatedItems: {
+        'design-services': { blurb: 'Develop process calculations and specifications.' },
+        'technical-procurement-support': { blurb: 'Prepare tenders and evaluate supplier proposals.' },
+        hazop: { blurb: 'Review process hazards and operability issues.' },
+      },
+    },
   },
 
   {

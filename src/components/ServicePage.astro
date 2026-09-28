@@ -32,6 +32,7 @@ const relatedRows = page.relatedLayout === 'rows';
 const stagesInline = page.stages?.layout === 'inline';
 const coversSide = page.coversLayout === 'side';
 const ctaAside = page.cta.layout === 'aside';
+const stagesPlain = page.stages?.layout === 'plain';
 const icon = (paths: string, cls: string) =>
   `<svg class="${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths}</svg>`;
 
@@ -39,6 +40,11 @@ const icon = (paths: string, cls: string) =>
 function relatedBlurb(r: Service): string | undefined {
   return page.relatedItems?.[r.slug]?.blurb ?? r.blurb;
 }
+
+// The page title, with its line breaks set by the page if it chooses.
+const title = page.titleLines
+  ? page.titleLines.map((line) => `<span class="sp-line">${line}</span>`).join(' ')
+  : undefined;
 
 // Split a title so its last word can be kept on a line with the arrow.
 const headOf = (t: string) => t.slice(0, t.lastIndexOf(' ') + 1);
@@ -53,16 +59,10 @@ const lastWord = (t: string) => t.slice(t.lastIndexOf(' ') + 1);
         <span aria-hidden="true">/</span>
         <span>{service.navTitle ?? service.title}</span>
       </nav>
-      {
-        page.heroIcon ? (
-          <div class="sp-hero__title">
-            <Fragment set:html={icon(serviceIcons[service.slug] ?? '', 'sp-hero__icon')} />
-            <h1>{service.title}</h1>
-          </div>
-        ) : (
-          <h1>{service.title}</h1>
-        )
-      }
+      <div class:list={[{ 'sp-hero__title': page.heroIcon }]}>
+        {page.heroIcon && <Fragment set:html={icon(serviceIcons[service.slug] ?? '', 'sp-hero__icon')} />}
+        {title ? <h1 set:html={title} /> : <h1>{service.title}</h1>}
+      </div>
       <p class="sp-hero__sub">{page.sub}</p>
       <p class="sp-hero__lede">{page.lede}</p>
       {page.scope && <p class="sp-hero__scope">{page.scope}</p>}
@@ -105,10 +105,10 @@ const lastWord = (t: string) => t.slice(t.lastIndexOf(' ') + 1);
     <section class="sp-stages">
       <div class="wrap">
         <h2>{page.stages.title}</h2>
-        <ol class:list={['sp-stages__list', { 'sp-stages__list--inline': stagesInline }]}>
+        <ol class:list={['sp-stages__list', { 'sp-stages__list--inline': stagesInline, 'sp-stages__list--plain': stagesPlain }]}>
           {page.stages.items.map((s, i) => (
             <li>
-              <span class="sp-stages__num">{pad(i + 1)}</span>
+              {!stagesPlain && <span class="sp-stages__num">{pad(i + 1)}</span>}
               <div>
                 <h3>{s.title}</h3>
                 <p>{s.text}</p>
@@ -130,7 +130,7 @@ const lastWord = (t: string) => t.slice(t.lastIndexOf(' ') + 1);
           <li class="sp-card">
             {numbered && <span class="sp-card__num">{pad(i + 1)}</span>}
             <div>
-              <svg class="sp-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={glyphs[c.icon]} />
+              {c.icon && <svg class="sp-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={glyphs[c.icon]} />}
               <h3>{c.title}</h3>
               <p>{c.text}</p>
             </div>
@@ -162,6 +162,27 @@ const lastWord = (t: string) => t.slice(t.lastIndexOf(' ') + 1);
   </div>
 </section>
 
+{
+  page.process && (
+    <section class="sp-process">
+      <div class="wrap">
+        <h2>{page.process.title}</h2>
+        <ol class="sp-process__list">
+          {page.process.items.map((s, i) => (
+            <li>
+              <span class="sp-process__num">{pad(i + 1)}</span>
+              <div>
+                <h3>{s.title}</h3>
+                <p>{s.text}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+  )
+}
+
 <section class:list={['sp-cta', { 'sp-cta--stacked': ctaStacked, 'sp-cta--aside': ctaAside }]}>
   <div class="wrap sp-cta__grid">
     <div>
@@ -170,7 +191,7 @@ const lastWord = (t: string) => t.slice(t.lastIndexOf(' ') + 1);
     </div>
     <div class="sp-cta__actions">
       <a class="btn btn--primary sp-btn" href="/contact">
-        Discuss your project <Fragment set:html={arrow} />
+        {page.cta.button ?? 'Discuss your project'} <Fragment set:html={arrow} />
       </a>
       {!ctaStacked && !ctaAside && <span class="sp-cta__rule" aria-hidden="true" />}
       <a class="sp-cta__phone" href={site.phoneHref}>
@@ -891,6 +912,99 @@ const lastWord = (t: string) => t.slice(t.lastIndexOf(' ') + 1);
     height: clamp(2.2rem, 3.4vw, 2.7rem);
     margin-top: 0.15em;
     color: var(--brand-deep);
+  }
+
+  /* Page-set title lines break only where there is room for them. */
+  @media (min-width: 560px) {
+    .sp-hero :global(.sp-line) {
+      display: block;
+    }
+  }
+
+  /* ---- stage cards without numbers ---- */
+
+  .sp-stages__list--plain li {
+    background: #fff;
+    border: 1px solid #dde9f4;
+    padding: 1.3rem 1.5rem 1.4rem;
+  }
+
+  /* ---- numbered process steps with arrows between ---- */
+
+  .sp-process {
+    padding-block: clamp(2.75rem, 5vw, 3.75rem);
+  }
+
+  .sp-process h2 {
+    color: var(--brand-deep);
+    font-size: clamp(1.6rem, 2.6vw, 2rem);
+    font-weight: 800;
+    margin-bottom: 1.4rem;
+  }
+
+  .sp-process__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 1.6rem;
+  }
+
+  .sp-process__list li {
+    margin: 0;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 1rem;
+    align-items: start;
+  }
+
+  /* #0A78C2 holds 4.69:1 on white. */
+  .sp-process__num {
+    color: #0a78c2;
+    font-size: clamp(1.9rem, 2.6vw, 2.3rem);
+    font-weight: 500;
+    line-height: 1;
+  }
+
+  .sp-process h3 {
+    color: var(--brand-deep);
+    font-size: 1.1rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .sp-process p {
+    margin: 0;
+    font-size: 0.97rem;
+    max-width: 30ch;
+  }
+
+  /* Arrows sit in the gap between steps, drawn in CSS so they stay out of
+     the reading order. */
+  @media (min-width: 860px) {
+    .sp-process__list {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 4.5rem;
+    }
+
+    .sp-process__list li {
+      position: relative;
+    }
+
+    .sp-process__list li + li::before {
+      content: '';
+      position: absolute;
+      left: -3.4rem;
+      top: 0.9rem;
+      width: 2.2rem;
+      height: 1.2rem;
+      background: #1a9fe0;
+      -webkit-mask: var(--sp-arrow) no-repeat center / contain;
+      mask: var(--sp-arrow) no-repeat center / contain;
+    }
+  }
+
+  .sp-process {
+    --sp-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 20' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 10h31'/%3E%3Cpath d='m26 3 7 7-7 7'/%3E%3C/svg%3E");
   }
 
   /* ---- stage cards with the number beside the text ---- */
