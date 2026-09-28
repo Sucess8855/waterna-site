@@ -39,8 +39,10 @@ export interface ServicePageContent {
   coversNumbered?: boolean;
   /** "top" puts each card's icon above its title; "side" beside it. */
   coversLayout?: 'top' | 'side';
-  /** divider: set the note off with a rule above it. */
-  receive: { text: string; items: string[]; note?: string; divider?: boolean };
+  /** Show scope card numbers in round badges. */
+  coversBadges?: boolean;
+  /** divider: set the note off with a rule above it; columns: list columns (default 2). */
+  receive: { text: string; items: string[]; note?: string; divider?: boolean; columns?: 1 | 2 };
   /**
    * "split" puts the actions in a row beside the text; "stacked" below it;
    * "aside" beside it with the phone under the button.
@@ -52,14 +54,21 @@ export interface ServicePageContent {
     /** Button label. Defaults to "Discuss your project". */
     button?: string;
   };
-  /** Optional numbered steps with arrows between, before the call to action. */
-  process?: { title: string; items: { title: string; text: string }[] };
+  /**
+   * Optional numbered steps before the call to action: "arrows" joins them
+   * with arrows; "dividers" separates them with rules and badge numbers.
+   */
+  process?: {
+    title: string;
+    items: { title: string; text: string }[];
+    layout?: 'arrows' | 'dividers';
+  };
   /**
    * "icons" shows icon, link and blurb; "large" is the same at a bigger
    * size; "tiles" shows bordered link tiles; "rows" makes each whole item
-   * a link with the arrow at its far end.
+   * a link with the arrow at its far end; "cards" is the same in a bordered card.
    */
-  relatedLayout?: 'icons' | 'large' | 'tiles' | 'rows';
+  relatedLayout?: 'icons' | 'large' | 'tiles' | 'rows' | 'cards';
   /**
    * Per-page wording for related links, keyed by service slug. Icons are
    * not overridable: a service shows the same icon wherever it appears.
@@ -570,6 +579,75 @@ export const services: Service[] = [
     deliverables:
       'A full HAZOP report with the node worksheets, the risk ranking, and an action register written so each item can be closed and evidenced. We can also run the close-out review once actions have been addressed.',
     related: ['design-services', 'independent-review', 'feasibility-studies'],
+    page: {
+      titleLines: ['HAZOP &', 'Risk Studies'],
+      heroIcon: true,
+      sub: 'Structured reviews. Clear actions.',
+      lede: 'Independent HAZOP chairing for water, wastewater and sludge treatment, including UF, RO desalination and anaerobic digestion.',
+      scope: 'Identify hazards and operability issues through a focused, multidisciplinary review.',
+      image: {
+        base: 'hazop',
+        alt: 'An engineer leading a HAZOP session in front of a process drawing on a wall screen',
+      },
+      heroCta: 'Discuss your study',
+      leadTitle: 'A focused review of how the plant could deviate from its intended operation.',
+      leadText:
+        'We bring structure to the discussion, draw on the team’s experience and document findings and recommendations clearly.',
+      fits: ['Prepared study scope', 'Relevant technical participation', 'Actions with defined ownership'],
+      fitsLayout: 'row',
+      stages: {
+        title: 'When a study can help',
+        layout: 'plain',
+        items: [
+          { title: 'New treatment systems', text: 'Review a sufficiently developed design before implementation.' },
+          { title: 'Plant modifications', text: 'Examine changes to equipment, controls or operating conditions.' },
+          { title: 'Existing installations', text: 'Review defined systems using current plant information.' },
+        ],
+      },
+      coversTitle: 'What our support covers',
+      coversBadges: true,
+      covers: [
+        { title: 'Study preparation', text: 'Agree scope, nodes, documentation and participants.' },
+        { title: 'Independent chairing and recording', text: 'Facilitate a structured guide-word review and capture the discussion.' },
+        { title: 'Deviations and safeguards', text: 'Examine causes, consequences and existing safeguards.' },
+        { title: 'Risk assessment', text: 'Apply the agreed criteria and risk matrix where required.' },
+        { title: 'Action definition', text: 'Record clear recommendations, owners and completion requirements.' },
+        { title: 'Close-out support', text: 'Track responses and review supporting evidence where commissioned.' },
+      ],
+      receive: {
+        text: 'A documented study record and an action register your team can work through.',
+        items: [
+          'Scope, team and reference documents',
+          'Node worksheets and findings',
+          'Recorded causes and consequences',
+          'Safeguards and risk rankings, where used',
+          'Actions, owners and target dates',
+          'Close-out status, where included',
+        ],
+        note: 'Implementation and action approval follow the agreed project responsibilities.',
+        columns: 1,
+      },
+      process: {
+        title: 'From preparation to follow-up',
+        layout: 'dividers',
+        items: [
+          { title: 'Prepare', text: 'Agree scope, gather documentation and confirm participants.' },
+          { title: 'Facilitate and record', text: 'Chair the study, capture discussion and agree actions.' },
+          { title: 'Report and follow up', text: 'Issue the study record and support action close-out where commissioned.' },
+        ],
+      },
+      cta: {
+        title: 'Let’s plan your HAZOP study.',
+        text: 'Tell us about your system, project stage, available drawings and intended timing.',
+        button: 'Discuss your study',
+      },
+      relatedLayout: 'cards',
+      relatedItems: {
+        'design-services': { blurb: 'Develop process drawings and specifications.' },
+        'independent-review': { blurb: 'Assess assumptions, sizing and technical risks.' },
+        'feasibility-studies': { blurb: 'Compare treatment options and constraints.' },
+      },
+    },
   },
 
   {
