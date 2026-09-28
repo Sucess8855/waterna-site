@@ -53,8 +53,16 @@ const lastWord = (t: string) => t.slice(t.lastIndexOf(' ') + 1);
         <span aria-hidden="true">/</span>
         <span>{service.navTitle ?? service.title}</span>
       </nav>
-      {page.heroIcon && <Fragment set:html={icon(serviceIcons[service.slug] ?? '', 'sp-hero__icon')} />}
-      <h1>{service.title}</h1>
+      {
+        page.heroIcon ? (
+          <div class="sp-hero__title">
+            <Fragment set:html={icon(serviceIcons[service.slug] ?? '', 'sp-hero__icon')} />
+            <h1>{service.title}</h1>
+          </div>
+        ) : (
+          <h1>{service.title}</h1>
+        )
+      }
       <p class="sp-hero__sub">{page.sub}</p>
       <p class="sp-hero__lede">{page.lede}</p>
       {page.scope && <p class="sp-hero__scope">{page.scope}</p>}
@@ -864,12 +872,25 @@ const lastWord = (t: string) => t.slice(t.lastIndexOf(' ') + 1);
 
   /* ---- service icon above the hero title ---- */
 
+  .sp-hero__title {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.9rem;
+  }
+
+  /* The icon takes some of the column, so the title steps down a little
+     to keep its line breaks. */
+  .sp-hero__title h1 {
+    font-size: clamp(2rem, 3.4vw, 2.6rem);
+  }
+
+  /* Sized and nudged to sit on the first line of the title. */
   .sp-hero :global(.sp-hero__icon) {
-    display: block;
-    width: 3rem;
-    height: 3rem;
+    flex: none;
+    width: clamp(2.2rem, 3.4vw, 2.7rem);
+    height: clamp(2.2rem, 3.4vw, 2.7rem);
+    margin-top: 0.15em;
     color: var(--brand-deep);
-    margin-bottom: 1rem;
   }
 
   /* ---- stage cards with the number beside the text ---- */
