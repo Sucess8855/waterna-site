@@ -121,13 +121,50 @@ export const services: Service[] = [
   },
 
   {
-    // Listed only for now — no intro, so no page is generated.
     slug: 'technical-procurement-support',
     pillar: 'project-engineering',
     title: 'Technical Procurement Support',
     navTitle: 'Procurement Support',
     summary:
       'Turning a design into a tender package and a supplier into a contract — specifications, bid evaluation, technical clarifications and factory acceptance testing.',
+    metaTitle: 'Technical Procurement Support for Treatment Plant | Waterna',
+    metaDescription:
+      'Independent technical procurement support for water and wastewater treatment equipment and packages — tender specifications, bid evaluation, technical clarifications and acceptance testing.',
+    intro:
+      'A good design can still end up as the wrong plant if the tender lets suppliers quote to their own standard rather than to your duty. We write the technical side of the tender, evaluate what comes back on a like-for-like basis, and hold the chosen supplier to what was specified.',
+    why: [
+      'Treatment packages are rarely bought on price alone, but they are often compared as if they were. Two bids can quote the same flow and differ in the design loads they assumed, the pretreatment they left out, the consumables they priced and the performance they are prepared to guarantee. Unless the tender fixes those points, the cheapest bid is often simply the one that included least.',
+      'Because we hold no supplier agreements, our only interest is that the package you buy does the job in the specification. That independence matters most at the moment of choosing between suppliers.',
+    ],
+    covered: [
+      [
+        'Technical specifications',
+        'Duty, performance and scope requirements written to the process need, clear enough that every bidder is pricing the same thing.',
+      ],
+      [
+        'Tender package preparation',
+        'Scope of supply, battery limits, performance guarantees, datasheets and the documentation bidders must return.',
+      ],
+      [
+        'Bid evaluation',
+        'Technical compliance checks and normalisation of competing bids onto a common basis, including whole-life operating cost.',
+      ],
+      [
+        'Technical clarifications',
+        'Raising and resolving the questions each bid leaves open, so exclusions and assumptions are visible before award.',
+      ],
+      [
+        'Supplier document review',
+        'Checking vendor drawings, datasheets and calculations against the specification after award.',
+      ],
+      [
+        'Acceptance testing',
+        'Factory and site acceptance test procedures, and witnessing where required, before equipment is accepted.',
+      ],
+    ],
+    deliverables:
+      'A tender-ready technical package, a written bid evaluation with a clear recommendation and the reasoning behind it, and a record of clarifications and test results you can hold the supplier to.',
+    related: ['design-services', 'independent-review', 'commissioning-performance-testing'],
   },
 
   {
@@ -318,12 +355,49 @@ export const services: Service[] = [
   },
 
   {
-    // Listed only for now — no intro, so no page is generated.
     slug: 'uf-ro-performance-assessment',
     pillar: 'plant-performance',
     title: 'UF & RO Performance Assessment',
     summary:
       'A point-in-time engineering assessment of membrane performance — normalisation, fouling and scaling indices, recovery and specific energy, with a baseline later operation can be judged against.',
+    metaTitle: 'UF & RO Membrane Performance Assessment | Waterna',
+    metaDescription:
+      'Independent engineering assessment of ultrafiltration and reverse osmosis systems — normalised performance, fouling and scaling, pretreatment, cleaning effectiveness and specific energy.',
+    intro:
+      'Membrane systems rarely fail suddenly. Permeability falls, differential pressure creeps up and cleans become more frequent, and each change looks small on its own. We assess UF and RO systems on a normalised basis to establish what condition the membranes are really in, and why.',
+    why: [
+      'Raw operating figures mislead on membrane plant. Permeate flow and pressure move with temperature, feed salinity and recovery, so a train can look stable while it is fouling, or look worse while nothing has changed. Normalising the data is the only way to see the underlying trend.',
+      'Most membrane problems start upstream. Fouling, scaling and early replacement usually trace back to pretreatment, chemical dosing or the way the plant is operated, rather than to the membranes themselves. An assessment that looks only at the membranes tends to recommend new membranes.',
+    ],
+    covered: [
+      [
+        'Normalised performance',
+        'Normalised permeate flow, salt passage and differential pressure, trended per train and stage against its own baseline.',
+      ],
+      [
+        'Fouling and scaling',
+        'Identifying the type and location of fouling or scaling from its performance signature, and the conditions driving it.',
+      ],
+      [
+        'Pretreatment review',
+        'Whether the feed reaching the membranes is fit for them — filtration, SDI and turbidity, coagulation, and oxidant control.',
+      ],
+      [
+        'Cleaning effectiveness',
+        'How much performance each clean recovers, how quickly it is lost again, and what that says about the cleaning regime.',
+      ],
+      [
+        'Recovery and energy',
+        'Operating recovery, flux and specific energy consumption compared against design and against what the feed allows.',
+      ],
+      [
+        'Membrane autopsy support',
+        'Where the evidence is unclear, specifying element sampling and interpreting autopsy results.',
+      ],
+    ],
+    deliverables:
+      'A written assessment of membrane condition and its causes, a normalised performance baseline that later operation can be judged against, and ranked recommendations covering operation, pretreatment, cleaning and replacement.',
+    related: ['chemical-dosing-cip', 'data-analysis', 'ro-insight'],
   },
 
   {
@@ -333,6 +407,44 @@ export const services: Service[] = [
     navTitle: 'Chemical Dosing & CIP',
     summary:
       'Getting dose rates and cleaning regimes right — antiscalant, coagulant and biocide selection, CIP chemistry and frequency, judged on what actually restores performance.',
+    metaTitle: 'Chemical Dosing & CIP Optimisation | Waterna',
+    metaDescription:
+      'Independent review of chemical selection, dose rates and clean-in-place procedures for water, wastewater and membrane treatment — lower chemical cost without risking performance.',
+    intro:
+      'Chemicals are often one of the largest operating costs on a treatment plant, and dose rates are rarely revisited once they have been set. We review what is dosed, how much and why, and whether cleaning procedures actually restore the performance they are meant to.',
+    why: [
+      'Dose rates tend to be set at commissioning, then raised to deal with a problem and never lowered again. The result is plants that overdose for most of the year, or underdose at exactly the conditions that matter. Either way the cost is paid in chemicals, sludge or performance.',
+      'Clean-in-place procedures drift in the same way. A clean that uses the wrong chemistry for the foulant, or runs at the wrong temperature, pH or contact time, can use a full set of chemicals and recover very little. Judging a clean by what it restores, rather than by whether it was carried out, is the only reliable test.',
+    ],
+    covered: [
+      [
+        'Chemical selection',
+        'Coagulants, flocculants, antiscalants, biocides, pH correction and oxidants reviewed against the actual water and treatment duty.',
+      ],
+      [
+        'Dose rate optimisation',
+        'Dose set against measured demand, with jar testing or trials where needed, rather than against historical habit.',
+      ],
+      [
+        'Dosing system review',
+        'Pump sizing, turndown, dosing points, mixing and control — the equipment that decides whether the set dose is actually delivered.',
+      ],
+      [
+        'CIP chemistry and procedure',
+        'Cleaning chemicals, sequence, temperature, pH and contact time matched to the foulants present.',
+      ],
+      [
+        'Cleaning frequency',
+        'Setting cleaning triggers from performance data, so plants clean when they need to rather than on a fixed calendar.',
+      ],
+      [
+        'Cost and supplier neutrality',
+        'Chemical cost per cubic metre benchmarked, with recommendations that do not depend on any particular chemical supplier.',
+      ],
+    ],
+    deliverables:
+      'A written review of chemical use and cleaning performance, revised dose ranges and CIP procedures, and an estimate of the savings and performance effect of each change.',
+    related: ['uf-ro-performance-assessment', 'plant-optimisation', 'data-analysis'],
   },
 
   {
@@ -342,6 +454,44 @@ export const services: Service[] = [
     navTitle: 'Commissioning & Testing',
     summary:
       'Proving a new plant does what it was bought to do, with a performance test protocol agreed before the contractor leaves site.',
+    metaTitle: 'Commissioning & Performance Testing | Waterna',
+    metaDescription:
+      'Independent commissioning support and performance testing for new and upgraded water and wastewater treatment plant — test protocols, witnessing and acceptance against agreed criteria.',
+    intro:
+      'Handover is the last point at which a contractor is obliged to prove the plant works. We help define what "working" means before testing starts, witness the tests, and assess the results independently, so acceptance is based on evidence rather than on a single good day.',
+    why: [
+      'Performance guarantees are only as useful as the test that checks them. If test conditions, sampling, durations and pass criteria are left to be agreed on site, they tend to be agreed in whatever form the plant can pass. Fixing them in advance protects the owner without being unfair to the contractor.',
+      'Problems not found at commissioning are usually found later, after the contractor’s liability has ended and at the owner’s cost. A clear test record also gives operators a baseline to compare against for the life of the plant.',
+    ],
+    covered: [
+      [
+        'Commissioning planning',
+        'Commissioning sequence, pre-commissioning checks and readiness reviews, coordinated with the contractor’s own plan.',
+      ],
+      [
+        'Performance test protocols',
+        'Test conditions, durations, sampling and analysis methods, and pass criteria agreed before testing begins.',
+      ],
+      [
+        'Test witnessing',
+        'Independent attendance at performance and acceptance tests, with observations recorded as they happen.',
+      ],
+      [
+        'Results assessment',
+        'Test data checked against the guarantees and the design basis, with any shortfall and its likely cause identified.',
+      ],
+      [
+        'Punch lists and remedial actions',
+        'Outstanding items recorded with clear completion criteria, and retests specified where needed.',
+      ],
+      [
+        'Performance baseline',
+        'A documented starting point for operation, so later changes in performance can be measured against it.',
+      ],
+    ],
+    deliverables:
+      'Agreed test protocols, a witnessed and independently assessed test report, a clear acceptance recommendation, and a performance baseline your operators can use from the first day.',
+    related: ['technical-procurement-support', 'plant-optimisation', 'uf-ro-performance-assessment'],
   },
 
   {
