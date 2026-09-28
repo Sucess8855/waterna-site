@@ -28,6 +28,12 @@ const numbered = page.coversNumbered !== false;
 const ctaStacked = page.cta.layout === 'stacked';
 const tiles = page.relatedLayout === 'tiles';
 const largeRelated = page.relatedLayout === 'large';
+const relatedRows = page.relatedLayout === 'rows';
+const stagesInline = page.stages?.layout === 'inline';
+const coversSide = page.coversLayout === 'side';
+const ctaAside = page.cta.layout === 'aside';
+const icon = (paths: string, cls: string) =>
+  `<svg class="${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths}</svg>`;
 
 /** A related link's wording; the page may override it. */
 function relatedBlurb(r: Service): string | undefined {
@@ -47,6 +53,7 @@ const lastWord = (t: string) => t.slice(t.lastIndexOf(' ') + 1);
         <span aria-hidden="true">/</span>
         <span>{service.navTitle ?? service.title}</span>
       </nav>
+      {page.heroIcon && <Fragment set:html={icon(serviceIcons[service.slug] ?? '', 'sp-hero__icon')} />}
       <h1>{service.title}</h1>
       <p class="sp-hero__sub">{page.sub}</p>
       <p class="sp-hero__lede">{page.lede}</p>
@@ -90,12 +97,14 @@ const lastWord = (t: string) => t.slice(t.lastIndexOf(' ') + 1);
     <section class="sp-stages">
       <div class="wrap">
         <h2>{page.stages.title}</h2>
-        <ol class="sp-stages__list">
+        <ol class:list={['sp-stages__list', { 'sp-stages__list--inline': stagesInline }]}>
           {page.stages.items.map((s, i) => (
             <li>
               <span class="sp-stages__num">{pad(i + 1)}</span>
-              <h3>{s.title}</h3>
-              <p>{s.text}</p>
+              <div>
+                <h3>{s.title}</h3>
+                <p>{s.text}</p>
+              </div>
             </li>
           ))}
         </ol>
@@ -107,7 +116,7 @@ const lastWord = (t: string) => t.slice(t.lastIndexOf(' ') + 1);
 <section class:list={['sp-covers', { 'sp-covers--after-band': page.stages }]}>
   <div class="wrap">
     <h2>{page.coversTitle}</h2>
-    <ol class:list={['sp-cards', { 'sp-cards--plain': !numbered }]}>
+    <ol class:list={['sp-cards', { 'sp-cards--plain': !numbered, 'sp-cards--side': coversSide }]}>
       {
         page.covers.map((c, i) => (
           <li class="sp-card">
@@ -145,7 +154,7 @@ const lastWord = (t: string) => t.slice(t.lastIndexOf(' ') + 1);
   </div>
 </section>
 
-<section class:list={['sp-cta', { 'sp-cta--stacked': ctaStacked }]}>
+<section class:list={['sp-cta', { 'sp-cta--stacked': ctaStacked, 'sp-cta--aside': ctaAside }]}>
   <div class="wrap sp-cta__grid">
     <div>
       <h2>{page.cta.title}</h2>
@@ -155,7 +164,7 @@ const lastWord = (t: string) => t.slice(t.lastIndexOf(' ') + 1);
       <a class="btn btn--primary sp-btn" href="/contact">
         Discuss your project <Fragment set:html={arrow} />
       </a>
-      {!ctaStacked && <span class="sp-cta__rule" aria-hidden="true" />}
+      {!ctaStacked && !ctaAside && <span class="sp-cta__rule" aria-hidden="true" />}
       <a class="sp-cta__phone" href={site.phoneHref}>
         <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"></path></svg>
         {site.phone}
@@ -169,8 +178,19 @@ const lastWord = (t: string) => t.slice(t.lastIndexOf(' ') + 1);
     <section class="sp-related">
       <div class="wrap">
         <h2>Related services</h2>
-        <ul class:list={['sp-related__list', { 'sp-related__list--tiles': tiles, 'sp-related__list--large': largeRelated }]}>
-          {related.map((r) => tiles ? (
+        <ul class:list={['sp-related__list', { 'sp-related__list--tiles': tiles, 'sp-related__list--large': largeRelated, 'sp-related__list--rows': relatedRows }]}>
+          {related.map((r) => relatedRows ? (
+            <li>
+              <a class="sp-row" href={serviceHref(r)}>
+                <Fragment set:html={icon(serviceIcons[r.slug] ?? '', 'sp-related__icon')} />
+                <span class="sp-row__text">
+                  <span class="sp-row__title">{r.navTitle ?? r.title}</span>
+                  {relatedBlurb(r) && <span class="sp-row__blurb">{relatedBlurb(r)}</span>}
+                </span>
+                <Fragment set:html={arrow} />
+              </a>
+            </li>
+          ) : tiles ? (
             <li>
               <a class="sp-tile" href={serviceHref(r)}>
                 {r.navTitle ?? r.title} <Fragment set:html={arrow} />
@@ -840,6 +860,131 @@ const lastWord = (t: string) => t.slice(t.lastIndexOf(' ') + 1);
   .sp-tile :global(svg) {
     flex: none;
     color: #1a9fe0;
+  }
+
+  /* ---- service icon above the hero title ---- */
+
+  .sp-hero :global(.sp-hero__icon) {
+    display: block;
+    width: 3rem;
+    height: 3rem;
+    color: var(--brand-deep);
+    margin-bottom: 1rem;
+  }
+
+  /* ---- stage cards with the number beside the text ---- */
+
+  .sp-stages__list--inline li {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 1.2rem;
+    align-items: start;
+    background: #fff;
+    border: 1px solid #dde9f4;
+    padding: 1.3rem 1.4rem;
+  }
+
+  /* On white, #0A78C2 holds 4.69:1. */
+  .sp-stages__list--inline .sp-stages__num {
+    font-weight: 500;
+    font-size: clamp(1.9rem, 2.6vw, 2.3rem);
+    margin: 0;
+    padding-right: 1.2rem;
+    border-right: 1px solid #b9d6ee;
+  }
+
+  /* ---- scope cards with the icon beside the text ---- */
+
+  /* Spare height goes to the text row, so a one-line title keeps its
+     description directly beneath it. */
+  .sp-cards--side .sp-card > div {
+    display: grid;
+    grid-template-columns: 2.6rem minmax(0, 1fr);
+    grid-template-rows: auto 1fr;
+    column-gap: 1.1rem;
+  }
+
+  .sp-cards--side .sp-card__icon {
+    grid-row: span 2;
+    color: var(--brand-deep);
+    margin: 0;
+  }
+
+  .sp-cards--side .sp-card h3 {
+    font-size: 1.05rem;
+  }
+
+  .sp-cards--side .sp-card p {
+    font-size: 0.95rem;
+  }
+
+  /* ---- call to action with the phone under the button ---- */
+
+  .sp-cta--aside .sp-cta__actions {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .sp-cta--aside h2 {
+    max-width: 22ch;
+  }
+
+  /* ---- related services as whole-item links ---- */
+
+  @media (min-width: 820px) {
+    .sp-related__list--rows li {
+      padding-inline: 1.8rem;
+    }
+  }
+
+  .sp-related__list--rows li {
+    display: block;
+  }
+
+  .sp-related a.sp-row {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 1.1rem;
+    align-items: start;
+    font-size: 1rem;
+  }
+
+  /* The icon is injected markup, so it needs :global to be styled, and
+     enough weight to beat the generic related-link arrow size. */
+  .sp-related a.sp-row > :global(svg.sp-related__icon) {
+    width: 2.3rem;
+    height: 2.3rem;
+    color: var(--brand-deep);
+  }
+
+  .sp-row__title {
+    display: block;
+    color: var(--brand-deep);
+    font-weight: 700;
+  }
+
+  .sp-row__blurb {
+    display: block;
+    margin-top: 0.2rem;
+    color: var(--body);
+    font-weight: 400;
+    font-size: 0.93rem;
+  }
+
+  .sp-related a.sp-row > :global(svg:last-child) {
+    width: 1.2rem;
+    height: 1.2rem;
+    margin-top: 0.15rem;
+    color: #1a9fe0;
+  }
+
+  .sp-related a.sp-row:hover > :global(svg:last-child) {
+    transform: translateX(3px);
+  }
+
+  .sp-related a.sp-row:hover .sp-row__title {
+    text-decoration: underline;
   }
 
   /* ---- related services, larger ---- */

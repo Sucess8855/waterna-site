@@ -13,6 +13,8 @@ export interface ServicePageContent {
   image: { base: string; alt: string };
   /** Hero button label. Defaults to "Discuss your project". */
   heroCta?: string;
+  /** Show the service's own icon above the title. */
+  heroIcon?: boolean;
   leadTitle: string;
   leadText: string;
   /** Situations the service fits, shown as a short checklist. */
@@ -20,20 +22,31 @@ export interface ServicePageContent {
   /** "side" puts the checklist beside the lead; "row" runs it beneath. */
   fitsLayout?: 'side' | 'row';
   /** Optional numbered band of project stages, after the lead. */
-  stages?: { title: string; items: { title: string; text: string }[] };
+  /** layout "inline" sets each number beside its text on a white card. */
+  stages?: {
+    title: string;
+    items: { title: string; text: string }[];
+    layout?: 'stacked' | 'inline';
+  };
   coversTitle: string;
   covers: { title: string; text: string; icon: Glyph }[];
   /** Number the scope cards 01, 02… Defaults to true. */
   coversNumbered?: boolean;
+  /** "top" puts each card's icon above its title; "side" beside it. */
+  coversLayout?: 'top' | 'side';
   /** divider: set the note off with a rule above it. */
   receive: { text: string; items: string[]; note?: string; divider?: boolean };
-  /** "split" puts the actions beside the text; "stacked" below it. */
-  cta: { title: string; text: string; layout?: 'split' | 'stacked' };
+  /**
+   * "split" puts the actions in a row beside the text; "stacked" below it;
+   * "aside" beside it with the phone under the button.
+   */
+  cta: { title: string; text: string; layout?: 'split' | 'stacked' | 'aside' };
   /**
    * "icons" shows icon, link and blurb; "large" is the same at a bigger
-   * size; "tiles" shows bordered link tiles.
+   * size; "tiles" shows bordered link tiles; "rows" makes each whole item
+   * a link with the arrow at its far end.
    */
-  relatedLayout?: 'icons' | 'large' | 'tiles';
+  relatedLayout?: 'icons' | 'large' | 'tiles' | 'rows';
   /**
    * Per-page wording for related links, keyed by service slug. Icons are
    * not overridable: a service shows the same icon wherever it appears.
@@ -319,8 +332,67 @@ export const services: Service[] = [
     ],
     deliverables:
       'A tender-ready technical package, a written bid evaluation with a clear recommendation and the reasoning behind it, and a record of clarifications and test results you can hold the supplier to.',
-    related: ['design-services', 'independent-review', 'commissioning-performance-testing'],
+    related: ['feasibility-studies', 'design-services', 'independent-review'],
     blurb: 'Technical input through tender and award.',
+    page: {
+      sub: 'Clear requirements. Informed supplier selection.',
+      lede: 'Technical support for tender preparation, bid evaluation and supplier follow-up across water, wastewater and sludge treatment, including UF and RO desalination.',
+      image: {
+        base: 'technical-procurement-support',
+        alt: 'A skid-mounted treatment package with pumps and pressure vessels in a fabrication workshop',
+      },
+      heroCta: 'Discuss your procurement needs',
+      heroIcon: true,
+      leadTitle: 'Compare proposals on a consistent basis.',
+      leadText:
+        'We help you understand differences in scope, design assumptions, performance commitments and operating costs before selecting a supplier.',
+      fits: ['Clear scope and interfaces', 'Comparable technical bids', 'Documented decisions and actions'],
+      fitsLayout: 'row',
+      stages: {
+        title: 'Support through the procurement process',
+        layout: 'inline',
+        items: [
+          { title: 'Prepare the tender', text: 'Define technical requirements and bidder deliverables.' },
+          { title: 'Evaluate proposals', text: 'Compare offers and resolve technical clarifications.' },
+          { title: 'Follow through after award', text: 'Review supplier documents and support acceptance testing.' },
+        ],
+      },
+      coversTitle: 'What our support covers',
+      coversNumbered: false,
+      coversLayout: 'side',
+      covers: [
+        { icon: 'docSearch', title: 'Technical specifications', text: 'Define equipment duties, operating conditions and performance requirements.' },
+        { icon: 'doc', title: 'Tender package preparation', text: 'Set scope boundaries, interfaces and required bidder information.' },
+        { icon: 'gear', title: 'Technical bid evaluation', text: 'Compare compliance, exclusions and whole-life cost assumptions.' },
+        { icon: 'chat', title: 'Technical clarifications', text: 'Record queries, resolve discrepancies and track outstanding points.' },
+        { icon: 'clipboard', title: 'Supplier document review', text: 'Review drawings, datasheets and calculations against agreed requirements.' },
+        { icon: 'chartBox', title: 'Acceptance testing support', text: 'Review test procedures and witness agreed factory or site tests.' },
+      ],
+      receive: {
+        text: 'A documented technical basis for procurement and supplier follow-up.',
+        items: [
+          'Tender specifications and datasheets',
+          'Technical bid comparison',
+          'Clarification and deviation register',
+          'Supplier selection recommendation',
+          'Document review comments',
+          'Test findings and outstanding actions',
+        ],
+        note: 'Deliverables are agreed to suit your procurement stage and scope.',
+        divider: true,
+      },
+      cta: {
+        title: 'Let’s clarify your procurement requirements.',
+        text: 'Tell us what you are buying, your project stage and the support you need.',
+        layout: 'aside',
+      },
+      relatedLayout: 'rows',
+      relatedItems: {
+        'feasibility-studies': { blurb: 'Compare options before procurement.' },
+        'design-services': { blurb: 'Define process duties and specifications.' },
+        'independent-review': { blurb: 'Assess proposed designs and technical risks.' },
+      },
+    },
   },
 
   {
