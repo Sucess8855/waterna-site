@@ -1,3 +1,26 @@
+import type { Glyph } from './icons';
+
+/**
+ * Content for the full service page layout. A service with this set is
+ * shown with ServicePage; one without it keeps the simpler ServiceDetail.
+ */
+export interface ServicePageContent {
+  sub: string;
+  lede: string;
+  /** Small line under the lede naming what the service applies to. */
+  scope?: string;
+  /** Basename in public/img/services. */
+  image: { base: string; alt: string };
+  leadTitle: string;
+  leadText: string;
+  /** Situations the service fits, shown as a short checklist. */
+  fits: string[];
+  coversTitle: string;
+  covers: { title: string; text: string; icon: Glyph }[];
+  receive: { text: string; items: string[]; note?: string };
+  cta: { title: string; text: string };
+}
+
 export interface Service {
   slug: string;
   title: string;
@@ -25,6 +48,9 @@ export interface Service {
   covered?: [string, string][];
   deliverables?: string;
   related?: string[];
+  /** A few words describing the service, for related-service links. */
+  blurb?: string;
+  page?: ServicePageContent;
 }
 
 export const services: Service[] = [
@@ -71,7 +97,50 @@ export const services: Service[] = [
     ],
     deliverables:
       'A written feasibility report you can put in front of a board, a lender or a regulator: the options considered, how they compare, what we recommend, what it will cost to build and to run, and the specific risks that need closing out before detailed design begins. If the honest answer is that the project does not stack up, the report says so.',
-    related: ['design-services', 'independent-review', 'plant-optimisation'],
+    related: ['design-services', 'technical-procurement-support', 'independent-review'],
+    blurb: 'Compare options before you commit.',
+    page: {
+      sub: 'A clear basis for your next investment.',
+      lede: 'Assess treatment options, understand costs and identify risks before committing to design and procurement.',
+      scope: 'Water, wastewater and sludge treatment, including UF and RO desalination.',
+      image: {
+        base: 'feasibility-studies',
+        alt: 'Two engineers reviewing process drawings and cost charts at a desk overlooking a treatment works',
+      },
+      leadTitle: 'Compare options before you commit.',
+      leadText:
+        'We assess technical viability, operating requirements and whole-life costs to help you select a suitable treatment approach.',
+      fits: [
+        'New treatment schemes',
+        'Capacity upgrades and replacement assets',
+        'Water reuse and changing treatment requirements',
+      ],
+      coversTitle: 'What the study covers',
+      covers: [
+        { icon: 'drop', title: 'Water quality and design basis', text: 'Review flows, loads, variability and treatment targets.' },
+        { icon: 'gears', title: 'Treatment options appraisal', text: 'Compare viable processes, performance, operability and footprint.' },
+        { icon: 'coins', title: 'Capital and operating costs', text: 'Assess budget costs, whole-life costs and key sensitivities.' },
+        { icon: 'doc', title: 'Regulatory and environmental requirements', text: 'Identify quality targets, discharge constraints and permitting needs.' },
+        { icon: 'map', title: 'Site and operational constraints', text: 'Review existing assets, utilities, access and maintenance requirements.' },
+        { icon: 'alert', title: 'Risks and further investigations', text: 'Identify data gaps, testing needs and next-stage priorities.' },
+      ],
+      receive: {
+        text: 'A practical feasibility report to support your next investment decision.',
+        items: [
+          'Design basis and assumptions',
+          'Comparison of viable options',
+          'Budget capital and operating costs',
+          'Recommended option and rationale',
+          'Key risks and information gaps',
+          'Next steps for project development',
+        ],
+        note: 'Cost estimates reflect the information available and the agreed study scope.',
+      },
+      cta: {
+        title: 'Let’s assess your treatment options.',
+        text: 'Tell us about your project, treatment targets and available information.',
+      },
+    },
   },
 
   {
@@ -118,6 +187,7 @@ export const services: Service[] = [
     deliverables:
       'A design package matched to your project stage — from a concept report and block flow diagram through to a full FEED deliverable set with P&IDs, datasheets, mass balance and basis of design. Everything is written so a third party can tender against it without depending on us to interpret it.',
     related: ['feasibility-studies', 'independent-review', 'hazop'],
+    blurb: 'From feasibility to detailed design.',
   },
 
   {
@@ -165,6 +235,7 @@ export const services: Service[] = [
     deliverables:
       'A tender-ready technical package, a written bid evaluation with a clear recommendation and the reasoning behind it, and a record of clarifications and test results you can hold the supplier to.',
     related: ['design-services', 'independent-review', 'commissioning-performance-testing'],
+    blurb: 'Technical input through tender and award.',
   },
 
   {
@@ -212,6 +283,7 @@ export const services: Service[] = [
     deliverables:
       'A written technical opinion with findings ranked by consequence, the evidence behind each, and a clear recommendation. Where we disagree with an existing design we say why, and what we would do instead.',
     related: ['feasibility-studies', 'design-services', 'plant-optimisation'],
+    blurb: 'An expert view on your design.',
   },
 
   {

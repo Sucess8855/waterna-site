@@ -1,0 +1,613 @@
+---
+// The full service page: split hero, a lead statement with the situations
+// it fits, numbered scope cards, a navy "what you receive" band, a call to
+// action and related services. Content comes from service.page.
+import { site } from '../data/site';
+import { relatedTo, serviceHref, type Service } from '../data/services';
+import { pillarBySlug } from '../data/pillars';
+import { glyphs, serviceIcons } from '../data/icons';
+
+interface Props {
+  service: Service;
+}
+
+const { service } = Astro.props;
+const page = service.page!;
+const pillar = pillarBySlug(service.pillar);
+const related = relatedTo(service);
+
+const arrow =
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>';
+const check =
+  '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11"></circle><path d="m7.5 12.5 3 3 6-6.5"></path></svg>';
+const pad = (n: number) => String(n).padStart(2, '0');
+---
+
+<section class="sp-hero">
+  <div class="wrap sp-hero__grid">
+    <div>
+      <nav class="sp-crumbs" aria-label="Breadcrumb">
+        <a href={`/${service.pillar}`}>{pillar?.title}</a>
+        <span aria-hidden="true">/</span>
+        <span>{service.navTitle ?? service.title}</span>
+      </nav>
+      <h1>{service.title}</h1>
+      <p class="sp-hero__sub">{page.sub}</p>
+      <p class="sp-hero__lede">{page.lede}</p>
+      {page.scope && <p class="sp-hero__scope">{page.scope}</p>}
+      <a class="btn btn--primary sp-btn" href="/contact">
+        Discuss your project <Fragment set:html={arrow} />
+      </a>
+    </div>
+    <picture class="sp-hero__media">
+      <source
+        type="image/webp"
+        srcset={`/img/services/${page.image.base}-800.webp 800w, /img/services/${page.image.base}-1400.webp 1400w`}
+        sizes="(min-width: 960px) 45vw, 100vw"
+      />
+      <img
+        src={`/img/services/${page.image.base}-1400.jpg`}
+        alt={page.image.alt}
+        width="1400"
+        height="1050"
+        fetchpriority="high"
+        decoding="async"
+      />
+    </picture>
+  </div>
+</section>
+
+<section class="sp-lead">
+  <div class="wrap sp-lead__grid">
+    <div>
+      <h2>{page.leadTitle}</h2>
+      <p>{page.leadText}</p>
+    </div>
+    <ul class="sp-checks">
+      {page.fits.map((item) => <li><Fragment set:html={check} />{item}</li>)}
+    </ul>
+  </div>
+</section>
+
+<section class="sp-covers">
+  <div class="wrap">
+    <h2>{page.coversTitle}</h2>
+    <ol class="sp-cards">
+      {
+        page.covers.map((c, i) => (
+          <li class="sp-card">
+            <span class="sp-card__num">{pad(i + 1)}</span>
+            <div>
+              <svg class="sp-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={glyphs[c.icon]} />
+              <h3>{c.title}</h3>
+              <p>{c.text}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<section class="sp-receive">
+  <div class="wrap sp-receive__grid">
+    <div>
+      <h2>What you receive</h2>
+      <p class="sp-receive__text">{page.receive.text}</p>
+    </div>
+    <div class="sp-receive__list">
+      <ul>
+        {page.receive.items.map((item) => <li><Fragment set:html={check} />{item}</li>)}
+      </ul>
+      {page.receive.note && <p class="sp-receive__note">{page.receive.note}</p>}
+    </div>
+  </div>
+</section>
+
+<section class="sp-cta">
+  <div class="wrap sp-cta__grid">
+    <div>
+      <h2>{page.cta.title}</h2>
+      <p>{page.cta.text}</p>
+    </div>
+    <div class="sp-cta__actions">
+      <a class="btn btn--primary sp-btn" href="/contact">
+        Discuss your project <Fragment set:html={arrow} />
+      </a>
+      <span class="sp-cta__rule" aria-hidden="true"></span>
+      <a class="sp-cta__phone" href={site.phoneHref}>
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"></path></svg>
+        {site.phone}
+      </a>
+    </div>
+  </div>
+</section>
+
+{
+  related.length > 0 && (
+    <section class="sp-related">
+      <div class="wrap">
+        <h2>Related services</h2>
+        <ul class="sp-related__list">
+          {related.map((r) => (
+            <li>
+              <svg class="sp-related__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={serviceIcons[r.slug] ?? ''} />
+              <div>
+                <a href={serviceHref(r)}>
+                  {r.navTitle ?? r.title} <Fragment set:html={arrow} />
+                </a>
+                {r.blurb && <p>{r.blurb}</p>}
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )
+}
+
+<style>
+  /* ---------- hero: the same contained split as the pillar pages ---------- */
+
+  .sp-hero {
+    background: #eaf2fa;
+    border-bottom: 1px solid var(--line);
+    padding-block: clamp(2.5rem, 6vw, 4rem);
+  }
+
+  .sp-hero__grid {
+    display: grid;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  @media (min-width: 960px) {
+    .sp-hero__grid {
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+      gap: 3.5rem;
+    }
+  }
+
+  .sp-crumbs {
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1rem;
+  }
+
+  .sp-crumbs a {
+    color: var(--brand);
+    text-decoration: none;
+  }
+
+  .sp-crumbs a:hover {
+    text-decoration: underline;
+  }
+
+  .sp-crumbs span[aria-hidden] {
+    margin-inline: 0.5rem;
+  }
+
+  .sp-hero h1 {
+    color: var(--brand-deep);
+    font-size: clamp(2.2rem, 4vw, 3rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 0.6rem;
+  }
+
+  .sp-hero__sub {
+    color: var(--brand-deep);
+    font-size: clamp(1.3rem, 2vw, 1.6rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+    margin-bottom: 1rem;
+  }
+
+  .sp-hero__lede {
+    font-size: 1.1rem;
+    max-width: 46ch;
+    margin-bottom: 0.9rem;
+  }
+
+  .sp-hero__scope {
+    font-size: 0.95rem;
+    color: var(--muted);
+    margin-bottom: 1.8rem;
+  }
+
+  .sp-hero__media img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    border-radius: 4px;
+    box-shadow: var(--shadow-card);
+  }
+
+  .sp-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+  }
+
+  .sp-btn :global(svg) {
+    width: 1.1rem;
+    height: 1.1rem;
+    transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .sp-btn:hover :global(svg) {
+    transform: translateX(3px);
+  }
+
+  /* ---------- shared check marks ---------- */
+
+  .sp-checks,
+  .sp-receive ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .sp-checks li,
+  .sp-receive li {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    margin: 0 0 0.9rem;
+  }
+
+  .sp-checks :global(svg),
+  .sp-receive :global(li svg) {
+    width: 1.45rem;
+    height: 1.45rem;
+    flex: none;
+  }
+
+  .sp-checks :global(circle) {
+    fill: #1a9fe0;
+  }
+
+  .sp-checks :global(path),
+  .sp-receive :global(li path) {
+    fill: none;
+    stroke-width: 2.4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .sp-checks :global(path) {
+    stroke: #fff;
+  }
+
+  /* ---------- lead ---------- */
+
+  .sp-lead {
+    padding-block: clamp(2.75rem, 5vw, 4rem) clamp(1.5rem, 3vw, 2rem);
+  }
+
+  .sp-lead__grid {
+    display: grid;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  @media (min-width: 900px) {
+    .sp-lead__grid {
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+      gap: 4rem;
+    }
+  }
+
+  .sp-lead h2 {
+    color: var(--brand-deep);
+    font-size: clamp(1.7rem, 2.8vw, 2.2rem);
+    font-weight: 800;
+    margin-bottom: 0.8rem;
+  }
+
+  .sp-lead p {
+    font-size: 1.1rem;
+    max-width: 50ch;
+    margin: 0;
+  }
+
+  .sp-checks li {
+    color: var(--ink);
+  }
+
+  .sp-checks li:last-child {
+    margin-bottom: 0;
+  }
+
+  /* ---------- scope cards ---------- */
+
+  .sp-covers {
+    padding-block: clamp(1.5rem, 3vw, 2rem) clamp(3rem, 6vw, 4.5rem);
+  }
+
+  .sp-covers h2 {
+    color: var(--brand-deep);
+    font-size: clamp(1.7rem, 2.8vw, 2.2rem);
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+  }
+
+  .sp-cards {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .sp-cards {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 960px) {
+    .sp-cards {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .sp-card {
+    margin: 0;
+    display: grid;
+    grid-template-columns: 2.6rem minmax(0, 1fr);
+    background: #fff;
+    border: 1px solid #dfe8f1;
+    border-radius: 4px;
+    padding: 1.5rem 1.5rem 1.6rem 1.2rem;
+  }
+
+  /* #0A78C2 holds 4.69:1 on white. */
+  .sp-card__num {
+    color: #0a78c2;
+    font-weight: 700;
+    font-size: 0.95rem;
+    padding-top: 0.2rem;
+  }
+
+  .sp-card__icon {
+    width: 2.3rem;
+    height: 2.3rem;
+    color: #1789cc;
+    margin-bottom: 0.9rem;
+  }
+
+  .sp-card h3 {
+    color: var(--brand-deep);
+    font-size: 1.1rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .sp-card p {
+    font-size: 0.98rem;
+    margin: 0;
+  }
+
+  /* ---------- what you receive ---------- */
+
+  .sp-receive {
+    background: var(--brand-deep);
+    color: #fff;
+    padding-block: clamp(2.75rem, 5vw, 3.75rem);
+  }
+
+  .sp-receive__grid {
+    display: grid;
+    gap: 2rem;
+  }
+
+  @media (min-width: 900px) {
+    .sp-receive__grid {
+      grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.4fr);
+      gap: 0;
+      align-items: center;
+    }
+
+    .sp-receive__list {
+      border-left: 1px solid rgba(255, 255, 255, 0.28);
+      padding-left: 2.5rem;
+      margin-left: 2.5rem;
+    }
+  }
+
+  .sp-receive h2 {
+    color: #fff;
+    font-size: clamp(1.8rem, 3vw, 2.3rem);
+    font-weight: 800;
+    margin-bottom: 0.7rem;
+  }
+
+  .sp-receive__text {
+    color: #d6e6f5;
+    font-size: 1.15rem;
+    max-width: 30ch;
+    margin: 0;
+  }
+
+  .sp-receive ul {
+    display: grid;
+    gap: 0 2rem;
+  }
+
+  @media (min-width: 640px) {
+    /* Fill down each column, as the list is read. */
+    .sp-receive ul {
+      grid-template-columns: repeat(2, max-content);
+      grid-template-rows: repeat(3, auto);
+      grid-auto-flow: column;
+    }
+  }
+
+  .sp-receive li {
+    color: #fff;
+    font-size: 1rem;
+  }
+
+  .sp-receive :global(li circle) {
+    fill: #fff;
+  }
+
+  .sp-receive :global(li path) {
+    stroke: var(--brand-deep);
+  }
+
+  .sp-receive__note {
+    margin: 0.4rem 0 0;
+    font-size: 0.88rem;
+    color: rgba(255, 255, 255, 0.78);
+  }
+
+  /* ---------- call to action ---------- */
+
+  .sp-cta {
+    background: #eaf2fa;
+    border-bottom: 1px solid var(--line);
+    padding-block: clamp(2.25rem, 4vw, 3rem);
+  }
+
+  .sp-cta__grid {
+    display: grid;
+    gap: 1.5rem;
+    align-items: center;
+  }
+
+  @media (min-width: 900px) {
+    .sp-cta__grid {
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 3rem;
+    }
+  }
+
+  .sp-cta h2 {
+    color: var(--brand-deep);
+    font-size: clamp(1.5rem, 2.4vw, 1.9rem);
+    font-weight: 800;
+    margin-bottom: 0.35rem;
+  }
+
+  .sp-cta p {
+    margin: 0;
+    font-size: 1.05rem;
+  }
+
+  .sp-cta__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .sp-cta__rule {
+    width: 1px;
+    height: 2.4rem;
+    background: var(--line);
+  }
+
+  .sp-cta__phone {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: var(--brand-deep);
+    font-size: 1.15rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .sp-cta__phone:hover {
+    text-decoration: underline;
+  }
+
+  .sp-cta__phone svg {
+    width: 1.3rem;
+    height: 1.3rem;
+  }
+
+  /* ---------- related ---------- */
+
+  .sp-related {
+    padding-block: clamp(2.5rem, 5vw, 3.5rem);
+  }
+
+  .sp-related h2 {
+    color: var(--brand-deep);
+    font-size: clamp(1.4rem, 2.2vw, 1.7rem);
+    font-weight: 800;
+    margin-bottom: 1.4rem;
+  }
+
+  .sp-related__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 820px) {
+    .sp-related__list {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+    }
+
+    .sp-related__list li {
+      padding-inline: 2rem;
+    }
+
+    .sp-related__list li:first-child {
+      padding-left: 0;
+    }
+
+    .sp-related__list li + li {
+      border-left: 1px solid var(--line);
+    }
+  }
+
+  .sp-related__list li {
+    margin: 0;
+    display: flex;
+    gap: 1.1rem;
+    align-items: flex-start;
+  }
+
+  .sp-related__icon {
+    width: 2.3rem;
+    height: 2.3rem;
+    flex: none;
+    color: #1789cc;
+  }
+
+  .sp-related a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--brand-deep);
+    font-weight: 700;
+    font-size: 1.05rem;
+    text-decoration: none;
+  }
+
+  .sp-related a :global(svg) {
+    width: 1rem;
+    height: 1rem;
+    transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .sp-related a:hover :global(svg) {
+    transform: translateX(3px);
+  }
+
+  .sp-related p {
+    margin: 0.2rem 0 0;
+    font-size: 0.95rem;
+  }
+</style>
