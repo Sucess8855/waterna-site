@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import ServiceDetail from '../../components/ServiceDetail.astro';
+import ServicePage from '../../components/ServicePage.astro';
 import { plantPerformance, hasPage } from '../../data/services';
 
 export function getStaticPaths() {
@@ -14,5 +15,5 @@ const { service } = Astro.props;
 ---
 
 <Base title={service.metaTitle} description={service.metaDescription}>
-  <ServiceDetail service={service} />
+  {service.page ? <ServicePage service={service} /> : <ServiceDetail service={service} />}
 </Base>

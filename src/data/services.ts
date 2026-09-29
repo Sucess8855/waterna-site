@@ -30,7 +30,8 @@ export interface ServicePageContent {
    */
   stages?: {
     title: string;
-    items: { title: string; text: string }[];
+    /** Items without text show as short title-only cards. */
+    items: { title: string; text?: string }[];
     layout?: 'stacked' | 'inline' | 'plain';
   };
   coversTitle: string;
@@ -39,8 +40,8 @@ export interface ServicePageContent {
   coversNumbered?: boolean;
   /** "top" puts each card's icon above its title; "side" beside it. */
   coversLayout?: 'top' | 'side';
-  /** Show scope card numbers in round badges. */
-  coversBadges?: boolean;
+  /** How scope card numbers look: small (default), in round badges, or large. */
+  coversNumberStyle?: 'small' | 'badge' | 'large';
   /** divider: set the note off with a rule above it; columns: list columns (default 2). */
   receive: { text: string; items: string[]; note?: string; divider?: boolean; columns?: 1 | 2 };
   /**
@@ -62,6 +63,10 @@ export interface ServicePageContent {
     title: string;
     items: { title: string; text: string }[];
     layout?: 'arrows' | 'dividers';
+    /** Show the step numbers in round badges. */
+    badges?: boolean;
+    /** A pointer to a related service, centred under the steps. */
+    link?: { lead: string; label: string; href: string };
   };
   /**
    * "icons" shows icon, link and blurb; "large" is the same at a bigger
@@ -605,7 +610,7 @@ export const services: Service[] = [
         ],
       },
       coversTitle: 'What our support covers',
-      coversBadges: true,
+      coversNumberStyle: 'badge',
       covers: [
         { title: 'Study preparation', text: 'Agree scope, nodes, documentation and participants.' },
         { title: 'Independent chairing and recording', text: 'Facilitate a structured guide-word review and capture the discussion.' },
@@ -630,6 +635,7 @@ export const services: Service[] = [
       process: {
         title: 'From preparation to follow-up',
         layout: 'dividers',
+        badges: true,
         items: [
           { title: 'Prepare', text: 'Agree scope, gather documentation and confirm participants.' },
           { title: 'Facilitate and record', text: 'Chair the study, capture discussion and agree actions.' },
@@ -694,7 +700,84 @@ export const services: Service[] = [
     ],
     deliverables:
       'A diagnosis supported by your own data, a ranked set of interventions with expected effect and cost, and support implementing them. Where the answer is a capital fix we say so — but we look for the operational one first.',
-    related: ['independent-review', 'training', 'feasibility-studies'],
+    related: ['independent-review', 'feasibility-studies', 'design-services'],
+    page: {
+      titleLines: ['Troubleshooting &', 'Optimisation'],
+      sub: 'Understand the cause. Improve the performance.',
+      lede: 'Practical process engineering support to investigate underperformance, identify constraints and plan improvements.',
+      scope: 'Water, wastewater and sludge treatment, including UF and RO desalination.',
+      image: {
+        base: 'plant-optimisation',
+        alt: 'An engineer in a hard hat checking plant data on a tablet beside pumps and pipework',
+      },
+      heroCta: 'Discuss your plant performance',
+      leadTitle: 'Build a clear picture of what is limiting performance.',
+      leadText:
+        'We combine operating records, process calculations and site observations to investigate causes and identify practical next steps.',
+      fits: ['Evidence-based investigation', 'Prioritised recommendations', 'Measured follow-up'],
+      fitsLayout: 'row',
+      stages: {
+        title: 'When we can help',
+        layout: 'plain',
+        items: [
+          { title: 'Inconsistent treated water quality' },
+          { title: 'Reduced throughput or recovery' },
+          { title: 'Rising energy or chemical use' },
+          { title: 'Recurring process instability' },
+          { title: 'Frequent fouling or cleaning' },
+          { title: 'Capacity constraints as loads change' },
+        ],
+      },
+      coversTitle: 'What our support covers',
+      coversNumberStyle: 'large',
+      covers: [
+        { title: 'Process troubleshooting', text: 'Investigate performance changes and distinguish potential causes.' },
+        { title: 'Operating data assessment', text: 'Review trends, data quality and gaps in the available evidence.' },
+        { title: 'Chemical and energy optimisation', text: 'Assess opportunities to improve resource use within treatment requirements.' },
+        { title: 'Process control review', text: 'Examine setpoints, operating sequences and instrument feedback.' },
+        { title: 'Capacity and bottleneck assessment', text: 'Identify constraints and compare operational or equipment changes.' },
+        { title: 'Improvement trials and follow-up', text: 'Define agreed trials and assess performance after changes.' },
+      ],
+      receive: {
+        text: 'A practical assessment and a prioritised plan for improvement.',
+        items: [
+          'Findings and supporting evidence',
+          'Likely causes and uncertainties',
+          'Ranked improvement options',
+          'Expected benefits and trade-offs',
+          'Further monitoring or testing needs',
+          'Implementation and review priorities',
+        ],
+        note: 'Deliverables and follow-up support are agreed around your plant and objectives.',
+        divider: true,
+      },
+      process: {
+        title: 'From investigation to improvement',
+        badges: true,
+        items: [
+          { title: 'Understand the issue', text: 'Review symptoms, history and available information.' },
+          { title: 'Assess the evidence', text: 'Check potential causes and identify what needs verification.' },
+          { title: 'Agree and review actions', text: 'Prioritise changes and evaluate their results.' },
+        ],
+        link: {
+          lead: 'Starting up a new plant? Explore',
+          label: 'Commissioning & Testing',
+          href: '/plant-performance/commissioning-performance-testing',
+        },
+      },
+      cta: {
+        title: 'Let’s discuss what has changed at your plant.',
+        text: 'Tell us about the symptoms, your treatment targets and the information available.',
+        button: 'Discuss your plant performance',
+        layout: 'aside',
+      },
+      relatedLayout: 'rows',
+      relatedItems: {
+        'independent-review': { blurb: 'Assess design assumptions and technical constraints.' },
+        'feasibility-studies': { blurb: 'Compare options for upgrades and investment.' },
+        'design-services': { blurb: 'Develop the engineering for agreed modifications.' },
+      },
+    },
   },
 
   {

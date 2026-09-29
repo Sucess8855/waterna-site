@@ -107,13 +107,13 @@ const lastWord = (t: string) => t.slice(t.lastIndexOf(' ') + 1);
     <section class="sp-stages">
       <div class="wrap">
         <h2>{page.stages.title}</h2>
-        <ol class:list={['sp-stages__list', { 'sp-stages__list--inline': stagesInline, 'sp-stages__list--plain': stagesPlain }]}>
+        <ol class:list={['sp-stages__list', { 'sp-stages__list--inline': stagesInline, 'sp-stages__list--plain': stagesPlain, 'sp-stages__list--compact': page.stages.items.every((s) => !s.text) }]}>
           {page.stages.items.map((s, i) => (
             <li>
               {!stagesPlain && <span class="sp-stages__num">{pad(i + 1)}</span>}
               <div>
                 <h3>{s.title}</h3>
-                <p>{s.text}</p>
+                {s.text && <p>{s.text}</p>}
               </div>
             </li>
           ))}
@@ -126,7 +126,7 @@ const lastWord = (t: string) => t.slice(t.lastIndexOf(' ') + 1);
 <section class:list={['sp-covers', { 'sp-covers--after-band': page.stages }]}>
   <div class="wrap">
     <h2>{page.coversTitle}</h2>
-    <ol class:list={['sp-cards', { 'sp-cards--plain': !numbered, 'sp-cards--side': coversSide, 'sp-cards--badges': page.coversBadges }]}>
+    <ol class:list={['sp-cards', { 'sp-cards--plain': !numbered, 'sp-cards--side': coversSide, 'sp-cards--badges': page.coversNumberStyle === 'badge', 'sp-cards--large': page.coversNumberStyle === 'large' }]}>
       {
         page.covers.map((c, i) => (
           <li class="sp-card">
@@ -169,7 +169,7 @@ const lastWord = (t: string) => t.slice(t.lastIndexOf(' ') + 1);
     <section class="sp-process">
       <div class="wrap">
         <h2>{page.process.title}</h2>
-        <ol class:list={['sp-process__list', { 'sp-process__list--dividers': processDividers }]}>
+        <ol class:list={['sp-process__list', { 'sp-process__list--dividers': processDividers, 'sp-process__list--badges': page.process.badges }]}>
           {page.process.items.map((s, i) => (
             <li>
               <span class="sp-process__num">{pad(i + 1)}</span>
@@ -180,6 +180,16 @@ const lastWord = (t: string) => t.slice(t.lastIndexOf(' ') + 1);
             </li>
           ))}
         </ol>
+        {
+          page.process.link && (
+            <p class="sp-process__link">
+              {page.process.link.lead}{' '}
+              <a href={page.process.link.href}>
+                {page.process.link.label} <Fragment set:html={arrow} />
+              </a>
+            </p>
+          )
+        }
       </div>
     </section>
   )
@@ -932,7 +942,7 @@ const lastWord = (t: string) => t.slice(t.lastIndexOf(' ') + 1);
   }
 
   .sp-cards--badges .sp-card__num,
-  .sp-process__list--dividers .sp-process__num {
+  .sp-process__list--badges .sp-process__num {
     display: grid;
     place-items: center;
     width: 2.6rem;
@@ -946,10 +956,67 @@ const lastWord = (t: string) => t.slice(t.lastIndexOf(' ') + 1);
     line-height: 1;
   }
 
-  .sp-process__list--dividers .sp-process__num {
+  .sp-process__list--badges .sp-process__num {
     width: 2.9rem;
     height: 2.9rem;
     font-size: 1.1rem;
+  }
+
+  /* ---- scope cards with large numbers ---- */
+
+  .sp-cards--large .sp-card {
+    grid-template-columns: auto minmax(0, 1fr);
+    column-gap: 1.3rem;
+    padding: 1.4rem 1.5rem 1.5rem;
+  }
+
+  /* #0A78C2 holds 4.69:1 on white. */
+  .sp-cards--large .sp-card__num {
+    color: #0a78c2;
+    font-size: clamp(1.9rem, 2.6vw, 2.3rem);
+    font-weight: 700;
+    line-height: 1;
+    padding-top: 0;
+  }
+
+  /* ---- title-only stage cards ---- */
+
+  .sp-stages__list--compact li {
+    padding: 1rem 1.4rem;
+    display: flex;
+    align-items: center;
+  }
+
+  .sp-stages__list--compact h3 {
+    font-size: 1.02rem;
+    margin: 0;
+  }
+
+  /* ---- link under the process steps ---- */
+
+  .sp-process p.sp-process__link {
+    max-width: none;
+    margin: 2rem 0 0;
+    text-align: center;
+    color: var(--body);
+  }
+
+  .sp-process__link a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .sp-process__link a:hover {
+    text-decoration: underline;
+  }
+
+  .sp-process__link :global(svg) {
+    width: 1rem;
+    height: 1rem;
+    color: #1a9fe0;
   }
 
   /* ---- process steps separated by rules, no arrows ---- */
