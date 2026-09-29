@@ -171,7 +171,7 @@ const lastWord = (t: string) => t.slice(t.lastIndexOf(' ') + 1);
   </div>
 </section>
 
-<section class:list={['sp-receive', { 'sp-receive--promo': page.receive.promo }]}>
+<section class="sp-receive">
   <div class="wrap sp-receive__grid">
     <div>
       <h2>What you receive</h2>
@@ -189,23 +189,28 @@ const lastWord = (t: string) => t.slice(t.lastIndexOf(' ') + 1);
         )
       }
     </div>
-    {
-      page.receive.promo && (
-        <aside class="sp-promo">
-          <div class="sp-promo__copy">
-            <p class="sp-promo__eyebrow">{page.receive.promo.eyebrow}</p>
-            <h3>{page.receive.promo.title}</h3>
-            <p>{page.receive.promo.text}</p>
-            <a class="btn btn--primary sp-btn" href={page.receive.promo.href}>
-              {page.receive.promo.label} <Fragment set:html={arrow} />
-            </a>
-          </div>
-          <img class="sp-promo__img" src={page.receive.promo.image} alt="" loading="lazy" decoding="async" />
-        </aside>
-      )
-    }
   </div>
 </section>
+
+{
+  page.promo && (
+    <section class="sp-promo-band">
+      <div class="wrap">
+        <aside class="sp-promo">
+          <div class="sp-promo__copy">
+            <p class="sp-promo__eyebrow">{page.promo.eyebrow}</p>
+            <h2>{page.promo.title}</h2>
+            <p>{page.promo.text}</p>
+            <a class="btn btn--primary sp-btn" href={page.promo.href}>
+              {page.promo.label} <Fragment set:html={arrow} />
+            </a>
+          </div>
+          <img class="sp-promo__img" src={page.promo.image} alt="" loading="lazy" decoding="async" />
+        </aside>
+      </div>
+    </section>
+  )
+}
 
 {
   page.process && (
@@ -1089,43 +1094,10 @@ const lastWord = (t: string) => t.slice(t.lastIndexOf(' ') + 1);
     font-weight: 400;
   }
 
-  /* ---- receive band split with a product card ---- */
+  /* ---- product card in its own section ---- */
 
-  @media (min-width: 960px) {
-    .sp-receive--promo {
-      background: linear-gradient(90deg, var(--brand-deep) 50%, #eaf2fa 50%);
-      padding-block: 0;
-    }
-
-    .sp-receive--promo .sp-receive__grid {
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-      gap: 0;
-      align-items: stretch;
-    }
-
-    .sp-receive--promo .sp-receive__grid > div:first-child {
-      padding-block: clamp(2.75rem, 4vw, 3.5rem) 0;
-    }
-
-    .sp-receive--promo .sp-receive__list {
-      border-left: 0;
-      margin-left: 0;
-      padding-left: 0;
-      padding-bottom: clamp(2.75rem, 4vw, 3.5rem);
-      grid-column: 1;
-    }
-
-    .sp-receive--promo .sp-promo {
-      grid-column: 2;
-      grid-row: 1 / span 2;
-      align-self: center;
-      margin: 2.5rem 0 2.5rem 2.5rem;
-    }
-  }
-
-  .sp-receive--promo .sp-receive__text {
-    max-width: 36ch;
-    margin-bottom: 1.4rem;
+  .sp-promo-band {
+    padding-block: clamp(2.5rem, 5vw, 3.5rem);
   }
 
   .sp-promo {
@@ -1141,14 +1113,14 @@ const lastWord = (t: string) => t.slice(t.lastIndexOf(' ') + 1);
 
   @media (min-width: 560px) {
     .sp-promo {
-      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
     }
   }
 
   .sp-promo__copy {
     position: relative;
     z-index: 1;
-    padding: 1.8rem 1.6rem 1.9rem 1.8rem;
+    padding: clamp(1.8rem, 3vw, 2.5rem);
   }
 
   /* #0A78C2 holds 4.69:1 on white. */
@@ -1161,14 +1133,16 @@ const lastWord = (t: string) => t.slice(t.lastIndexOf(' ') + 1);
     color: #0a78c2;
   }
 
-  .sp-promo h3 {
+  .sp-promo h2 {
     color: var(--brand-deep);
-    font-size: 1.45rem;
+    font-size: clamp(1.5rem, 2.4vw, 1.9rem);
+    font-weight: 800;
     margin-bottom: 0.6rem;
   }
 
   .sp-promo p {
-    font-size: 0.98rem;
+    font-size: 1rem;
+    max-width: 46ch;
   }
 
   .sp-promo__img {

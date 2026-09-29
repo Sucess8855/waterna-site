@@ -46,18 +46,10 @@ export interface ServicePageContent {
   coversLayout?: 'top' | 'side';
   /** How scope card numbers look: small (default), round badges, large, or large and light. */
   coversNumberStyle?: 'small' | 'badge' | 'large' | 'light';
-  /**
-   * divider: set the note off with a rule above it; columns: list columns
-   * (default 2); promo: a product card beside the list, on a split band.
-   */
-  receive: {
-    text: string;
-    items: string[];
-    note?: string;
-    divider?: boolean;
-    columns?: 1 | 2;
-    promo?: { eyebrow: string; title: string; text: string; label: string; href: string; image: string };
-  };
+  /** divider: set the note off with a rule above it; columns: list columns (default 2). */
+  receive: { text: string; items: string[]; note?: string; divider?: boolean; columns?: 1 | 2 };
+  /** Optional product card in its own section, after "What you receive". */
+  promo?: { eyebrow: string; title: string; text: string; label: string; href: string; image: string };
   /**
    * "split" puts the actions in a row beside the text; "stacked" below it;
    * "aside" beside it with the phone under the button.
@@ -947,14 +939,14 @@ export const services: Service[] = [
           'Replacement considerations, where justified',
         ],
         columns: 1,
-        promo: {
-          eyebrow: 'Ongoing RO monitoring',
-          title: 'Waterna RO Insight™',
-          text: 'Track RO performance between engineering reviews with more than 100 engineering indicators and an offline AI assistant.',
-          label: 'Explore RO Insight™',
-          href: '/ro-insight',
-          image: '/img/services/uf-ro-performance-assessment-800.webp',
-        },
+      },
+      promo: {
+        eyebrow: 'Ongoing RO monitoring',
+        title: 'Waterna RO Insight™',
+        text: 'Track RO performance between engineering reviews with more than 100 engineering indicators and an offline AI assistant.',
+        label: 'Explore RO Insight™',
+        href: '/ro-insight',
+        image: '/img/services/uf-ro-performance-assessment-800.webp',
       },
       cta: {
         title: 'Let’s assess your membrane performance.',
