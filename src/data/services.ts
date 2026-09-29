@@ -25,6 +25,8 @@ export interface ServicePageContent {
   fits: string[];
   /** "side" puts the checklist beside the lead; "row" runs it beneath. */
   fitsLayout?: 'side' | 'row';
+  /** Short titled points under the lead, in columns; the lead sits on a band. */
+  leadPoints?: { title: string; text: string }[];
   /** Optional numbered band of project stages, after the lead. */
   /**
    * "inline" sets each number beside its text on a white card; "plain" is
@@ -44,10 +46,23 @@ export interface ServicePageContent {
   coversNumbered?: boolean;
   /** "top" puts each card's icon above its title; "side" beside it. */
   coversLayout?: 'top' | 'side';
-  /** How scope card numbers look: small (default), round badges, large, or large and light. */
-  coversNumberStyle?: 'small' | 'badge' | 'large' | 'light';
-  /** divider: set the note off with a rule above it; columns: list columns (default 2). */
-  receive: { text: string; items: string[]; note?: string; divider?: boolean; columns?: 1 | 2 };
+  /**
+   * How scope card numbers look: small (default), round badges, large,
+   * large and light, or large above the title ("stacked").
+   */
+  coversNumberStyle?: 'small' | 'badge' | 'large' | 'light' | 'stacked';
+  /**
+   * divider: set the note off with a rule above it; columns: list columns
+   * (default 2); aside: a statement panel beside the list on a split band.
+   */
+  receive: {
+    text?: string;
+    items: string[];
+    note?: string;
+    divider?: boolean;
+    columns?: 1 | 2;
+    aside?: { title: string; text: string };
+  };
   /** Optional product card in its own section, after "What you receive". */
   promo?: { eyebrow: string; title: string; text: string; label: string; href: string; image: string };
   /**
@@ -57,7 +72,7 @@ export interface ServicePageContent {
   cta: {
     title: string;
     text: string;
-    layout?: 'split' | 'stacked' | 'aside';
+    layout?: 'split' | 'stacked' | 'aside' | 'center';
     /** Button label. Defaults to "Discuss your project". */
     button?: string;
   };
@@ -79,7 +94,7 @@ export interface ServicePageContent {
    * size; "tiles" shows bordered link tiles; "rows" makes each whole item
    * a link with the arrow at its far end; "cards" is the same in a bordered card.
    */
-  relatedLayout?: 'icons' | 'large' | 'tiles' | 'rows' | 'cards' | 'text';
+  relatedLayout?: 'icons' | 'large' | 'tiles' | 'rows' | 'cards' | 'text' | 'links';
   /** Heading over the related links. Defaults to "Related services". */
   relatedTitle?: string;
   /**
@@ -1009,6 +1024,55 @@ export const services: Service[] = [
     deliverables:
       'A written review of chemical use and cleaning performance, revised dose ranges and CIP procedures, and an estimate of the savings and performance effect of each change.',
     related: ['uf-ro-performance-assessment', 'plant-optimisation', 'data-analysis'],
+    page: {
+      titleLines: ['Chemical Dosing &', 'CIP Optimisation'],
+      sub: 'Effective dosing. Better cleaning decisions.',
+      lede: 'We review chemical selection, dosing systems and clean-in-place procedures to help improve treatment performance, control chemical use and assess cleaning effectiveness.',
+      image: {
+        base: 'chemical-dosing-cip',
+        alt: 'Chemical dosing pumps on a skid with storage tanks, beside a stainless steel cleaning-in-place vessel',
+      },
+      heroCta: 'Discuss your plant',
+      leadTitle: 'Match chemical use to plant conditions.',
+      leadText:
+        'We assess operating data, water quality and cleaning records to identify practical improvements and the trials needed to verify them.',
+      fits: [],
+      leadPoints: [
+        { title: 'Chemical dosing', text: 'Selection, delivered dose, mixing and control.' },
+        { title: 'Cleaning in place', text: 'Procedure, compatibility and performance recovery.' },
+      ],
+      coversTitle: 'What our review covers',
+      coversNumberStyle: 'stacked',
+      covers: [
+        { title: 'Chemical selection', text: 'Review treatment chemicals against water quality, process duty and material compatibility.' },
+        { title: 'Dose rate optimisation', text: 'Assess demand, dosing trends and opportunities for controlled trials.' },
+        { title: 'Dosing systems & control', text: 'Review pump capacity, calibration, injection points, mixing and controls.' },
+        { title: 'CIP chemistry & procedure', text: 'Assess cleaning sequence, conditions, circulation and rinsing.' },
+        { title: 'Cleaning triggers & recovery', text: 'Review when cleaning is needed and how effectively performance recovers.' },
+        { title: 'Cost & resource use', text: 'Compare chemical, water, energy and downtime implications.' },
+      ],
+      receive: {
+        items: [
+          'Evidence-based assessment',
+          'Prioritised recommendations',
+          'Proposed operating and cleaning changes',
+          'Trial and monitoring plan',
+          'Indicative benefits where supported',
+        ],
+        columns: 1,
+        aside: {
+          title: 'Independent advice. Practical next steps.',
+          text: 'Recommendations reflect your process requirements and operating constraints. Proposed changes are checked against supplier guidance and validated through agreed trials.',
+        },
+      },
+      cta: {
+        title: 'Improve dosing. Understand cleaning performance.',
+        text: 'Tell us about your plant, chemical use and cleaning challenges.',
+        button: 'Discuss your requirements',
+        layout: 'center',
+      },
+      relatedLayout: 'links',
+    },
   },
 
   {
