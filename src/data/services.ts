@@ -17,9 +17,11 @@ export interface ServicePageContent {
   heroIcon?: boolean;
   /** Set the title's line breaks, one entry per line, on wide screens. */
   titleLines?: string[];
+  /** The same for the line under the title; sub stays as its plain text. */
+  subLines?: string[];
   leadTitle: string;
   leadText: string;
-  /** Situations the service fits, shown as a short checklist. */
+  /** Situations the service fits, shown as a short checklist. Empty to omit. */
   fits: string[];
   /** "side" puts the checklist beside the lead; "row" runs it beneath. */
   fitsLayout?: 'side' | 'row';
@@ -34,16 +36,28 @@ export interface ServicePageContent {
     items: { title: string; text?: string }[];
     layout?: 'stacked' | 'inline' | 'plain';
   };
+  /** Optional side-by-side bulleted cards (e.g. UF and RO), after the lead. */
+  compare?: { title: string; columns: { title: string; items: string[] }[]; note?: string };
   coversTitle: string;
   covers: { title: string; text: string; icon?: Glyph }[];
   /** Number the scope cards 01, 02… Defaults to true. */
   coversNumbered?: boolean;
   /** "top" puts each card's icon above its title; "side" beside it. */
   coversLayout?: 'top' | 'side';
-  /** How scope card numbers look: small (default), in round badges, or large. */
-  coversNumberStyle?: 'small' | 'badge' | 'large';
-  /** divider: set the note off with a rule above it; columns: list columns (default 2). */
-  receive: { text: string; items: string[]; note?: string; divider?: boolean; columns?: 1 | 2 };
+  /** How scope card numbers look: small (default), round badges, large, or large and light. */
+  coversNumberStyle?: 'small' | 'badge' | 'large' | 'light';
+  /**
+   * divider: set the note off with a rule above it; columns: list columns
+   * (default 2); promo: a product card beside the list, on a split band.
+   */
+  receive: {
+    text: string;
+    items: string[];
+    note?: string;
+    divider?: boolean;
+    columns?: 1 | 2;
+    promo?: { eyebrow: string; title: string; text: string; label: string; href: string; image: string };
+  };
   /**
    * "split" puts the actions in a row beside the text; "stacked" below it;
    * "aside" beside it with the phone under the button.
@@ -73,7 +87,9 @@ export interface ServicePageContent {
    * size; "tiles" shows bordered link tiles; "rows" makes each whole item
    * a link with the arrow at its far end; "cards" is the same in a bordered card.
    */
-  relatedLayout?: 'icons' | 'large' | 'tiles' | 'rows' | 'cards';
+  relatedLayout?: 'icons' | 'large' | 'tiles' | 'rows' | 'cards' | 'text';
+  /** Heading over the related links. Defaults to "Related services". */
+  relatedTitle?: string;
   /**
    * Per-page wording for related links, keyed by service slug. Icons are
    * not overridable: a service shows the same icon wherever it appears.
@@ -870,7 +886,90 @@ export const services: Service[] = [
     ],
     deliverables:
       'A written assessment of membrane condition and its causes, a normalised performance baseline that later operation can be judged against, and ranked recommendations covering operation, pretreatment, cleaning and replacement.',
-    related: ['chemical-dosing-cip', 'data-analysis', 'ro-insight'],
+    related: ['chemical-dosing-cip', 'data-analysis', 'plant-optimisation'],
+    page: {
+      titleLines: ['UF & RO Performance', 'Assessment'],
+      sub: 'Understand membrane performance. Plan the next step.',
+      subLines: ['Understand membrane performance.', 'Plan the next step.'],
+      lede: 'Independent assessment of ultrafiltration and reverse osmosis systems to investigate deterioration, assess cleaning results and prioritise improvements.',
+      image: {
+        base: 'uf-ro-performance-assessment',
+        alt: 'Ultrafiltration modules and reverse osmosis pressure vessels in a membrane treatment hall',
+      },
+      heroCta: 'Discuss your membrane system',
+      leadTitle: 'Put performance changes in context.',
+      leadText:
+        'We review operating trends alongside feed conditions, pretreatment and cleaning history to assess likely causes and identify further checks.',
+      fits: [],
+      fitsLayout: 'row',
+      compare: {
+        title: 'A focused assessment for each membrane process',
+        columns: [
+          {
+            title: 'Ultrafiltration (UF)',
+            items: [
+              'Temperature-corrected permeability and TMP',
+              'Flux, filtration cycles and net recovery',
+              'Backwash, CEB and CIP performance',
+              'Filtrate quality and integrity-test records',
+            ],
+          },
+          {
+            title: 'Reverse osmosis (RO)',
+            items: [
+              'Normalised permeate flow and salt passage',
+              'Differential pressure and train comparisons',
+              'Recovery, flux and specific energy use',
+              'Cleaning response and feedwater conditions',
+            ],
+          },
+        ],
+        note: 'Assessment methods and reference conditions depend on the membrane system and available data.',
+      },
+      coversTitle: 'What our assessment covers',
+      coversNumberStyle: 'light',
+      covers: [
+        { title: 'Performance trends and baselines', text: 'Check data quality and establish suitable comparisons.' },
+        { title: 'Fouling, scaling and integrity concerns', text: 'Assess likely causes and identify evidence needed to confirm them.' },
+        { title: 'Pretreatment and feed conditions', text: 'Review upstream performance and membrane compatibility.' },
+        { title: 'Cleaning effectiveness', text: 'Compare performance before and after cleaning.' },
+        { title: 'Recovery and resource use', text: 'Review water losses, energy demand and operating constraints.' },
+        { title: 'Further testing and autopsy support', text: 'Define targeted investigations and interpret specialist findings.' },
+      ],
+      receive: {
+        text: 'An evidence-based assessment with prioritised recommendations.',
+        items: [
+          'UF and RO performance findings',
+          'Suitable baselines, where data supports them',
+          'Likely causes and remaining uncertainties',
+          'Cleaning and operational recommendations',
+          'Further testing requirements',
+          'Replacement considerations, where justified',
+        ],
+        columns: 1,
+        promo: {
+          eyebrow: 'Ongoing RO monitoring',
+          title: 'Waterna RO Insight™',
+          text: 'Track RO performance between engineering reviews with more than 100 engineering indicators and an offline AI assistant.',
+          label: 'Explore RO Insight™',
+          href: '/ro-insight',
+          image: '/img/services/uf-ro-performance-assessment-800.webp',
+        },
+      },
+      cta: {
+        title: 'Let’s assess your membrane performance.',
+        text: 'Tell us about your system, the changes you have observed and the data available.',
+        button: 'Discuss your assessment',
+        layout: 'stacked',
+      },
+      relatedTitle: 'Related support',
+      relatedLayout: 'text',
+      relatedItems: {
+        'chemical-dosing-cip': { blurb: 'Review dosing and cleaning requirements.' },
+        'data-analysis': { blurb: 'Explore operating trends and data quality.' },
+        'plant-optimisation': { blurb: 'Investigate wider treatment constraints.' },
+      },
+    },
   },
 
   {
