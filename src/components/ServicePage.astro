@@ -95,7 +95,7 @@ const lastWord = (t: string) => t.slice(t.lastIndexOf(' ') + 1);
   </div>
 </section>
 
-<section class:list={['sp-lead', { 'sp-lead--row': fitsRow || page.leadPoints, 'sp-lead--band': page.leadPoints || page.leadSteps, 'sp-lead--steps': page.leadSteps }]}>
+<section class:list={['sp-lead', { 'sp-lead--row': fitsRow || page.leadPoints || page.leadBand, 'sp-lead--band': page.leadPoints || page.leadSteps || page.leadBand, 'sp-lead--steps': page.leadSteps }]}>
   <div class="wrap sp-lead__grid">
     <div>
       <h2>{page.leadTitle}</h2>
@@ -158,6 +158,24 @@ const lastWord = (t: string) => t.slice(t.lastIndexOf(' ') + 1);
 }
 
 {
+  page.tiles && (
+    <section class="sp-tiles">
+      <div class="wrap">
+        <h2>{page.tiles.title}</h2>
+        <ul class="sp-tiles__list">
+          {page.tiles.items.map((it) => (
+            <li>
+              <Fragment set:html={icon(glyphs[it.icon], 'sp-tiles__icon')} />
+              {it.label}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )
+}
+
+{
   page.compare && (
     <section class="sp-compare">
       <div class="wrap">
@@ -178,7 +196,7 @@ const lastWord = (t: string) => t.slice(t.lastIndexOf(' ') + 1);
   )
 }
 
-<section class:list={['sp-covers', { 'sp-covers--after-band': page.stages || page.compare || page.leadPoints }]}>
+<section class:list={['sp-covers', { 'sp-covers--after-band': page.stages || page.compare || page.leadPoints || page.leadBand, 'sp-covers--tight': page.tiles }]}>
   <div class="wrap">
     <h2>{page.coversTitle}</h2>
     <ol class:list={['sp-cards', { 'sp-cards--plain': !numbered, 'sp-cards--side': coversSide, 'sp-cards--badges': page.coversNumberStyle === 'badge', 'sp-cards--large': page.coversNumberStyle === 'large' || page.coversNumberStyle === 'light', 'sp-cards--light': page.coversNumberStyle === 'light', 'sp-cards--stacked': page.coversNumberStyle === 'stacked' }]}>
@@ -197,6 +215,27 @@ const lastWord = (t: string) => t.slice(t.lastIndexOf(' ') + 1);
     </ol>
   </div>
 </section>
+
+{
+  page.options && (
+    <section class="sp-options">
+      <div class="wrap">
+        <h2>{page.options.title}</h2>
+        <ul class="sp-options__list">
+          {page.options.items.map((o) => (
+            <li>
+              <Fragment set:html={icon(glyphs[o.icon], 'sp-options__icon')} />
+              <div>
+                <h3>{o.title}</h3>
+                <p>{o.text}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )
+}
 
 <section class:list={['sp-receive', { 'sp-receive--aside': page.receive.aside }]}>
   <div class="wrap sp-receive__grid">
@@ -1057,6 +1096,104 @@ const lastWord = (t: string) => t.slice(t.lastIndexOf(' ') + 1);
     width: 2.9rem;
     height: 2.9rem;
     font-size: 1.1rem;
+  }
+
+  /* ---- icon tiles ---- */
+
+  .sp-tiles {
+    padding-block: clamp(2.5rem, 5vw, 3.5rem) 0;
+  }
+
+  .sp-tiles h2,
+  .sp-options h2 {
+    color: var(--brand-deep);
+    font-size: clamp(1.6rem, 2.6vw, 2rem);
+    font-weight: 800;
+    margin-bottom: 1.2rem;
+  }
+
+  .sp-tiles__list,
+  .sp-options__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.8rem;
+  }
+
+  @media (min-width: 640px) {
+    .sp-tiles__list,
+    .sp-options__list {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 960px) {
+    .sp-tiles__list,
+    .sp-options__list {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .sp-tiles__list li {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: #f4f8fc;
+    border: 1px solid #dde9f4;
+    border-radius: 4px;
+    padding: 0.9rem 1.2rem;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .sp-tiles :global(.sp-tiles__icon) {
+    flex: none;
+    width: 1.8rem;
+    height: 1.8rem;
+    color: #1789cc;
+  }
+
+  .sp-covers.sp-covers--tight {
+    padding-top: clamp(2.5rem, 5vw, 3.5rem);
+  }
+
+  /* ---- icon option cards ---- */
+
+  .sp-options {
+    background: #eef5fb;
+    border-block: 1px solid #dde9f4;
+    padding-block: clamp(2.5rem, 5vw, 3.5rem);
+  }
+
+  .sp-options__list li {
+    margin: 0;
+    display: flex;
+    gap: 1.1rem;
+    align-items: flex-start;
+    background: #fff;
+    border: 1px solid #dde9f4;
+    border-radius: 4px;
+    padding: 1.3rem 1.4rem;
+  }
+
+  .sp-options :global(.sp-options__icon) {
+    flex: none;
+    width: 2.6rem;
+    height: 2.6rem;
+    color: #1789cc;
+  }
+
+  .sp-options h3 {
+    color: var(--brand-deep);
+    font-size: 1.08rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .sp-options p {
+    margin: 0;
+    font-size: 0.95rem;
   }
 
   /* ---- lead beside numbered mini steps ---- */

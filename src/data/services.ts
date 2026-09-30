@@ -27,6 +27,12 @@ export interface ServicePageContent {
   fitsLayout?: 'side' | 'row';
   /** Short titled points under the lead, in columns; the lead sits on a band. */
   leadPoints?: { title: string; text: string }[];
+  /** Put the lead on a light band even without points or steps. */
+  leadBand?: boolean;
+  /** Optional grid of icon tiles after the lead (e.g. data sources). */
+  tiles?: { title: string; items: { label: string; icon: Glyph }[] };
+  /** Optional row of icon cards on a band, after the scope cards. */
+  options?: { title: string; items: { title: string; text: string; icon: Glyph }[] };
   /** Numbered mini steps beside the lead, joined by arrows; the lead sits on a band. */
   leadSteps?: { title: string; text: string }[];
   /** Optional numbered band of project stages, after the lead. */
@@ -1224,7 +1230,80 @@ export const services: Service[] = [
     ],
     deliverables:
       'A structured engineering assessment: what the data shows, what is causing it, and a ranked set of recommendations. Available as a one-off diagnostic study, a recurring performance review, or through an ongoing monitoring dashboard. It is frequently the first stage of an optimisation project, because it establishes and quantifies the opportunity before anyone proposes changing the plant.',
-    related: ['ro-insight', 'plant-optimisation', 'independent-review'],
+    related: ['plant-optimisation', 'independent-review', 'ro-insight'],
+    page: {
+      titleLines: ['Data Analysis &', 'Performance Review'],
+      sub: 'Understand the trends. Prioritise the next step.',
+      lede: 'We combine process engineering with analysis of operating records to assess performance, investigate changes and identify practical improvements across water, wastewater and sludge treatment.',
+      image: {
+        base: 'data-analysis',
+        alt: 'Performance charts on a desktop monitor overlooking a treatment works, with reports on the desk',
+      },
+      heroCta: 'Discuss your data',
+      leadTitle: 'Put operating data in process context',
+      leadText:
+        'Review data quality, operating conditions and historical events before drawing conclusions. Combine engineering interpretation with statistical analysis to establish what the evidence supports.',
+      fits: [],
+      leadBand: true,
+      tiles: {
+        title: 'The data we work from',
+        items: [
+          { label: 'SCADA & historian exports', icon: 'database' },
+          { label: 'Laboratory results', icon: 'flask' },
+          { label: 'Flow & pressure records', icon: 'waves' },
+          { label: 'Energy & chemical use', icon: 'bolt' },
+          { label: 'Maintenance & event logs', icon: 'clipboard' },
+          { label: 'Sludge & solids records', icon: 'solids' },
+        ],
+      },
+      coversTitle: 'What our review covers',
+      coversNumberStyle: 'stacked',
+      covers: [
+        { title: 'Data quality & preparation', text: 'Check completeness, units, timestamps and measurement consistency.' },
+        { title: 'Trends & unusual behaviour', text: 'Investigate drift, step changes and relationships between variables.' },
+        { title: 'Investigation of likely causes', text: 'Link observed patterns to process conditions and operating events.' },
+        { title: 'Resource use & operating cost', text: 'Assess energy, chemicals, water losses and sludge production.' },
+        { title: 'Performance benchmarking', text: 'Compare results with relevant design and historical reference conditions.' },
+        { title: 'Prioritised recommendations', text: 'Set out practical actions, further checks and monitoring needs.' },
+      ],
+      options: {
+        title: 'Choose the support you need',
+        items: [
+          { icon: 'doc', title: 'One-off study', text: 'A focused review of a defined issue or operating period.' },
+          { icon: 'cycle', title: 'Recurring review', text: 'Regular assessment of performance and agreed actions.' },
+          { icon: 'bars', title: 'Dashboard & reporting', text: 'Agreed indicators and visual reports for ongoing review.' },
+        ],
+      },
+      receive: {
+        items: [
+          'Engineering findings and supporting trends',
+          'Data gaps and assessment limitations',
+          'Likely causes and further checks',
+          'Prioritised improvement actions',
+          'A review discussion with your team',
+        ],
+        columns: 1,
+        aside: {
+          title: 'Engineering interpretation. Clear next steps.',
+          titleLines: ['Engineering interpretation.', 'Clear next steps.'],
+          text: 'Available as a standalone service or as the starting point for a wider optimisation project.',
+          note: 'The scope, outputs and review frequency are agreed around your process and available data.',
+          bar: false,
+        },
+      },
+      cta: {
+        title: 'Make your operating records more useful.',
+        text: 'Tell us what your plant records and the questions you need answered.',
+        button: 'Discuss your requirements',
+        layout: 'stacked',
+      },
+      relatedLayout: 'rows',
+      relatedItems: {
+        'plant-optimisation': { blurb: 'Resolve problems and improve performance.' },
+        'independent-review': { blurb: 'An objective review of your design and performance.' },
+        'ro-insight': { blurb: 'For ongoing RO monitoring.' },
+      },
+    },
   },
 
   {
