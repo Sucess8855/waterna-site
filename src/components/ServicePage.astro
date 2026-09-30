@@ -28,7 +28,8 @@ const numbered = page.coversNumbered !== false;
 const ctaStacked = page.cta.layout === 'stacked';
 const tiles = page.relatedLayout === 'tiles';
 const largeRelated = page.relatedLayout === 'large';
-const relatedRows = page.relatedLayout === 'rows' || page.relatedLayout === 'cards';
+const relatedFeature = page.relatedLayout === 'feature';
+const relatedRows = page.relatedLayout === 'rows' || page.relatedLayout === 'cards' || relatedFeature;
 const stagesInline = page.stages?.layout === 'inline';
 const coversSide = page.coversLayout === 'side';
 const ctaAside = page.cta.layout === 'aside';
@@ -94,12 +95,25 @@ const lastWord = (t: string) => t.slice(t.lastIndexOf(' ') + 1);
   </div>
 </section>
 
-<section class:list={['sp-lead', { 'sp-lead--row': fitsRow || page.leadPoints, 'sp-lead--band': page.leadPoints }]}>
+<section class:list={['sp-lead', { 'sp-lead--row': fitsRow || page.leadPoints, 'sp-lead--band': page.leadPoints || page.leadSteps, 'sp-lead--steps': page.leadSteps }]}>
   <div class="wrap sp-lead__grid">
     <div>
       <h2>{page.leadTitle}</h2>
       <p>{page.leadText}</p>
     </div>
+    {
+      page.leadSteps && (
+        <ol class="sp-ministeps">
+          {page.leadSteps.map((s, i) => (
+            <li>
+              <span class="sp-ministeps__num">{pad(i + 1)}</span>
+              <h3>{s.title}</h3>
+              <p>{s.text}</p>
+            </li>
+          ))}
+        </ol>
+      )
+    }
     {
       page.leadPoints && (
         <ul class="sp-points">
@@ -205,9 +219,14 @@ const lastWord = (t: string) => t.slice(t.lastIndexOf(' ') + 1);
     {
       page.receive.aside && (
         <aside class="sp-receive__aside">
-          <span class="sp-receive__bar" aria-hidden="true" />
-          <h2>{page.receive.aside.title}</h2>
+          {page.receive.aside.bar !== false && <span class="sp-receive__bar" aria-hidden="true" />}
+          <h2>
+            {page.receive.aside.titleLines
+              ? page.receive.aside.titleLines.map((line) => <span class="sp-line">{line}{' '}</span>)
+              : page.receive.aside.title}
+          </h2>
           <p>{page.receive.aside.text}</p>
+          {page.receive.aside.note && <p class="sp-receive__aside-note">{page.receive.aside.note}</p>}
         </aside>
       )
     }
@@ -289,7 +308,7 @@ const lastWord = (t: string) => t.slice(t.lastIndexOf(' ') + 1);
     <section class="sp-related">
       <div class="wrap">
         <h2>{page.relatedTitle ?? 'Related services'}</h2>
-        <ul class:list={['sp-related__list', { 'sp-related__list--tiles': tiles, 'sp-related__list--large': largeRelated, 'sp-related__list--rows': relatedRows, 'sp-related__list--cards': relatedCards, 'sp-related__list--text': relatedText, 'sp-related__list--links': relatedLinks }]}>
+        <ul class:list={['sp-related__list', { 'sp-related__list--tiles': tiles, 'sp-related__list--large': largeRelated, 'sp-related__list--rows': relatedRows, 'sp-related__list--cards': relatedCards, 'sp-related__list--text': relatedText, 'sp-related__list--links': relatedLinks, 'sp-related__list--feature': relatedFeature }]}>
           {related.map((r) => relatedText ? (
             <li>
               <a href={serviceHref(r)}>
@@ -303,7 +322,7 @@ const lastWord = (t: string) => t.slice(t.lastIndexOf(' ') + 1);
                 <Fragment set:html={icon(serviceIcons[r.slug] ?? '', 'sp-related__icon')} />
                 <span class="sp-row__text">
                   <span class="sp-row__title">{r.navTitle ?? r.title}</span>
-                  {relatedBlurb(r) && <span class="sp-row__blurb">{relatedBlurb(r)}</span>}
+                  {!relatedFeature && relatedBlurb(r) && <span class="sp-row__blurb">{relatedBlurb(r)}</span>}
                 </span>
                 <Fragment set:html={arrow} />
               </a>
@@ -1005,7 +1024,8 @@ const lastWord = (t: string) => t.slice(t.lastIndexOf(' ') + 1);
 
   /* Page-set title lines break only where there is room for them. */
   @media (min-width: 560px) {
-    .sp-hero :global(.sp-line) {
+    .sp-hero :global(.sp-line),
+    .sp-receive__aside .sp-line {
       display: block;
     }
   }
@@ -1037,6 +1057,112 @@ const lastWord = (t: string) => t.slice(t.lastIndexOf(' ') + 1);
     width: 2.9rem;
     height: 2.9rem;
     font-size: 1.1rem;
+  }
+
+  /* ---- lead beside numbered mini steps ---- */
+
+  @media (min-width: 960px) {
+    .sp-lead--steps .sp-lead__grid {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+      gap: 3.5rem;
+      align-items: center;
+    }
+  }
+
+  .sp-ministeps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 1.4rem;
+  }
+
+  @media (min-width: 640px) {
+    .sp-ministeps {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2.2rem;
+    }
+
+    .sp-ministeps li {
+      position: relative;
+    }
+
+    /* Arrow centred between one badge and the next (badge 2.8rem, gap
+       2.2rem), drawn in CSS so it stays out of the reading order. */
+    .sp-ministeps li:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      left: calc((2.8rem + 100% + 2.2rem) / 2 - 0.75rem);
+      top: 0.9rem;
+      width: 1.5rem;
+      height: 1rem;
+      background: #1a9fe0;
+      -webkit-mask: var(--sp-mini-arrow) no-repeat center / contain;
+      mask: var(--sp-mini-arrow) no-repeat center / contain;
+    }
+  }
+
+  .sp-ministeps {
+    --sp-mini-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 20' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 10h31'/%3E%3Cpath d='m26 3 7 7-7 7'/%3E%3C/svg%3E");
+  }
+
+  .sp-ministeps li {
+    margin: 0;
+  }
+
+  .sp-ministeps__num {
+    display: grid;
+    place-items: center;
+    width: 2.8rem;
+    height: 2.8rem;
+    border-radius: 50%;
+    background: #dcebf8;
+    color: var(--brand-deep);
+    font-weight: 700;
+    margin-bottom: 0.7rem;
+  }
+
+  .sp-ministeps h3 {
+    color: var(--brand-deep);
+    font-size: 1.1rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .sp-lead .sp-ministeps p {
+    font-size: 0.95rem;
+    margin: 0;
+  }
+
+  /* ---- statement panel note ---- */
+
+  .sp-receive .sp-receive__aside p.sp-receive__aside-note {
+    margin-top: 1.3rem;
+    font-size: 0.98rem;
+    color: var(--muted);
+  }
+
+  /* ---- related links with large icons, titles only ---- */
+
+  .sp-related a.sp-row > :global(svg.sp-related__icon) {
+    flex: none;
+  }
+
+  .sp-related .sp-related__list--feature a.sp-row {
+    align-items: center;
+  }
+
+  .sp-related .sp-related__list--feature a.sp-row > :global(svg.sp-related__icon) {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .sp-related__list--feature .sp-row__title {
+    font-weight: 600;
+    font-size: 1.05rem;
+  }
+
+  .sp-related .sp-related__list--feature a.sp-row > :global(svg:last-child) {
+    margin-top: 0;
   }
 
   /* ---- lead on a band, with titled points ---- */

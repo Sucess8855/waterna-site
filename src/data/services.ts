@@ -27,6 +27,8 @@ export interface ServicePageContent {
   fitsLayout?: 'side' | 'row';
   /** Short titled points under the lead, in columns; the lead sits on a band. */
   leadPoints?: { title: string; text: string }[];
+  /** Numbered mini steps beside the lead, joined by arrows; the lead sits on a band. */
+  leadSteps?: { title: string; text: string }[];
   /** Optional numbered band of project stages, after the lead. */
   /**
    * "inline" sets each number beside its text on a white card; "plain" is
@@ -61,7 +63,8 @@ export interface ServicePageContent {
     note?: string;
     divider?: boolean;
     columns?: 1 | 2;
-    aside?: { title: string; text: string };
+    /** bar: the short accent rule above the title (default true). */
+    aside?: { title: string; titleLines?: string[]; text: string; note?: string; bar?: boolean };
   };
   /** Optional product card in its own section, after "What you receive". */
   promo?: { eyebrow: string; title: string; text: string; label: string; href: string; image: string };
@@ -94,7 +97,8 @@ export interface ServicePageContent {
    * size; "tiles" shows bordered link tiles; "rows" makes each whole item
    * a link with the arrow at its far end; "cards" is the same in a bordered card.
    */
-  relatedLayout?: 'icons' | 'large' | 'tiles' | 'rows' | 'cards' | 'text' | 'links';
+  /** "feature" is "rows" with larger icons and no descriptions. */
+  relatedLayout?: 'icons' | 'large' | 'tiles' | 'rows' | 'cards' | 'text' | 'links' | 'feature';
   /** Heading over the related links. Defaults to "Related services". */
   relatedTitle?: string;
   /**
@@ -1120,6 +1124,59 @@ export const services: Service[] = [
     deliverables:
       'Agreed test protocols, a witnessed and independently assessed test report, a clear acceptance recommendation, and a performance baseline your operators can use from the first day.',
     related: ['technical-procurement-support', 'plant-optimisation', 'uf-ro-performance-assessment'],
+    page: {
+      titleLines: ['Commissioning &', 'Performance Testing'],
+      sub: 'Clear test criteria. Evidence for handover.',
+      lede: 'We support commissioning planning, witness performance tests and independently assess results to help you make informed handover decisions.',
+      image: {
+        base: 'commissioning-performance-testing',
+        alt: 'An engineer recording test readings on a clipboard beside pumps and pipework',
+      },
+      heroCta: 'Discuss your commissioning plan',
+      leadTitle: 'Agree the test before testing begins',
+      leadText:
+        'Define operating conditions, sampling, duration and acceptance criteria in advance. Record what was tested, what the results show and what remains outstanding.',
+      fits: [],
+      leadSteps: [
+        { title: 'Plan', text: 'Establish readiness and test requirements.' },
+        { title: 'Witness', text: 'Record conditions, observations and deviations.' },
+        { title: 'Assess', text: 'Evaluate results and recommend next steps.' },
+      ],
+      coversTitle: 'What our support covers',
+      coversNumberStyle: 'badge',
+      covers: [
+        { title: 'Commissioning planning', text: 'Review process readiness, sequencing and interfaces with the site team.' },
+        { title: 'Test protocols', text: 'Define conditions, sampling, duration and assessment criteria.' },
+        { title: 'Test witnessing', text: 'Observe agreed tests and document how they were carried out.' },
+        { title: 'Results assessment', text: 'Compare valid test results with agreed performance requirements.' },
+        { title: 'Outstanding actions', text: 'Record shortfalls, completion criteria and proposed retests.' },
+        { title: 'Operating baseline', text: 'Capture representative performance and its reference conditions.' },
+      ],
+      receive: {
+        items: [
+          'Commissioning review and test protocols',
+          'Test observations and assessed results',
+          'Outstanding action register',
+          'Technical acceptance recommendation',
+          'Operating baseline where supported',
+        ],
+        columns: 1,
+        aside: {
+          title: 'Clear responsibilities. A documented handover.',
+          titleLines: ['Clear responsibilities.', 'A documented handover.'],
+          text: 'Our assessment supports the client’s acceptance decision. The scope, authority and responsibilities of each party are agreed at the outset.',
+          note: 'Support for new plants, upgrades and modified treatment systems.',
+          bar: false,
+        },
+      },
+      cta: {
+        title: 'Prepare for testing with confidence.',
+        text: 'Tell us about your plant, programme and performance requirements.',
+        button: 'Discuss your requirements',
+        layout: 'stacked',
+      },
+      relatedLayout: 'feature',
+    },
   },
 
   {
