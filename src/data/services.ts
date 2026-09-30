@@ -29,6 +29,8 @@ export interface ServicePageContent {
   leadPoints?: { title: string; text: string }[];
   /** Put the lead on a light band even without points or steps. */
   leadBand?: boolean;
+  /** Show the lead as a navy feature band with trend lines and tags instead. */
+  leadFeature?: { eyebrow: string; titleLines?: string[]; tags: string[] };
   /** Optional grid of icon tiles after the lead (e.g. data sources). */
   tiles?: { title: string; items: { label: string; icon: Glyph }[] };
   /** Optional row of icon cards on a band, after the scope cards. */
@@ -1244,7 +1246,11 @@ export const services: Service[] = [
       leadText:
         'Review data quality, operating conditions and historical events before drawing conclusions. Combine engineering interpretation with statistical analysis to establish what the evidence supports.',
       fits: [],
-      leadBand: true,
+      leadFeature: {
+        eyebrow: 'Engineering-led analysis',
+        titleLines: ['Put operating data', 'in process context'],
+        tags: ['Data quality', 'Operating conditions', 'Plant history'],
+      },
       tiles: {
         title: 'The data we work from',
         items: [

@@ -22,6 +22,26 @@ const check =
   '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11"></circle><path d="m7.5 12.5 3 3 6-6.5"></path></svg>';
 const pad = (n: number) => String(n).padStart(2, '0');
 
+/* Decorative trend lines for the feature lead: smooth curves through
+   fixed points, on a 600 x 260 canvas. */
+const smooth = (pts: [number, number][]) =>
+  pts.reduce((d, [x, y], i) => {
+    if (i === 0) return `M${x},${y}`;
+    const [px, py] = pts[i - 1];
+    const mx = (px + x) / 2;
+    return `${d} C${mx},${py} ${mx},${y} ${x},${y}`;
+  }, '');
+const trendLines = [
+  { cls: 'a', pts: [[0, 220], [120, 150], [200, 100], [320, 40], [420, 110], [500, 70], [600, 0]] },
+  { cls: 'b', pts: [[0, 150], [80, 130], [160, 150], [240, 90], [340, 120], [420, 115], [520, 110], [600, 40]] },
+  { cls: 'c', pts: [[120, 150], [240, 110], [320, 150], [400, 170], [470, 120], [540, 70], [600, 60]] },
+  { cls: 'd', pts: [[0, 250], [120, 210], [200, 160], [290, 150], [350, 190], [430, 180], [520, 140], [600, 110]] },
+] as { cls: string; pts: [number, number][] }[];
+const trendDots: [number, number, string][] = [
+  [320, 40, 'a'], [600, 0, 'a'], [410, 111, 'b'], [600, 40, 'b'], [320, 150, 'c'], [330, 147, 'c'],
+  [200, 160, 'o'], [360, 189, 'o'], [540, 132, 'o'],
+];
+
 // Layout options; each defaults to the first page built with this layout.
 const fitsRow = page.fitsLayout === 'row';
 const numbered = page.coversNumbered !== false;
@@ -95,6 +115,38 @@ const lastWord = (t: string) => t.slice(t.lastIndexOf(' ') + 1);
   </div>
 </section>
 
+{
+  page.leadFeature ? (
+    <section class="sp-feature">
+      <div class="wrap sp-feature__grid">
+        <div>
+          <span class="sp-feature__bar" aria-hidden="true" />
+          <p class="sp-feature__eyebrow">{page.leadFeature.eyebrow}</p>
+          <h2>
+            {page.leadFeature.titleLines
+              ? page.leadFeature.titleLines.map((line) => <span class="sp-line">{line}{' '}</span>)
+              : page.leadTitle}
+          </h2>
+          <p class="sp-feature__text">{page.leadText}</p>
+        </div>
+        <div class="sp-feature__visual">
+          <svg class="sp-feature__chart" viewBox="-10 -12 620 280" aria-hidden="true">
+            <g class="sp-feature__grid-lines">
+              {[0, 1, 2, 3, 4, 5, 6, 7].map((i) => <path d={`M${i * 85},-10V260`} />)}
+              {[0, 1, 2, 3].map((i) => <path d={`M-10,${i * 70 + 20}H610`} />)}
+            </g>
+            {trendLines.map((l) => <path class={`sp-feature__line sp-feature__line--${l.cls}`} d={smooth(l.pts)} />)}
+            {trendDots.map(([x, y, c]) => (
+              <circle class={`sp-feature__dot sp-feature__dot--${c}`} cx={x} cy={y} r={c === 'o' ? 5 : 6} />
+            ))}
+          </svg>
+          <ul class="sp-feature__tags">
+            {page.leadFeature.tags.map((tag) => <li>{tag}</li>)}
+          </ul>
+        </div>
+      </div>
+    </section>
+  ) : (
 <section class:list={['sp-lead', { 'sp-lead--row': fitsRow || page.leadPoints || page.leadBand, 'sp-lead--band': page.leadPoints || page.leadSteps || page.leadBand, 'sp-lead--steps': page.leadSteps }]}>
   <div class="wrap sp-lead__grid">
     <div>
@@ -135,6 +187,8 @@ const lastWord = (t: string) => t.slice(t.lastIndexOf(' ') + 1);
     }
   </div>
 </section>
+  )
+}
 
 {
   page.stages && (
@@ -196,7 +250,7 @@ const lastWord = (t: string) => t.slice(t.lastIndexOf(' ') + 1);
   )
 }
 
-<section class:list={['sp-covers', { 'sp-covers--after-band': page.stages || page.compare || page.leadPoints || page.leadBand, 'sp-covers--tight': page.tiles }]}>
+<section class:list={['sp-covers', { 'sp-covers--after-band': page.stages || page.compare || page.leadPoints || page.leadBand || page.leadFeature, 'sp-covers--tight': page.tiles }]}>
   <div class="wrap">
     <h2>{page.coversTitle}</h2>
     <ol class:list={['sp-cards', { 'sp-cards--plain': !numbered, 'sp-cards--side': coversSide, 'sp-cards--badges': page.coversNumberStyle === 'badge', 'sp-cards--large': page.coversNumberStyle === 'large' || page.coversNumberStyle === 'light', 'sp-cards--light': page.coversNumberStyle === 'light', 'sp-cards--stacked': page.coversNumberStyle === 'stacked' }]}>
@@ -1096,6 +1150,122 @@ const lastWord = (t: string) => t.slice(t.lastIndexOf(' ') + 1);
     width: 2.9rem;
     height: 2.9rem;
     font-size: 1.1rem;
+  }
+
+  /* ---- navy feature lead ---- */
+
+  .sp-feature {
+    color: #fff;
+    background:
+      radial-gradient(ellipse 50% 70% at 75% 50%, rgba(0, 185, 245, 0.12), transparent 65%),
+      linear-gradient(115deg, #0a4c8a 0%, var(--brand-deep) 45%, #062a52 100%);
+    padding-block: clamp(3rem, 6vw, 4.5rem);
+  }
+
+  .sp-feature__grid {
+    display: grid;
+    gap: 2.5rem;
+    align-items: center;
+  }
+
+  @media (min-width: 960px) {
+    .sp-feature__grid {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 3rem;
+    }
+  }
+
+  .sp-feature__bar {
+    display: block;
+    width: 2.8rem;
+    height: 4px;
+    border-radius: 2px;
+    background: var(--accent);
+    margin-bottom: 1.2rem;
+  }
+
+  /* Cyan holds 4.7:1 on navy. */
+  .sp-feature__eyebrow {
+    margin: 0 0 0.9rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .sp-feature h2 {
+    color: #fff;
+    font-size: clamp(2.1rem, 4vw, 3.1rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.08;
+    margin-bottom: 1.2rem;
+  }
+
+  @media (min-width: 560px) {
+    .sp-feature .sp-line {
+      display: block;
+    }
+  }
+
+  .sp-feature__text {
+    color: #d6e6f5;
+    font-size: 1.1rem;
+    max-width: 48ch;
+    margin: 0;
+  }
+
+  .sp-feature__chart {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+
+  .sp-feature__grid-lines path {
+    stroke: rgba(255, 255, 255, 0.06);
+    stroke-width: 1;
+    stroke-dasharray: 3 4;
+  }
+
+  .sp-feature__line {
+    fill: none;
+    stroke-width: 1.6;
+  }
+
+  .sp-feature__line--a { stroke: #29c4f7; }
+  .sp-feature__line--b { stroke: #1a9fe0; }
+  .sp-feature__line--c { stroke: rgba(255, 255, 255, 0.75); }
+  .sp-feature__line--d { stroke: #3aa8e4; stroke-dasharray: 5 5; }
+
+  .sp-feature__dot--a,
+  .sp-feature__dot--b { fill: #29c4f7; }
+  .sp-feature__dot--c { fill: #c9d8e8; }
+  .sp-feature__dot--o { fill: none; stroke: #8fc3e8; stroke-width: 1.5; }
+
+  .sp-feature__tags {
+    list-style: none;
+    margin: 1.4rem 0 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+  }
+
+  @media (min-width: 960px) {
+    .sp-feature__tags {
+      justify-content: flex-end;
+    }
+  }
+
+  .sp-feature__tags li {
+    margin: 0;
+    border: 1px solid rgba(0, 185, 245, 0.55);
+    border-radius: 6px;
+    padding: 0.55rem 1rem;
+    font-size: 0.95rem;
+    color: #fff;
   }
 
   /* ---- icon tiles ---- */
