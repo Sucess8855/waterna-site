@@ -17,11 +17,11 @@ interface Env {
 }
 
 const SUBJECTS: Record<string, string> = {
-  feasibility: 'New scheme — feasibility or design',
-  problem: 'Existing plant not performing',
-  review: 'Second opinion on a design',
-  hazop: 'HAZOP or risk study',
-  training: 'Training',
+  project: 'New scheme or upgrade — feasibility or design',
+  review: 'Design review or HAZOP',
+  performance: 'Existing plant performance',
+  membranes: 'UF / RO membrane systems',
+  software: 'RO Insight software',
   other: 'Other',
 };
 
