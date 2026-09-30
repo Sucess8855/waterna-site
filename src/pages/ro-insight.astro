@@ -67,17 +67,17 @@ const steps = [
 const glance: [string, string][][] = [
   [
     ['Purpose', 'RO performance monitoring and decision support'],
-    ['Scale', 'Single-train and multi-rack configurations'],
     ['Data', 'Historical exports or agreed live interfaces'],
+    ['Deployment', 'On-premise or cloud options'],
   ],
   [
-    ['Deployment', 'On-premise or cloud options'],
     ['AI assistant', 'Offline, on-premise configuration'],
+    ['ML model', 'Models trained on your own plant data'],
     ['Commercial model', 'Licence or subscription'],
   ],
 ];
 
-const related = ['uf-ro-performance-assessment', 'chemical-dosing-cip', 'data-analysis']
+const related = ['plant-optimisation', 'chemical-dosing-cip', 'data-analysis']
   .map((slug) => pagedServices.find((s) => s.slug === slug))
   .filter((s) => s !== undefined);
 
@@ -105,7 +105,6 @@ const pad = (n: number) => String(n).padStart(2, '0');
         </p>
         <div class="ri-hero__actions">
           <a class="btn btn--light ri-btn" href="/contact">Request a walkthrough <Fragment set:html={arrow} /></a>
-          <a class="btn ri-btn--outline" href="/contact">Discuss your plant</a>
         </div>
         <ul class="ri-stats">
           <li>100+ engineering indicators</li>
@@ -447,16 +446,6 @@ const pad = (n: number) => String(n).padStart(2, '0');
     flex-wrap: wrap;
     gap: 0.9rem;
     margin-bottom: 2rem;
-  }
-
-  .ri-btn--outline {
-    border-color: rgba(255, 255, 255, 0.85);
-    color: #fff;
-  }
-
-  .ri-btn--outline:hover {
-    background: #fff;
-    color: var(--brand-deep);
   }
 
   .ri-stats {
@@ -829,21 +818,28 @@ const pad = (n: number) => String(n).padStart(2, '0');
     gap: 0;
   }
 
+  /* The left list gets a little more room so Purpose holds one line. */
   @media (min-width: 820px) {
     .ri-glance__grid {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 3.5rem;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 3rem;
     }
   }
 
+  /* Each list sizes its term column to its own longest term, so the
+     values get as much of the row as possible. */
   .ri-glance dl {
     margin: 0;
+    display: grid;
+    grid-template-columns: max-content minmax(0, 1fr);
   }
 
   .ri-glance dl > div {
-    display: grid;
-    grid-template-columns: 9.5rem minmax(0, 1fr);
-    gap: 1rem;
+    display: contents;
+  }
+
+  .ri-glance dt,
+  .ri-glance dd {
     padding: 0.6rem 0;
     border-bottom: 1px solid #d3e3f1;
   }
@@ -851,6 +847,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
   .ri-glance dt {
     font-weight: 700;
     color: var(--ink);
+    padding-right: 1.8rem;
   }
 
   .ri-glance dd {
@@ -931,7 +928,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
     align-items: center;
   }
 
-  @media (min-width: 1200px) {
+  @media (min-width: 1100px) {
     .ri-related__row {
       grid-template-columns: auto minmax(0, 1fr);
       gap: 3rem;
@@ -947,6 +944,17 @@ const pad = (n: number) => String(n).padStart(2, '0');
     display: flex;
     flex-wrap: wrap;
     gap: 0.8rem 0;
+  }
+
+  /* The links hold one line from tablet width up. */
+  @media (min-width: 900px) {
+    .ri-related ul {
+      flex-wrap: nowrap;
+    }
+
+    .ri-related a {
+      white-space: nowrap;
+    }
   }
 
   .ri-related li {
