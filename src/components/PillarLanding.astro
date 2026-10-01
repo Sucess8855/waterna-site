@@ -239,7 +239,23 @@ const {
   }
 
   .pl-hero--banner .pl-hero__copy {
-    max-width: 36rem;
+    max-width: 38rem;
+  }
+
+  /* A touch tighter than the split hero, so longer copy still fits the
+     shared banner height. */
+  .pl-hero--banner h1 {
+    font-size: clamp(2.1rem, 3.6vw, 2.75rem);
+    margin-bottom: 0.4rem;
+  }
+
+  .pl-hero--banner .pl-hero__sub {
+    font-size: clamp(1.2rem, 1.8vw, 1.45rem);
+    margin-bottom: 0.8rem;
+  }
+
+  .pl-hero--banner .pl-hero__lede {
+    margin-bottom: 1.3rem;
   }
 
   @media (min-width: 900px) {
@@ -247,7 +263,7 @@ const {
       min-height: var(--banner-h);
       display: flex;
       align-items: center;
-      padding-block: 2rem;
+      padding-block: 1.5rem;
     }
 
     .pl-hero--banner > .wrap {
