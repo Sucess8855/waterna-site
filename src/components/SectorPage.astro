@@ -54,16 +54,18 @@ const pad = (n: number) => String(n).padStart(2, '0');
 <!-- ---------- systems ---------- -->
 <section class="sc-systems">
   <div class="wrap">
-    <h2>Systems we support</h2>
-    <div class="sc-systems__grid">
+    <h2>{page.systemsTitle ?? 'Systems we support'}</h2>
+    <div class:list={['sc-systems__grid', { 'sc-systems__grid--3': page.systems.length === 3 }]}>
       {
         page.systems.map((s) => (
           <article class="sc-system">
             <h3>{s.title}</h3>
             <p>{s.text}</p>
-            <ul>
-              {s.points.map((pt) => <li>{pt}</li>)}
-            </ul>
+            {s.points && (
+              <ul>
+                {s.points.map((pt) => <li>{pt}</li>)}
+              </ul>
+            )}
           </article>
         ))
       }
@@ -75,7 +77,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
 <section class="sc-help">
   <div class="wrap">
     <h2>Where we can help</h2>
-    <ol class="sc-help__list">
+    <ol class:list={['sc-help__list', { 'sc-help__list--large': page.helpStyle === 'large' }]}>
       {
         page.help.map((h, i) => (
           <li>
@@ -90,6 +92,40 @@ const pad = (n: number) => String(n).padStart(2, '0');
     </ol>
   </div>
 </section>
+
+<!-- ---------- treatment processes ---------- -->
+{
+  page.processes && (
+    <section class="sc-proc">
+      <div class="wrap">
+        <h2>{page.processes.title}</h2>
+        <ul class="sc-proc__list">
+          {page.processes.items.map((it) => <li>{it}</li>)}
+        </ul>
+        {page.processes.note && <p class="sc-proc__note">{page.processes.note.map((n) => <span>{n}</span>)}</p>}
+      </div>
+    </section>
+  )
+}
+
+<!-- ---------- connected sectors ---------- -->
+{
+  page.connect && (
+    <section class="sc-connect">
+      <div class="wrap sc-connect__grid">
+        <div>
+          <h2>{page.connect.title}</h2>
+          <p>{page.connect.text}</p>
+        </div>
+        <div class="sc-connect__links">
+          {page.connect.links.map((l) => (
+            <a class="sc-connect__btn" href={l.href}>{l.label} <Fragment set:html={arrow} /></a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
 
 <!-- ---------- RO Insight ---------- -->
 {
@@ -444,6 +480,145 @@ const pad = (n: number) => String(n).padStart(2, '0');
     font-size: 0.97rem;
   }
 
+  @media (min-width: 900px) {
+    .sc-systems__grid--3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .sc-system p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* ---- large help numbers beside a rule ---- */
+
+  .sc-help__list--large .sc-help__num {
+    font-size: clamp(1.7rem, 2.4vw, 2.1rem);
+    font-weight: 800;
+    line-height: 1;
+    padding-right: 1rem;
+    border-right: 1px solid var(--line);
+    align-self: stretch;
+  }
+
+  /* ---------- treatment processes ---------- */
+
+  .sc-proc {
+    background: #eef5fb;
+    border-block: 1px solid #dde9f4;
+    padding-block: clamp(2.5rem, 5vw, 3.25rem);
+  }
+
+  .sc-proc h2 {
+    margin-bottom: 1.1rem;
+  }
+
+  .sc-proc__list {
+    list-style: none;
+    margin: 0 0 1.4rem;
+    padding: 0;
+    display: grid;
+    gap: 0.5rem 3rem;
+  }
+
+  @media (min-width: 700px) {
+    .sc-proc__list {
+      grid-template-columns: repeat(2, minmax(0, 26rem));
+      grid-template-rows: repeat(3, auto);
+      grid-auto-flow: column;
+    }
+  }
+
+  .sc-proc__list li {
+    position: relative;
+    margin: 0;
+    padding-left: 1.4rem;
+    color: var(--ink);
+    font-size: 1.05rem;
+  }
+
+  .sc-proc__list li::before {
+    content: '';
+    position: absolute;
+    left: 0.1rem;
+    top: 0.6em;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: #1a9fe0;
+  }
+
+  .sc-proc__note {
+    margin: 0;
+    font-size: 0.95rem;
+  }
+
+  .sc-proc__note span {
+    display: block;
+  }
+
+  /* ---------- connected sectors band ---------- */
+
+  .sc-connect {
+    background: var(--brand-deep);
+    color: #d6e6f5;
+    padding-block: clamp(2.25rem, 4vw, 2.75rem);
+  }
+
+  .sc-connect__grid {
+    display: grid;
+    gap: 1.5rem;
+    align-items: center;
+  }
+
+  @media (min-width: 900px) {
+    .sc-connect__grid {
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 3rem;
+    }
+  }
+
+  .sc-connect h2 {
+    color: #fff;
+    margin-bottom: 0.4rem;
+  }
+
+  .sc-connect p {
+    margin: 0;
+    font-size: 1.05rem;
+    max-width: 56ch;
+  }
+
+  .sc-connect__links {
+    display: grid;
+    gap: 0.7rem;
+  }
+
+  .sc-connect__btn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    border-radius: 4px;
+    padding: 0.7rem 1.1rem;
+    color: #fff;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  .sc-connect__btn:hover {
+    background: #fff;
+    color: var(--brand-deep);
+  }
+
+  .sc-connect__btn :global(svg) {
+    flex: none;
+    width: 1.05rem;
+    height: 1.05rem;
+  }
+
   /* ---------- RO Insight band ---------- */
 
   .sc-ro {
@@ -621,6 +796,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
   }
 
   .sc-cta h2 {
+    font-size: clamp(1.5rem, 2.4vw, 1.9rem);
     margin-bottom: 0.4rem;
   }
 

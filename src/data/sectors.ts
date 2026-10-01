@@ -26,10 +26,18 @@ export interface SectorPageContent {
   banner: string;
   leadTitle: string;
   leadText: string;
-  systems: { title: string; text: string; points: string[] }[];
+  /** Heading over the system cards. Defaults to "Systems we support". */
+  systemsTitle?: string;
+  systems: { title: string; text: string; points?: string[] }[];
   help: { title: string; text: string }[];
+  /** "large" sets bigger numbers beside a rule. */
+  helpStyle?: 'small' | 'large';
+  /** Optional two-column process list with a note, on a band. */
+  processes?: { title: string; items: string[]; note?: string[] };
   /** Show the RO Insight band. */
   roInsight?: boolean;
+  /** Optional navy band pointing to other sectors. */
+  connect?: { title: string; text: string; links: { label: string; href: string }[] };
   related: string[];
   cta: { title: string; text: string };
 }
@@ -182,6 +190,58 @@ export const sectors: Sector[] = [
       'Zero liquid discharge and evaporation',
     ],
     relatedServices: ['feasibility-studies', 'design-services', 'independent-review'],
+    page: {
+      sub: 'Water quality matched to your process.',
+      lede: 'Independent process engineering for industrial water systems, supporting reliable supply, practical treatment design and improved plant performance.',
+      heroCta: 'Discuss your water requirements',
+      banner: 'industrial',
+      leadTitle: 'Start with what your process needs',
+      leadText:
+        'We assess source water quality, production demand and the requirements of each water user to establish a practical design basis. Our reviews consider treatment, storage, distribution and opportunities for recovery and reuse.',
+      systemsTitle: 'Applications we support',
+      systems: [
+        { title: 'Process water', text: 'Treatment matched to manufacturing requirements, product quality and production demand.' },
+        { title: 'Utility water', text: 'Water preparation for boiler feed, cooling system make-up and other site utilities.' },
+        { title: 'Recovery & reuse', text: 'Assessment of suitable streams for reuse, with treatment requirements and costs evaluated.' },
+      ],
+      helpStyle: 'large',
+      help: [
+        { title: 'Source water & variability', text: 'Review available water sources, quality data and changing operating conditions.' },
+        { title: 'Demand & water balance', text: 'Assess peak demand, storage and the needs of connected water users.' },
+        { title: 'Treatment selection & design', text: 'Compare process options against required quality, capacity and site constraints.' },
+        { title: 'Plant performance & reliability', text: 'Investigate quality shortfalls, capacity limits and recurring operating problems.' },
+        { title: 'Water efficiency & reuse', text: 'Identify opportunities to reduce demand and recover suitable water streams.' },
+        { title: 'Whole-life cost', text: 'Compare investment, energy, chemicals, maintenance and residuals management.' },
+      ],
+      processes: {
+        title: 'Treatment processes',
+        items: [
+          'Clarification and dissolved air flotation',
+          'Media and cartridge filtration',
+          'Ion exchange and softening',
+          'UF, RO and demineralisation',
+          'Degassing and deaeration',
+          'UV and chemical disinfection',
+        ],
+        note: [
+          'Evaporation and zero liquid discharge options can be assessed where relevant to the project.',
+          'Treatment selection is based on your process requirements and operating conditions.',
+        ],
+      },
+      connect: {
+        title: 'A connected view of your water systems',
+        text: 'We consider how treatment, storage, distribution and reuse work together, helping you plan improvements across the site.',
+        links: [
+          { label: 'Explore UF & RO Desalination', href: '/sectors/uf-ro-desalination' },
+          { label: 'Explore Produced Water Treatment', href: '/sectors/produced-water-treatment' },
+        ],
+      },
+      related: ['feasibility-studies', 'independent-review', 'design-services', 'plant-optimisation'],
+      cta: {
+        title: 'Discuss your industrial water requirements',
+        text: 'Tell us about your water source, required quality, demand and current challenge.',
+      },
+    },
   },
 
   {

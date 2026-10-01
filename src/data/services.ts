@@ -694,7 +694,7 @@ export const services: Service[] = [
   {
     slug: 'plant-optimisation',
     pillar: 'plant-performance',
-    title: 'Plant Troubleshooting & Optimisation',
+    title: 'Troubleshooting & Optimisation',
     navTitle: 'Troubleshooting & Optimisation',
     summary:
       'Get an underperforming plant back within consent — or commission a new one properly the first time.',
