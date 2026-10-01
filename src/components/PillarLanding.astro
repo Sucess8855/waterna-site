@@ -21,13 +21,11 @@ interface Props {
   heroCta: string;
   /** Where the hero button goes. Defaults to the contact page. */
   heroHref?: string;
-  image: { base: string; alt: string };
   /**
-   * Show the hero as a full-width banner instead: pale ground, this photo
-   * (basename in public/img/pillars, -1200.webp/.jpg) fading in from the
-   * right, and the text on top.
+   * The banner photo: basename in public/img/pillars (-1200.webp/.jpg),
+   * shown fading in from the right behind the text.
    */
-  banner?: string;
+  banner: string;
   introTitle: string;
   intro: string[];
   helpWith: string[];
@@ -48,21 +46,17 @@ interface Props {
 }
 
 const {
-  eyebrow, title, sub, lede, heroCta, heroHref = '/contact', image, banner, introTitle, intro,
+  eyebrow, title, sub, lede, heroCta, heroHref = '/contact', banner, introTitle, intro,
   helpWith, helpTitle = 'When we can help', servicesTitle, services = [], lines = {},
   icons = {}, extra, ctaTitle, ctaText, ctaTone = 'navy',
 } = Astro.props;
 ---
 
-<section class:list={['pl-hero', { 'pl-hero--banner': banner }]}>
-  {
-    banner && (
-      <picture class="pl-hero__banner" aria-hidden="true">
-        <source type="image/webp" srcset={`/img/pillars/${banner}-1200.webp`} />
-        <img src={`/img/pillars/${banner}-1200.jpg`} alt="" width="1200" height="667" fetchpriority="high" />
-      </picture>
-    )
-  }
+<section class="pl-hero pl-hero--banner">
+  <picture class="pl-hero__banner" aria-hidden="true">
+    <source type="image/webp" srcset={`/img/pillars/${banner}-1200.webp`} />
+    <img src={`/img/pillars/${banner}-1200.jpg`} alt="" width="1200" height="667" fetchpriority="high" />
+  </picture>
   <div class="wrap pl-hero__grid">
     <div class="pl-hero__copy">
       <p class="eyebrow">{eyebrow}</p>
@@ -74,25 +68,6 @@ const {
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
       </a>
     </div>
-    {
-      !banner && (
-    <picture class="pl-hero__media">
-      <source
-        type="image/webp"
-        srcset={`/img/pillars/${image.base}-800.webp 800w, /img/pillars/${image.base}-1400.webp 1400w`}
-        sizes="(min-width: 960px) 45vw, 100vw"
-      />
-      <img
-        src={`/img/pillars/${image.base}-1400.jpg`}
-        alt={image.alt}
-        width="1400"
-        height="1050"
-        fetchpriority="high"
-        decoding="async"
-      />
-    </picture>
-      )
-    }
   </div>
 </section>
 
@@ -318,14 +293,6 @@ const {
     margin-bottom: 1.8rem;
   }
 
-  .pl-hero__media img {
-    display: block;
-    width: 100%;
-    aspect-ratio: 16 / 10;
-    object-fit: cover;
-    border-radius: 4px;
-    box-shadow: var(--shadow-card);
-  }
 
   .btn--arrow {
     display: inline-flex;
