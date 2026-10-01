@@ -22,6 +22,12 @@ interface Props {
   /** Where the hero button goes. Defaults to the contact page. */
   heroHref?: string;
   image: { base: string; alt: string };
+  /**
+   * Show the hero as a full-width banner instead: pale ground, this photo
+   * (basename in public/img/pillars, -1200.webp/.jpg) fading in from the
+   * right, and the text on top.
+   */
+  banner?: string;
   introTitle: string;
   intro: string[];
   helpWith: string[];
@@ -42,13 +48,21 @@ interface Props {
 }
 
 const {
-  eyebrow, title, sub, lede, heroCta, heroHref = '/contact', image, introTitle, intro,
+  eyebrow, title, sub, lede, heroCta, heroHref = '/contact', image, banner, introTitle, intro,
   helpWith, helpTitle = 'When we can help', servicesTitle, services = [], lines = {},
   icons = {}, extra, ctaTitle, ctaText, ctaTone = 'navy',
 } = Astro.props;
 ---
 
-<section class="pl-hero">
+<section class:list={['pl-hero', { 'pl-hero--banner': banner }]}>
+  {
+    banner && (
+      <picture class="pl-hero__banner" aria-hidden="true">
+        <source type="image/webp" srcset={`/img/pillars/${banner}-1200.webp`} />
+        <img src={`/img/pillars/${banner}-1200.jpg`} alt="" width="1200" height="667" fetchpriority="high" />
+      </picture>
+    )
+  }
   <div class="wrap pl-hero__grid">
     <div class="pl-hero__copy">
       <p class="eyebrow">{eyebrow}</p>
@@ -60,6 +74,8 @@ const {
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
       </a>
     </div>
+    {
+      !banner && (
     <picture class="pl-hero__media">
       <source
         type="image/webp"
@@ -75,6 +91,8 @@ const {
         decoding="async"
       />
     </picture>
+      )
+    }
   </div>
 </section>
 
@@ -191,6 +209,57 @@ const {
     background: #eaf2fa;
     border-bottom: 1px solid var(--line);
     padding-block: clamp(2.5rem, 6vw, 4rem);
+  }
+
+  /* ---------- banner variant ---------- */
+
+  .pl-hero--banner {
+    position: relative;
+    overflow: hidden;
+    background: #f4f8fc;
+    border-bottom: 0;
+  }
+
+  .pl-hero__banner img {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: min(62%, 1000px);
+    height: 100%;
+    object-fit: cover;
+    object-position: left center;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 35%);
+    mask-image: linear-gradient(90deg, transparent 0%, #000 35%);
+    pointer-events: none;
+  }
+
+  .pl-hero--banner .pl-hero__grid {
+    position: relative;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .pl-hero--banner .pl-hero__copy {
+    max-width: 36rem;
+  }
+
+  @media (min-width: 900px) {
+    .pl-hero--banner {
+      min-height: var(--banner-h);
+      display: flex;
+      align-items: center;
+      padding-block: 2rem;
+    }
+
+    .pl-hero--banner > .wrap {
+      width: min(100% - 2.5rem, var(--wrap));
+    }
+  }
+
+  @media (max-width: 899px) {
+    .pl-hero__banner img {
+      width: 100%;
+      opacity: 0.25;
+    }
   }
 
   .pl-hero__grid {
