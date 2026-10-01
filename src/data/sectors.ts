@@ -37,7 +37,13 @@ export interface SectorPageContent {
   /** Show the RO Insight band. */
   roInsight?: boolean;
   /** Optional navy band pointing to other sectors. */
-  connect?: { title: string; text: string; links: { label: string; href: string }[] };
+  /** "stacked" puts a single white button under the text instead of outline links beside it. */
+  connect?: {
+    title: string;
+    text: string;
+    links: { label: string; href: string }[];
+    layout?: 'side' | 'stacked';
+  };
   related: string[];
   cta: { title: string; text: string };
 }
@@ -295,6 +301,55 @@ export const sectors: Sector[] = [
       'Disinfection',
     ],
     relatedServices: ['plant-optimisation', 'design-services', 'feasibility-studies'],
+    page: {
+      sub: 'Practical engineering for reliable treatment.',
+      lede: 'Independent process engineering for industrial effluent and wastewater systems, from treatment assessment and design to troubleshooting and plant improvement.',
+      heroCta: 'Discuss your treatment requirements',
+      banner: 'wastewater',
+      leadTitle: 'Understand the load. Define the treatment.',
+      leadText:
+        'We assess influent quality, flow variation and required effluent quality to establish a practical basis for treatment. Our reviews bring together operating data, plant capacity and site constraints to guide design and improvement decisions.',
+      systemsTitle: 'Treatment stages we support',
+      systems: [
+        { title: 'Primary treatment', text: 'Assessment of screening, settlement and physical-chemical treatment to prepare wastewater for downstream processes.' },
+        { title: 'Biological treatment', text: 'Process assessment and design review for organic load and nutrient removal.' },
+        { title: 'Tertiary treatment & reuse', text: 'Filtration, polishing and disinfection assessed against discharge or intended reuse requirements.' },
+      ],
+      helpStyle: 'large',
+      help: [
+        { title: 'Influent & variable loads', text: 'Review flow, wastewater composition and changes associated with production or cleaning.' },
+        { title: 'Effluent quality & targets', text: 'Assess treatment performance against the site’s discharge or reuse requirements.' },
+        { title: 'Biological performance', text: 'Investigate foaming, poor settlement and unstable treatment using plant data.' },
+        { title: 'Capacity & plant upgrades', text: 'Identify process constraints and compare operational improvements with upgrade options.' },
+        { title: 'Energy & chemical use', text: 'Review aeration, pumping and dosing to identify practical efficiency opportunities.' },
+        { title: 'Residuals & operating cost', text: 'Consider sludge production and handling requirements within the overall treatment assessment.' },
+      ],
+      processes: {
+        title: 'Treatment processes',
+        items: [
+          'Screening and grit removal',
+          'Flow equalisation and pH adjustment',
+          'Primary settlement and dissolved air flotation',
+          'Activated sludge and extended aeration',
+          'MBBR, SBR and membrane bioreactors',
+          'Nutrient removal',
+          'Tertiary filtration and polishing',
+          'Disinfection',
+        ],
+        note: ['Process selection considers wastewater characteristics, treatment targets, available space and operating requirements.'],
+      },
+      connect: {
+        title: 'Make better use of your operating data',
+        text: 'We combine operating records, laboratory results and process knowledge to assess performance and prioritise the next steps.',
+        links: [{ label: 'Explore Data Analysis & Performance Review', href: '/plant-performance/data-analysis' }],
+        layout: 'stacked',
+      },
+      related: ['feasibility-studies', 'design-services', 'plant-optimisation', 'commissioning-performance-testing'],
+      cta: {
+        title: 'Discuss your wastewater treatment challenge',
+        text: 'Tell us about your wastewater source, flow, treatment requirements and current concern.',
+      },
+    },
   },
 
   {

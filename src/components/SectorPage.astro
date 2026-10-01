@@ -99,7 +99,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
     <section class="sc-proc">
       <div class="wrap">
         <h2>{page.processes.title}</h2>
-        <ul class="sc-proc__list">
+        <ul class="sc-proc__list" style={`--rows: ${Math.ceil(page.processes.items.length / 2)}`}>
           {page.processes.items.map((it) => <li>{it}</li>)}
         </ul>
         {page.processes.note && <p class="sc-proc__note">{page.processes.note.map((n) => <span>{n}</span>)}</p>}
@@ -111,7 +111,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
 <!-- ---------- connected sectors ---------- -->
 {
   page.connect && (
-    <section class="sc-connect">
+    <section class:list={['sc-connect', { 'sc-connect--stacked': page.connect.layout === 'stacked' }]}>
       <div class="wrap sc-connect__grid">
         <div>
           <h2>{page.connect.title}</h2>
@@ -524,7 +524,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
   @media (min-width: 700px) {
     .sc-proc__list {
       grid-template-columns: repeat(2, minmax(0, 26rem));
-      grid-template-rows: repeat(3, auto);
+      grid-template-rows: repeat(var(--rows, 3), auto);
       grid-auto-flow: column;
     }
   }
@@ -611,6 +611,29 @@ const pad = (n: number) => String(n).padStart(2, '0');
   .sc-connect__btn:hover {
     background: #fff;
     color: var(--brand-deep);
+  }
+
+  /* Stacked: text above a single white button. */
+  @media (min-width: 900px) {
+    .sc-connect--stacked .sc-connect__grid {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 1.4rem;
+    }
+  }
+
+  .sc-connect--stacked .sc-connect__links {
+    justify-items: start;
+  }
+
+  .sc-connect--stacked .sc-connect__btn {
+    background: #fff;
+    color: var(--brand-deep);
+    border-color: #fff;
+  }
+
+  .sc-connect--stacked .sc-connect__btn:hover {
+    background: var(--accent);
+    border-color: var(--accent);
   }
 
   .sc-connect__btn :global(svg) {
