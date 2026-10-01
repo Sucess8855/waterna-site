@@ -15,6 +15,11 @@ export interface ServicePageContent {
   heroCta?: string;
   /** Show the service's own icon beside the title. */
   heroIcon?: boolean;
+  /**
+   * Show the hero as a full-width banner (photo fading in from the right,
+   * text on top, shared banner height) instead of photo beside text.
+   */
+  banner?: boolean;
   /** Set the title's line breaks, one entry per line, on wide screens. */
   titleLines?: string[];
   /** The same for the line under the title; sub stays as its plain text. */
@@ -737,6 +742,7 @@ export const services: Service[] = [
       'A diagnosis supported by your own data, a ranked set of interventions with expected effect and cost, and support implementing them. Where the answer is a capital fix we say so — but we look for the operational one first.',
     related: ['independent-review', 'feasibility-studies', 'design-services'],
     page: {
+      banner: true,
       titleLines: ['Troubleshooting &', 'Optimisation'],
       sub: 'Understand the cause. Improve the performance.',
       lede: 'Practical process engineering support to investigate underperformance, identify constraints and plan improvements.',
@@ -907,6 +913,7 @@ export const services: Service[] = [
       'A written assessment of membrane condition and its causes, a normalised performance baseline that later operation can be judged against, and ranked recommendations covering operation, pretreatment, cleaning and replacement.',
     related: ['chemical-dosing-cip', 'data-analysis', 'plant-optimisation'],
     page: {
+      banner: true,
       titleLines: ['UF & RO Performance', 'Assessment'],
       sub: 'Understand membrane performance. Plan the next step.',
       subLines: ['Understand membrane performance.', 'Plan the next step.'],
@@ -1037,6 +1044,7 @@ export const services: Service[] = [
       'A written review of chemical use and cleaning performance, revised dose ranges and CIP procedures, and an estimate of the savings and performance effect of each change.',
     related: ['uf-ro-performance-assessment', 'plant-optimisation', 'data-analysis'],
     page: {
+      banner: true,
       titleLines: ['Chemical Dosing &', 'CIP Optimisation'],
       sub: 'Effective dosing. Better cleaning decisions.',
       lede: 'We review chemical selection, dosing systems and clean-in-place procedures to help improve treatment performance, control chemical use and assess cleaning effectiveness.',
@@ -1133,6 +1141,7 @@ export const services: Service[] = [
       'Agreed test protocols, a witnessed and independently assessed test report, a clear acceptance recommendation, and a performance baseline your operators can use from the first day.',
     related: ['technical-procurement-support', 'plant-optimisation', 'uf-ro-performance-assessment'],
     page: {
+      banner: true,
       titleLines: ['Commissioning &', 'Performance Testing'],
       sub: 'Clear test criteria. Evidence for handover.',
       lede: 'We support commissioning planning, witness performance tests and independently assess results to help you make informed handover decisions.',
@@ -1234,6 +1243,7 @@ export const services: Service[] = [
       'A structured engineering assessment: what the data shows, what is causing it, and a ranked set of recommendations. Available as a one-off diagnostic study, a recurring performance review, or through an ongoing monitoring dashboard. It is frequently the first stage of an optimisation project, because it establishes and quantifies the opportunity before anyone proposes changing the plant.',
     related: ['plant-optimisation', 'independent-review', 'ro-insight'],
     page: {
+      banner: true,
       titleLines: ['Data Analysis &', 'Performance Review'],
       sub: 'Understand the trends. Prioritise the next step.',
       lede: 'We combine process engineering with analysis of operating records to assess performance, investigate changes and identify practical improvements across water and wastewater treatment.',

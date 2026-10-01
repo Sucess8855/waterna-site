@@ -76,7 +76,19 @@ const headOf = (t: string) => t.slice(0, t.lastIndexOf(' ') + 1);
 const lastWord = (t: string) => t.slice(t.lastIndexOf(' ') + 1);
 ---
 
-<section class="sp-hero">
+<section class:list={['sp-hero', { 'sp-hero--banner': page.banner }]}>
+  {
+    page.banner && (
+      <picture class="sp-hero__banner" aria-hidden="true">
+        <source
+          type="image/webp"
+          srcset={`/img/services/${page.image.base}-800.webp 800w, /img/services/${page.image.base}-1400.webp 1400w`}
+          sizes="(min-width: 900px) 62vw, 100vw"
+        />
+        <img src={`/img/services/${page.image.base}-1400.jpg`} alt="" width="1400" height="1050" fetchpriority="high" />
+      </picture>
+    )
+  }
   <div class="wrap sp-hero__grid">
     <div>
       <nav class="sp-crumbs" aria-label="Breadcrumb">
@@ -97,6 +109,7 @@ const lastWord = (t: string) => t.slice(t.lastIndexOf(' ') + 1);
         {page.heroCta ?? 'Discuss your project'} <Fragment set:html={arrow} />
       </a>
     </div>
+    {!page.banner && (
     <picture class="sp-hero__media">
       <source
         type="image/webp"
@@ -112,6 +125,7 @@ const lastWord = (t: string) => t.slice(t.lastIndexOf(' ') + 1);
         decoding="async"
       />
     </picture>
+    )}
   </div>
 </section>
 
@@ -523,6 +537,87 @@ const lastWord = (t: string) => t.slice(t.lastIndexOf(' ') + 1);
     margin-bottom: 1.8rem;
   }
 
+  /* ---------- banner variant: matches the pillar, sector and about banners ---------- */
+
+  .sp-hero--banner {
+    position: relative;
+    overflow: hidden;
+    background: #f4f8fc;
+    border-bottom: 0;
+  }
+
+  .sp-hero__banner img {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: min(62%, 1000px);
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 35%);
+    mask-image: linear-gradient(90deg, transparent 0%, #000 35%);
+    pointer-events: none;
+  }
+
+  .sp-hero--banner .sp-hero__grid {
+    position: relative;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .sp-hero--banner .sp-hero__grid > div {
+    max-width: 36rem;
+  }
+
+  /* A touch tighter than the split hero so the copy fits the shared height. */
+  .sp-hero--banner h1 {
+    font-size: clamp(2rem, 3.4vw, 2.6rem);
+    line-height: 1.08;
+    margin-bottom: 0.5rem;
+  }
+
+  .sp-hero--banner .sp-hero__sub {
+    font-size: clamp(1.1rem, 1.6vw, 1.3rem);
+    margin-bottom: 0.6rem;
+  }
+
+  .sp-hero--banner .sp-crumbs {
+    margin-bottom: 0.7rem;
+  }
+
+  .sp-hero--banner .sp-hero__lede {
+    font-size: 1.02rem;
+    color: var(--ink);
+    margin-bottom: 0.6rem;
+  }
+
+  .sp-hero--banner .sp-hero__lede:last-of-type {
+    margin-bottom: 1.2rem;
+  }
+
+  .sp-hero--banner .sp-hero__scope {
+    margin-bottom: 1.2rem;
+  }
+
+  @media (min-width: 900px) {
+    .sp-hero--banner {
+      min-height: var(--banner-h);
+      display: flex;
+      align-items: center;
+      padding-block: 1.5rem;
+    }
+
+    .sp-hero--banner > .wrap {
+      width: min(100% - 2.5rem, var(--wrap));
+    }
+  }
+
+  @media (max-width: 899px) {
+    .sp-hero__banner img {
+      width: 100%;
+      opacity: 0.25;
+    }
+  }
+
   .sp-hero__media img {
     display: block;
     width: 100%;
@@ -746,7 +841,7 @@ const lastWord = (t: string) => t.slice(t.lastIndexOf(' ') + 1);
   @media (min-width: 640px) {
     /* Fill down each column, as the list is read. */
     .sp-receive ul {
-      grid-template-columns: repeat(2, max-content);
+      grid-template-columns: repeat(2, minmax(0, max-content));
       grid-template-rows: repeat(3, auto);
       grid-auto-flow: column;
     }
