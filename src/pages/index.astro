@@ -125,7 +125,7 @@ import { sectors } from '../data/sectors';
   <section class="section section--follow">
     <div class="wrap">
       <p class="eyebrow">Sectors</p>
-      <h2>Expertise across water, wastewater and <span class="hl">sludge treatment</span></h2>
+      <h2>Expertise across water and <span class="hl">wastewater treatment</span></h2>
 
       <div class="grid grid--2 secgrid">
         {
@@ -150,7 +150,7 @@ import { sectors } from '../data/sectors';
               </a>
               <div class="seccard__body">
                 <h3>{s.title}</h3>
-                <p>{s.summary}</p>
+                <p>{s.card.text}</p>
                 {
                   s.slug === 'uf-ro-desalination' && (
                     <p class="seccard__extra">
