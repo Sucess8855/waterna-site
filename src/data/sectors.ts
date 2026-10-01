@@ -33,7 +33,8 @@ export interface SectorPageContent {
   /** "large" sets bigger numbers beside a rule. */
   helpStyle?: 'small' | 'large';
   /** Optional two-column process list with a note, on a band. */
-  processes?: { title: string; items: string[]; note?: string[] };
+  /** noteColumns: set the note lines side by side under each list column. */
+  processes?: { title: string; items: string[]; note?: string[]; noteColumns?: boolean };
   /** Show the RO Insight band. */
   roInsight?: boolean;
   /** Optional navy band pointing to other sectors. */
@@ -43,6 +44,8 @@ export interface SectorPageContent {
     text: string;
     links: { label: string; href: string }[];
     layout?: 'side' | 'stacked';
+    /** White filled buttons instead of outlined ones. */
+    solid?: boolean;
   };
   related: string[];
   cta: { title: string; text: string };
@@ -404,5 +407,55 @@ export const sectors: Sector[] = [
       'Reinjection water treatment',
     ],
     relatedServices: ['feasibility-studies', 'independent-review', 'plant-optimisation'],
+    page: {
+      sub: 'Treatment matched to your production conditions.',
+      lede: 'Independent process engineering for produced water systems in the oil and gas industry, from characterisation and treatment selection to design review and plant optimisation.',
+      heroCta: 'Discuss your produced water project',
+      banner: 'produced-water',
+      leadTitle: 'Start with the water and its destination',
+      leadText:
+        'We assess produced water characteristics, operating conditions and the required treated water quality to establish a practical treatment basis. Our reviews consider upstream separation, production chemicals and the interfaces with discharge, reinjection or reuse systems.',
+      systemsTitle: 'Treatment areas we support',
+      systems: [
+        { title: 'Oil & solids removal', text: 'Assessment of separation and solids removal stages against feed conditions and treatment targets.' },
+        { title: 'Polishing & filtration', text: 'Review of downstream treatment to meet the required oil and solids specifications.' },
+        { title: 'Discharge, reinjection & reuse', text: 'Treatment options assessed against the requirements of the intended water destination.' },
+      ],
+      help: [
+        { title: 'Water characterisation', text: 'Review composition, flow variation and sampling needs to establish the design basis.' },
+        { title: 'Separation performance', text: 'Assess oil removal, solids loading and the performance of connected treatment stages.' },
+        { title: 'Chemical treatment', text: 'Review dosing arrangements and potential interactions with downstream treatment.' },
+        { title: 'Water quality requirements', text: 'Translate project-specific discharge, reinjection or reuse requirements into treatment targets.' },
+        { title: 'Capacity & operating changes', text: 'Assess existing equipment against changing flows and production conditions.' },
+        { title: 'Troubleshooting & upgrades', text: 'Investigate shortfalls and compare operating improvements with modification options.' },
+      ],
+      processes: {
+        title: 'Treatment processes',
+        items: [
+          'Gravity and plate separation',
+          'Hydrocyclones',
+          'Induced and dissolved gas flotation',
+          'Walnut shell and media filtration',
+          'Cartridge filtration',
+          'Chemical treatment and demulsification',
+        ],
+        note: [
+          'Membrane and additional polishing options are assessed where appropriate to the water quality and treatment duty.',
+          'Scaling and chemical compatibility are considered as part of the process assessment.',
+        ],
+        noteColumns: true,
+      },
+      connect: {
+        title: 'Independent review of your treatment package',
+        text: 'We review the process basis, equipment duty, operating flexibility and package interfaces to help you assess proposals and identify technical gaps.',
+        links: [{ label: 'Explore Independent Design Review', href: '/project-engineering/independent-review' }],
+        solid: true,
+      },
+      related: ['feasibility-studies', 'design-services', 'technical-procurement-support', 'plant-optimisation'],
+      cta: {
+        title: 'Discuss your produced water challenge',
+        text: 'Tell us about your water composition, flow, existing treatment and required outlet quality.',
+      },
+    },
   },
 ];
