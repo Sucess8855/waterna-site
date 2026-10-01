@@ -17,12 +17,17 @@ const topics: [string, string][] = [
   description="Talk to an independent water and wastewater treatment engineer. Call +44 7450 201927, email info@waterna.co.uk, or send an enquiry."
 >
   <section class="ct-hero">
-    <div class="wrap">
+    <picture class="ct-hero__media" aria-hidden="true">
+      <source type="image/webp" srcset="/img/about/contact-banner-1000.webp" />
+      <img src="/img/about/contact-banner-1000.jpg" alt="" width="1000" height="667" fetchpriority="high" />
+    </picture>
+    <div class="wrap ct-hero__inner">
       <p class="eyebrow">Contact Waterna</p>
       <h1>Talk to an engineer</h1>
+      <p class="ct-hero__lede">Tell us about your project, plant or operating challenge.</p>
       <p class="ct-hero__lede">
-        Tell us about your project, plant or operating challenge. We offer a no-obligation initial
-        discussion to understand your requirements and agree a practical next step.
+        We offer a no-obligation initial discussion to understand your requirements and agree a
+        practical next step.
       </p>
     </div>
   </section>
@@ -124,23 +129,57 @@ const topics: [string, string][] = [
 <style>
   /* ---------- header band ---------- */
 
+  /* Pale ground with the desk scene fading in from the right, as on
+     the Sectors banner. */
   .ct-hero {
-    background: #eaf2fa;
-    padding-block: clamp(2.5rem, 5vw, 3.5rem);
+    position: relative;
+    overflow: hidden;
+    background: #f4f8fc;
+    padding-block: clamp(3rem, 6vw, 4.5rem);
+  }
+
+  .ct-hero__media img {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: min(55%, 900px);
+    height: 100%;
+    object-fit: cover;
+    object-position: left center;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 40%);
+    mask-image: linear-gradient(90deg, transparent 0%, #000 40%);
+    pointer-events: none;
+  }
+
+  .ct-hero__inner {
+    position: relative;
   }
 
   .ct-hero h1 {
     color: var(--brand-deep);
-    font-size: clamp(2.3rem, 4.5vw, 3.2rem);
+    font-size: clamp(2.4rem, 5vw, 3.6rem);
     font-weight: 800;
-    letter-spacing: -0.03em;
-    margin-bottom: 1rem;
+    letter-spacing: -0.035em;
+    margin-bottom: 1.1rem;
   }
 
   .ct-hero__lede {
-    font-size: 1.15rem;
-    max-width: 62ch;
-    margin: 0;
+    font-size: clamp(1.1rem, 1.6vw, 1.3rem);
+    color: var(--ink);
+    max-width: 44ch;
+    margin: 0 0 0.9rem;
+  }
+
+  .ct-hero__lede:last-child {
+    margin-bottom: 0;
+  }
+
+  /* On narrow screens the text runs full width, so the photo steps back. */
+  @media (max-width: 759px) {
+    .ct-hero__media img {
+      width: 100%;
+      opacity: 0.25;
+    }
   }
 
   /* ---------- body ---------- */
