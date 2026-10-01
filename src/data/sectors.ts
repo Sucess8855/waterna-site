@@ -126,7 +126,7 @@ export const sectors: Sector[] = [
       related: ['design-services', 'uf-ro-performance-assessment', 'chemical-dosing-cip', 'commissioning-performance-testing'],
       cta: {
         title: 'Discuss your UF or RO project',
-        text: 'Tell us about your water source, treatment capacity, required water quality and current challenge.',
+        text: 'Tell us about your water source, capacity and current challenge.',
       },
     },
   },
