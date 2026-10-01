@@ -348,6 +348,26 @@ import { sectors } from '../data/sectors';
     object-position: center;
   }
 
+  /* A slow push-in and drift on the photo, out and back over 28 seconds,
+     to give the banner some life without competing with the text. The
+     container clips the overflow; reduced-motion visitors get a still. */
+  @keyframes hero-drift {
+    from {
+      transform: scale(1);
+    }
+    to {
+      transform: scale(1.08) translateX(-1.5%);
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .hero img {
+      transform-origin: 60% 50%;
+      animation: hero-drift 14s ease-in-out infinite alternate;
+      will-change: transform;
+    }
+  }
+
   .hero__scrim {
     position: absolute;
     inset: 0;
