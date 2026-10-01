@@ -82,6 +82,18 @@ const related = ['plant-optimisation', 'chemical-dosing-cip', 'data-analysis']
   .filter((s) => s !== undefined);
 
 const pad = (n: number) => String(n).padStart(2, '0');
+
+/**
+ * Hero slideshow. Each entry is a basename in public/img/ro-insight with
+ * -900.webp, -1400.webp and -1400.jpg versions (1400 wide, cropped from
+ * the top to about 1400x795). Add, remove or reorder entries freely.
+ */
+const slides = [
+  { base: 'dash-full', caption: 'Live dashboard: plant status, fleet KPIs and diagnostics', alt: 'RO Insight live dashboard: plant status, fleet KPI snapshot and diagnostic overview' },
+  { base: 'rack-detail', caption: 'Rack detail: operating KPIs and membrane health', alt: 'RO Insight rack detail: rack status, latest operating KPIs and normalised membrane health indicators' },
+  { base: 'fleet-benchmark', caption: 'Fleet benchmarking and rack availability', alt: 'RO Insight fleet rack benchmark summary with an availability table and timeline' },
+  { base: 'scaling-risk', caption: 'Scaling risk: mineral saturation by rack', alt: 'RO Insight scaling risk summary with mineral saturation bars and per-rack scaling risk table' },
+];
 ---
 
 <Base title={roInsight.metaTitle} description={roInsight.metaDescription}>
@@ -113,26 +125,68 @@ const pad = (n: number) => String(n).padStart(2, '0');
         </ul>
       </div>
 
-      <figure class="ri-screen">
+      <figure class="ri-screen ri-carousel" aria-roledescription="carousel" aria-label="RO Insight™ screens">
         <div class="ri-frame">
           <div class="ri-frame__bar" aria-hidden="true"><span></span><span></span><span></span></div>
-          <picture>
-            <source
-              type="image/webp"
-              srcset="/img/ro-insight/dash-full-900.webp 900w, /img/ro-insight/dash-full-1400.webp 1400w"
-              sizes="(min-width: 960px) 50vw, 100vw"
-            />
-            <img
-              src="/img/ro-insight/dash-full-1400.jpg"
-              alt="RO Insight live dashboard: plant status, fleet KPI snapshot and diagnostic overview"
-              width="1400"
-              height="795"
-              fetchpriority="high"
-              decoding="async"
-            />
-          </picture>
+          <div class="ri-slides">
+            {
+              slides.map((s, i) => (
+                <div
+                  class:list={['ri-slide', { 'is-active': i === 0 }]}
+                  role="group"
+                  aria-roledescription="slide"
+                  aria-label={`${i + 1} of ${slides.length}`}
+                  aria-hidden={i === 0 ? undefined : 'true'}
+                  data-caption={s.caption}
+                >
+                  <picture>
+                    <source
+                      type="image/webp"
+                      srcset={`/img/ro-insight/${s.base}-900.webp 900w, /img/ro-insight/${s.base}-1400.webp 1400w`}
+                      sizes="(min-width: 960px) 50vw, 100vw"
+                    />
+                    <img
+                      src={`/img/ro-insight/${s.base}-1400.jpg`}
+                      alt={s.alt}
+                      width="1400"
+                      height="795"
+                      loading={i === 0 ? 'eager' : 'lazy'}
+                      fetchpriority={i === 0 ? 'high' : undefined}
+                      decoding="async"
+                    />
+                  </picture>
+                </div>
+              ))
+            }
+          </div>
         </div>
-        <figcaption>The RO Insight™ live dashboard</figcaption>
+
+        <div class="ri-carousel__controls">
+          <button class="ri-carousel__btn" type="button" data-prev aria-label="Previous screen">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg>
+          </button>
+          <div class="ri-carousel__dots">
+            {
+              slides.map((s, i) => (
+                <button
+                  class:list={['ri-carousel__dot', { 'is-active': i === 0 }]}
+                  type="button"
+                  data-dot={i}
+                  aria-label={`Show screen ${i + 1}: ${s.caption}`}
+                  aria-current={i === 0 ? 'true' : undefined}
+                />
+              ))
+            }
+          </div>
+          <button class="ri-carousel__btn" type="button" data-next aria-label="Next screen">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg>
+          </button>
+          <button class="ri-carousel__btn ri-carousel__pause" type="button" data-pause aria-label="Pause slideshow">
+            <svg class="ri-icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"></rect><rect x="14" y="5" width="4" height="14" rx="1"></rect></svg>
+            <svg class="ri-icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 5v14l12-7z"></path></svg>
+          </button>
+        </div>
+        <figcaption aria-live="polite">{slides[0].caption}</figcaption>
       </figure>
     </div>
   </section>
@@ -305,6 +359,78 @@ const pad = (n: number) => String(n).padStart(2, '0');
     </div>
   </section>
 </Base>
+
+<script>
+  // Hero slideshow: arrows, dots, keyboard, and a timer that pauses on
+  // hover or focus and never starts for reduced-motion users.
+  for (const root of document.querySelectorAll<HTMLElement>('.ri-carousel')) {
+    const slides = [...root.querySelectorAll<HTMLElement>('.ri-slide')];
+    const dots = [...root.querySelectorAll<HTMLButtonElement>('[data-dot]')];
+    const caption = root.querySelector('figcaption')!;
+    const pauseBtn = root.querySelector<HTMLButtonElement>('[data-pause]')!;
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const DELAY = 6000;
+    let index = 0;
+    let timer: number | undefined;
+    let paused = reduced;
+    let hovering = false;
+
+    const show = (i: number) => {
+      index = (i + slides.length) % slides.length;
+      slides.forEach((s, n) => {
+        const on = n === index;
+        s.classList.toggle('is-active', on);
+        if (on) s.removeAttribute('aria-hidden');
+        else s.setAttribute('aria-hidden', 'true');
+      });
+      dots.forEach((d, n) => {
+        d.classList.toggle('is-active', n === index);
+        if (n === index) d.setAttribute('aria-current', 'true');
+        else d.removeAttribute('aria-current');
+      });
+      caption.textContent = slides[index].dataset.caption ?? '';
+    };
+
+    const stop = () => window.clearInterval(timer);
+    const start = () => {
+      stop();
+      if (!paused && !hovering && slides.length > 1) timer = window.setInterval(() => show(index + 1), DELAY);
+    };
+    const setPaused = (p: boolean) => {
+      paused = p;
+      root.classList.toggle('is-paused', p);
+      pauseBtn.setAttribute('aria-label', p ? 'Play slideshow' : 'Pause slideshow');
+      start();
+    };
+
+    root.querySelector('[data-prev]')!.addEventListener('click', () => { show(index - 1); start(); });
+    root.querySelector('[data-next]')!.addEventListener('click', () => { show(index + 1); start(); });
+    dots.forEach((d, n) => d.addEventListener('click', () => { show(n); start(); }));
+    pauseBtn.addEventListener('click', () => setPaused(!paused));
+
+    root.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') { show(index - 1); start(); }
+      if (e.key === 'ArrowRight') { show(index + 1); start(); }
+    });
+    root.addEventListener('mouseenter', () => { hovering = true; stop(); });
+    root.addEventListener('mouseleave', () => { hovering = false; start(); });
+    root.addEventListener('focusin', () => { hovering = true; stop(); });
+    root.addEventListener('focusout', () => { hovering = false; start(); });
+
+    // Swipe on touch screens.
+    let x0: number | null = null;
+    root.addEventListener('touchstart', (e) => { x0 = e.touches[0].clientX; }, { passive: true });
+    root.addEventListener('touchend', (e) => {
+      if (x0 === null) return;
+      const dx = e.changedTouches[0].clientX - x0;
+      if (Math.abs(dx) > 40) { show(index + (dx < 0 ? 1 : -1)); start(); }
+      x0 = null;
+    });
+
+    if (slides.length < 2) root.classList.add('is-single');
+    setPaused(paused);
+  }
+</script>
 
 <style>
   /* ---------- shared ---------- */
@@ -523,6 +649,128 @@ const pad = (n: number) => String(n).padStart(2, '0');
     width: 100%;
     height: auto;
     border-radius: 4px;
+  }
+
+  /* ---- hero slideshow ---- */
+
+  .ri-slides {
+    position: relative;
+    aspect-ratio: 1400 / 795;
+    overflow: hidden;
+    border-radius: 4px;
+    background: #0a0e19;
+  }
+
+  .ri-slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity 0.6s ease,
+      visibility 0s linear 0.6s;
+  }
+
+  .ri-slide.is-active {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.6s ease;
+  }
+
+  .ri-frame .ri-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top left;
+    border-radius: 0;
+  }
+
+  .ri-carousel__controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    margin-top: 1rem;
+  }
+
+  .ri-carousel.is-single .ri-carousel__controls {
+    display: none;
+  }
+
+  .ri-carousel__btn {
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    background: rgba(255, 255, 255, 0.06);
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+  }
+
+  .ri-carousel__btn:hover {
+    background: rgba(0, 185, 245, 0.22);
+    border-color: var(--accent);
+  }
+
+  .ri-carousel__btn svg {
+    width: 1.05rem;
+    height: 1.05rem;
+  }
+
+  .ri-carousel__pause {
+    margin-left: 0.4rem;
+  }
+
+  .ri-carousel__pause svg {
+    width: 0.85rem;
+    height: 0.85rem;
+  }
+
+  .ri-icon-play,
+  .ri-carousel.is-paused .ri-icon-pause {
+    display: none;
+  }
+
+  .ri-carousel.is-paused .ri-icon-play {
+    display: block;
+  }
+
+  .ri-carousel__dots {
+    display: flex;
+    gap: 0.15rem;
+  }
+
+  /* A 24px target around each small visible dot. */
+  .ri-carousel__dot {
+    width: 1.5rem;
+    height: 1.5rem;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+  }
+
+  .ri-carousel__dot::before {
+    content: '';
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.4);
+    transition: width 0.25s ease, background-color 0.25s ease;
+  }
+
+  .ri-carousel__dot.is-active::before {
+    width: 1.3rem;
+    background: var(--accent);
+  }
+
+  .ri-carousel figcaption {
+    margin-top: 0.6rem;
   }
 
   .ri-screen figcaption {
