@@ -177,7 +177,6 @@ export const sectors: Sector[] = [
       'Primary settlement and DAF',
       'Activated sludge and extended aeration',
       'MBBR, SBR and MBR',
-      'Anaerobic pre-treatment',
       'Tertiary filtration and polishing',
       'Nutrient removal',
       'Disinfection',

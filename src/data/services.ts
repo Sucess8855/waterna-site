@@ -197,7 +197,7 @@ export const services: Service[] = [
     page: {
       sub: 'A clear basis for your next investment.',
       lede: 'Assess treatment options, understand costs and identify risks before committing to design and procurement.',
-      scope: 'Water, wastewater and sludge treatment, including UF and RO desalination.',
+      scope: 'Water and wastewater treatment, including UF and RO desalination.',
       image: {
         base: 'feasibility-studies',
         alt: 'Two engineers reviewing process drawings and cost charts at a desk overlooking a treatment works',
@@ -246,7 +246,7 @@ export const services: Service[] = [
       'Process and engineering design, from block flow diagrams and mass balances through to equipment specification and P&IDs.',
     metaTitle: 'Water & Wastewater Treatment Design Services | Waterna',
     metaDescription:
-      'Process design for water, effluent and sludge treatment — mass balances, PFDs, P&IDs, hydraulic profiles, equipment datasheets and full FEED deliverables.',
+      'Process design for water and effluent treatment — mass balances, PFDs, P&IDs, hydraulic profiles, equipment datasheets and full FEED deliverables.',
     intro:
       'Design is where a treatment concept becomes something a contractor can price and a team can build. We produce the process engineering that sits underneath it — the mass balance, the flow schemes, the equipment duties and the drawings — at whatever depth your stage of project requires.',
     why: [
@@ -286,7 +286,7 @@ export const services: Service[] = [
     page: {
       sub: 'Turn treatment concepts into practical engineering.',
       lede: 'Process engineering for new plants and system upgrades, from concept development through to front-end engineering design.',
-      scope: 'Water, wastewater and sludge treatment, including UF and RO desalination.',
+      scope: 'Water and wastewater treatment, including UF and RO desalination.',
       image: {
         base: 'design-services',
         alt: 'A scale model of a treatment works on a desk covered with process drawings',
@@ -398,7 +398,7 @@ export const services: Service[] = [
     blurb: 'Technical input through tender and award.',
     page: {
       sub: 'Clear requirements. Informed supplier selection.',
-      lede: 'Technical support for tender preparation, bid evaluation and supplier follow-up across water, wastewater and sludge treatment, including UF and RO desalination.',
+      lede: 'Technical support for tender preparation, bid evaluation and supplier follow-up across water and wastewater treatment, including UF and RO desalination.',
       image: {
         base: 'technical-procurement-support',
         alt: 'A skid-mounted treatment package with pumps and pressure vessels in a fabrication workshop',
@@ -508,7 +508,7 @@ export const services: Service[] = [
       heroIcon: true,
       sub: 'An independent assessment of your treatment design.',
       lede: 'Review design assumptions, process sizing and operating requirements before key project decisions.',
-      scope: 'Water, wastewater and sludge treatment, including UF and RO desalination.',
+      scope: 'Water and wastewater treatment, including UF and RO desalination.',
       image: {
         base: 'independent-review',
         alt: 'A process drawing marked up with review comments, beside a calculation sheet and a tablet listing design review items',
@@ -583,11 +583,11 @@ export const services: Service[] = [
       'Structured hazard and operability studies, chaired independently, with actions tracked through to close-out.',
     metaTitle: 'HAZOP Studies for Water & Effluent Plant | Waterna',
     metaDescription:
-      'Independently chaired HAZOP and hazard studies for water, wastewater and sludge treatment plant — full node-by-node examination with actions tracked to close-out.',
+      'Independently chaired HAZOP and hazard studies for water and wastewater treatment plant — full node-by-node examination with actions tracked to close-out.',
     intro:
       'A HAZOP is a structured, node-by-node examination of a design, asking what happens when it does not behave as intended. We chair the study, keep it rigorous, and make sure the actions it generates are specific enough to actually close.',
     why: [
-      'Water and effluent plants carry hazards that are easy to underrate: chlorine and other hazardous chemicals, confined spaces, biogas and hydrogen sulphide, high-pressure membrane systems, and pumps that can flood a site if a level signal fails. Anaerobic digestion in particular brings an explosive atmosphere onto a site that may not otherwise handle one.',
+      'Water and effluent plants carry hazards that are easy to underrate: chlorine and other hazardous chemicals, confined spaces, biogas and hydrogen sulphide, high-pressure membrane systems, and pumps that can flood a site if a level signal fails.',
       'A HAZOP is only as good as its chair. A study that runs late, drifts off the guide words, or generates vague actions like "consider reviewing" has consumed everyone’s time without reducing risk. Independent chairing matters here — the designer is the last person who should be judging whether the design is sound.',
     ],
     covered: [
@@ -623,7 +623,7 @@ export const services: Service[] = [
       titleLines: ['HAZOP &', 'Risk Studies'],
       heroIcon: true,
       sub: 'Structured reviews. Clear actions.',
-      lede: 'Independent HAZOP chairing for water, wastewater and sludge treatment, including UF, RO desalination and anaerobic digestion.',
+      lede: 'Independent HAZOP chairing for water and wastewater treatment, including UF and RO desalination.',
       scope: 'Identify hazards and operability issues through a focused, multidisciplinary review.',
       image: {
         base: 'hazop',
@@ -740,7 +740,7 @@ export const services: Service[] = [
       titleLines: ['Troubleshooting &', 'Optimisation'],
       sub: 'Understand the cause. Improve the performance.',
       lede: 'Practical process engineering support to investigate underperformance, identify constraints and plan improvements.',
-      scope: 'Water, wastewater and sludge treatment, including UF and RO desalination.',
+      scope: 'Water and wastewater treatment, including UF and RO desalination.',
       image: {
         base: 'plant-optimisation',
         alt: 'An engineer in a hard hat checking plant data on a tablet beside pumps and pipework',
@@ -1236,7 +1236,7 @@ export const services: Service[] = [
     page: {
       titleLines: ['Data Analysis &', 'Performance Review'],
       sub: 'Understand the trends. Prioritise the next step.',
-      lede: 'We combine process engineering with analysis of operating records to assess performance, investigate changes and identify practical improvements across water, wastewater and sludge treatment.',
+      lede: 'We combine process engineering with analysis of operating records to assess performance, investigate changes and identify practical improvements across water and wastewater treatment.',
       image: {
         base: 'data-analysis',
         alt: 'Performance charts on a desktop monitor overlooking a treatment works, with reports on the desk',
@@ -1259,7 +1259,7 @@ export const services: Service[] = [
           { label: 'Flow & pressure records', icon: 'waves' },
           { label: 'Energy & chemical use', icon: 'bolt' },
           { label: 'Maintenance & event logs', icon: 'clipboard' },
-          { label: 'Sludge & solids records', icon: 'solids' },
+          { label: 'Solids & residuals records', icon: 'solids' },
         ],
       },
       coversTitle: 'What our review covers',

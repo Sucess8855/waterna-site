@@ -25,7 +25,7 @@ export const pillars: Pillar[] = [
       'We establish the right treatment approach and translate it into practical engineering requirements, covering feasibility, process design, independent design review and risk studies.',
     metaTitle: 'Project Engineering for Water & Wastewater Treatment | Waterna',
     metaDescription:
-      'Feasibility studies, process design, independent design review and HAZOP for water, effluent and sludge treatment schemes — vendor-neutral, with no equipment sales.',
+      'Feasibility studies, process design, independent design review and HAZOP for water and effluent treatment schemes — vendor-neutral, with no equipment sales.',
     intro:
       'Almost everything that determines whether a treatment plant succeeds is decided before it exists — in the design basis, the options appraisal and the hazard study. This is the work that happens there.',
     body: [
