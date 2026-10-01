@@ -7,9 +7,9 @@ export const site = {
   phoneHref: 'tel:+447450201927',
   email: 'info@waterna.co.uk',
   address: {
-    street: '12 Glenferness Ave',
+    street: '19 Oxford Road',
     city: 'Bournemouth',
-    postcode: 'BH4 9NG',
+    postcode: 'BH8 8GS',
     country: 'United Kingdom',
   },
   linkedin: 'https://www.linkedin.com/company/waterna',
