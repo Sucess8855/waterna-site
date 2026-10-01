@@ -138,6 +138,19 @@ const topics: [string, string][] = [
     padding-block: clamp(3rem, 6vw, 4.5rem);
   }
 
+  @media (min-width: 900px) {
+    .ct-hero {
+      min-height: var(--banner-h);
+      display: flex;
+      align-items: center;
+      padding-block: 2.5rem;
+    }
+
+    .ct-hero > .wrap {
+      width: min(100% - 2.5rem, var(--wrap));
+    }
+  }
+
   .ct-hero__media img {
     position: absolute;
     top: 0;

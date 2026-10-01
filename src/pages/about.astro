@@ -45,8 +45,17 @@ const waves = Array.from({ length: 10 }, (_, i) => {
   description="Waterna is an independent UK water and wastewater treatment consultancy. Process engineering from early assessment and design to plant performance — no equipment sales, no vendor agreements."
 >
   <!-- ---------- hero ---------- -->
-  <!-- Three layers: photograph, gradient, live text. -->
+  <!-- Desktop shows the supplied banner image whole, text included; the
+       live text below stays for phones, search engines and screen readers. -->
   <section class="ab-hero">
+    <picture class="ab-hero__full" aria-hidden="true">
+      <source
+        type="image/webp"
+        srcset="/img/about/about-full-1600.webp 1600w, /img/about/about-full-2172.webp 2172w"
+        sizes="100vw"
+      />
+      <img src="/img/about/about-full-2172.jpg" alt="" width="2172" height="724" loading="lazy" decoding="async" />
+    </picture>
     <picture class="ab-hero__photo">
       <source
         type="image/webp"
@@ -276,6 +285,82 @@ const waves = Array.from({ length: 10 }, (_, i) => {
     color: var(--ink);
     max-width: 44ch;
     margin-bottom: 1.8rem;
+  }
+
+  .ab-hero__full {
+    display: none;
+  }
+
+  /* Desktop: the same height as the other banners, filled by the supplied
+     image. Its text sits at 28-84% of the height, so the crop is centred on
+     56% to keep the button in view. The live text is kept but visually
+     hidden, apart from its button, which sits over the one in the image. */
+  @media (min-width: 900px) {
+    .ab-hero {
+      height: var(--banner-h);
+      padding: 0;
+    }
+
+    .ab-hero__full {
+      display: block;
+    }
+
+    .ab-hero__full img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: left 56%;
+    }
+
+    .ab-hero__photo,
+    .ab-hero__fade {
+      display: none;
+    }
+
+    .ab-hero__text > :not(.ab-btn) {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+    }
+
+    /* The live link sits invisibly over the button drawn in the image.
+       --s is the rendered size of one source pixel under object-fit:
+       cover; the button occupies x 166-478, y 541-611 of the 2172x724
+       source. */
+    .ab-hero {
+      container-type: inline-size;
+    }
+
+    .ab-hero__text {
+      position: static;
+    }
+
+    .ab-hero__text .ab-btn {
+      --s: max(100cqw / 2172, var(--banner-h) / 724);
+      position: absolute;
+      left: calc(var(--s) * 166);
+      top: calc((var(--banner-h) - var(--s) * 724) * 0.56 + var(--s) * 541);
+      width: calc(var(--s) * 312);
+      height: calc(var(--s) * 70);
+      padding: 0;
+      background: transparent;
+      color: transparent;
+      overflow: hidden;
+    }
+
+    .ab-hero__text .ab-btn :global(svg) {
+      display: none;
+    }
+
+    .ab-hero__text .ab-btn:focus-visible {
+      outline: 3px solid var(--accent);
+      outline-offset: 3px;
+    }
   }
 
   /* Narrow screens: the text spans the width, so the wash covers it all. */

@@ -94,6 +94,19 @@ const featured = 'uf-ro-desalination';
     padding-block: clamp(3rem, 6vw, 4.5rem);
   }
 
+  @media (min-width: 900px) {
+    .sx-hero {
+      min-height: var(--banner-h);
+      display: flex;
+      align-items: center;
+      padding-block: 2.5rem;
+    }
+
+    .sx-hero > .wrap {
+      width: min(100% - 2.5rem, var(--wrap));
+    }
+  }
+
   .sx-hero__water img {
     position: absolute;
     top: 0;

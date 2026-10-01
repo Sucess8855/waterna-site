@@ -42,6 +42,9 @@
   --shadow-card: 0 2px 48px -12px rgba(0, 63, 118, 0.20);
 
   --wrap: 1120px;
+
+  /* Height of the photo banners on About, Sectors and Contact, desktop up. */
+  --banner-h: 420px;
   --font-sans: 'Archivo', 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Arial, sans-serif;
 }
 
