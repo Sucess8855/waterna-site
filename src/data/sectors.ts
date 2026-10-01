@@ -14,6 +14,24 @@ export interface Sector {
   image: string;
   /** Short description and three points for the sector card. */
   card: { text: string; points: string[] };
+  /** Content for the full sector page layout; without it the simpler layout is used. */
+  page?: SectorPageContent;
+}
+
+export interface SectorPageContent {
+  sub: string;
+  lede: string;
+  heroCta: string;
+  /** Basename in public/img/sectors for the banner photo (-1200.webp/.jpg). */
+  banner: string;
+  leadTitle: string;
+  leadText: string;
+  systems: { title: string; text: string; points: string[] }[];
+  help: { title: string; text: string }[];
+  /** Show the RO Insight band. */
+  roInsight?: boolean;
+  related: string[];
+  cta: { title: string; text: string };
 }
 
 export const sectors: Sector[] = [
@@ -76,6 +94,41 @@ export const sectors: Sector[] = [
       'Permeate remineralisation',
     ],
     relatedServices: ['ro-insight', 'plant-optimisation', 'design-services'],
+    page: {
+      sub: 'From treatment design to plant performance.',
+      lede: 'Independent process engineering for ultrafiltration and reverse osmosis systems, supporting new projects, plant upgrades and day-to-day operation.',
+      heroCta: 'Discuss your membrane project',
+      banner: 'uf-ro',
+      leadTitle: 'Engineering built around your water',
+      leadText:
+        'We assess feed water quality, treatment requirements and operating conditions to develop practical solutions for your plant. Our support covers pretreatment, membrane selection, process design, commissioning and performance improvement.',
+      systems: [
+        {
+          title: 'Ultrafiltration & pretreatment',
+          text: 'Engineering support for UF systems and the treatment stages that protect downstream membranes.',
+          points: ['Feed water assessment and pretreatment', 'UF sizing, backwash and cleaning review', 'Integrity testing and operating performance'],
+        },
+        {
+          title: 'Reverse osmosis desalination',
+          text: 'Process design and operational support for seawater and brackish water RO systems.',
+          points: ['Membrane selection, flux and recovery', 'High-pressure pumping and energy recovery', 'Permeate quality and post-treatment'],
+        },
+      ],
+      help: [
+        { title: 'Feed water & pretreatment', text: 'Review water quality, variability and pretreatment performance.' },
+        { title: 'Design & operating conditions', text: 'Assess capacity, flux, recovery and equipment constraints.' },
+        { title: 'Fouling & scaling', text: 'Investigate likely causes using operating data and water analysis.' },
+        { title: 'Cleaning & recovery', text: 'Review cleaning procedures and compare performance before and after cleaning.' },
+        { title: 'Energy & resource use', text: 'Assess pumping, energy recovery and chemical consumption.' },
+        { title: 'Commissioning & baselines', text: 'Define test requirements and establish a reference for future assessment.' },
+      ],
+      roInsight: true,
+      related: ['design-services', 'uf-ro-performance-assessment', 'chemical-dosing-cip', 'commissioning-performance-testing'],
+      cta: {
+        title: 'Discuss your UF or RO project',
+        text: 'Tell us about your water source, treatment capacity, required water quality and current challenge.',
+      },
+    },
   },
 
   {

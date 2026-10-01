@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import SectorPage from '../../components/SectorPage.astro';
 import { site } from '../../data/site';
 import { sectors } from '../../data/sectors';
 import { pagedServices, serviceHref } from '../../data/services';
@@ -18,6 +19,11 @@ const related = sector.relatedServices
 ---
 
 <Base title={sector.metaTitle} description={sector.metaDescription}>
+  {
+    sector.page ? (
+      <SectorPage sector={sector} />
+    ) : (
+      <Fragment>
   <section class="phead">
     <div class="wrap phead__grid">
       <div>
@@ -104,6 +110,9 @@ const related = sector.relatedServices
       </aside>
     </div>
   </section>
+      </Fragment>
+    )
+  }
 </Base>
 
 <style>

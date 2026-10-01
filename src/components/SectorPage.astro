@@ -1,0 +1,648 @@
+---
+// The full sector page: banner, lead, system cards, numbered "where we can
+// help" grid, optional RO Insight band, related services and a call to
+// action. Content comes from sector.page.
+import { site } from '../data/site';
+import type { Sector } from '../data/sectors';
+import { pagedServices, roInsight, serviceHref } from '../data/services';
+import { serviceIcons } from '../data/icons';
+
+interface Props {
+  sector: Sector;
+}
+
+const { sector } = Astro.props;
+const page = sector.page!;
+const related = page.related
+  .map((slug) => pagedServices.find((s) => s.slug === slug))
+  .filter((s) => s !== undefined);
+
+const arrow =
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>';
+const icon = (paths: string) =>
+  `<svg class="sc-related__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths}</svg>`;
+const pad = (n: number) => String(n).padStart(2, '0');
+---
+
+<!-- ---------- banner ---------- -->
+<section class="sc-hero">
+  <picture class="sc-hero__photo" aria-hidden="true">
+    <source type="image/webp" srcset={`/img/sectors/${page.banner}-1200.webp`} />
+    <img src={`/img/sectors/${page.banner}-1200.jpg`} alt="" width="1200" height="674" fetchpriority="high" />
+  </picture>
+  <div class="wrap sc-hero__inner">
+    <nav class="sc-crumbs" aria-label="Breadcrumb">
+      <a href="/sectors">Sectors</a>
+      <span aria-hidden="true">/</span>
+      <span>{sector.navTitle ?? sector.title}</span>
+    </nav>
+    <h1>{sector.title}</h1>
+    <p class="sc-hero__sub">{page.sub}</p>
+    <p class="sc-hero__lede">{page.lede}</p>
+    <a class="btn btn--primary sc-btn" href="/contact">{page.heroCta} <Fragment set:html={arrow} /></a>
+  </div>
+</section>
+
+<!-- ---------- lead ---------- -->
+<section class="sc-lead">
+  <div class="wrap">
+    <h2>{page.leadTitle}</h2>
+    <p>{page.leadText}</p>
+  </div>
+</section>
+
+<!-- ---------- systems ---------- -->
+<section class="sc-systems">
+  <div class="wrap">
+    <h2>Systems we support</h2>
+    <div class="sc-systems__grid">
+      {
+        page.systems.map((s) => (
+          <article class="sc-system">
+            <h3>{s.title}</h3>
+            <p>{s.text}</p>
+            <ul>
+              {s.points.map((pt) => <li>{pt}</li>)}
+            </ul>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ---------- where we can help ---------- -->
+<section class="sc-help">
+  <div class="wrap">
+    <h2>Where we can help</h2>
+    <ol class="sc-help__list">
+      {
+        page.help.map((h, i) => (
+          <li>
+            <span class="sc-help__num">{pad(i + 1)}</span>
+            <div>
+              <h3>{h.title}</h3>
+              <p>{h.text}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<!-- ---------- RO Insight ---------- -->
+{
+  page.roInsight && (
+    <section class="sc-ro">
+      <div class="wrap sc-ro__grid">
+        <div>
+          <p class="sc-ro__eyebrow">RO performance software</p>
+          <h2>Waterna RO Insight™</h2>
+          <p class="sc-ro__text">
+            Turn routine RO operating data into engineering indicators to support membrane assessment,
+            cleaning decisions and energy performance review.
+          </p>
+          <p class="sc-ro__note">Optional software, available separately from our consultancy services.</p>
+          <a class="btn btn--light sc-btn" href={serviceHref(roInsight)}>
+            Explore RO Insight™ <Fragment set:html={arrow} />
+          </a>
+        </div>
+        <figure class="sc-ro__screen">
+          <div class="sc-ro__frame">
+            <picture>
+              <source
+                type="image/webp"
+                srcset="/img/ro-insight/dash-full-900.webp 900w, /img/ro-insight/dash-full-1400.webp 1400w"
+                sizes="(min-width: 900px) 40vw, 100vw"
+              />
+              <img
+                src="/img/ro-insight/dash-full-1400.jpg"
+                alt="RO Insight live dashboard: plant status, fleet KPI snapshot and diagnostic overview"
+                width="1400"
+                height="795"
+                loading="lazy"
+                decoding="async"
+              />
+            </picture>
+          </div>
+          <div class="sc-ro__base" aria-hidden="true" />
+        </figure>
+      </div>
+    </section>
+  )
+}
+
+<!-- ---------- related services ---------- -->
+{
+  related.length > 0 && (
+    <section class="sc-related">
+      <div class="wrap">
+        <h2>Related services</h2>
+        <ul class="sc-related__list">
+          {related.map((r) => (
+            <li>
+              <a href={serviceHref(r)}>
+                <Fragment set:html={icon(serviceIcons[r.slug] ?? '')} />
+                <span>{r.title}</span>
+                <Fragment set:html={arrow} />
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )
+}
+
+<!-- ---------- call to action ---------- -->
+<section class="sc-cta">
+  <div class="wrap sc-cta__grid">
+    <div>
+      <h2>{page.cta.title}</h2>
+      <p>{page.cta.text}</p>
+      <a class="btn btn--primary sc-btn" href="/contact">Contact an engineer <Fragment set:html={arrow} /></a>
+    </div>
+    <p class="sc-cta__direct">
+      <a href={site.phoneHref}>{site.phone}</a>
+      <span aria-hidden="true">|</span>
+      <a href={`mailto:${site.email}`}>{site.email}</a>
+    </p>
+  </div>
+</section>
+
+<style>
+  h2 {
+    color: var(--brand-deep);
+    font-size: clamp(1.7rem, 2.8vw, 2.2rem);
+    font-weight: 800;
+  }
+
+  .sc-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .sc-btn :global(svg) {
+    width: 1.1rem;
+    height: 1.1rem;
+    transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .sc-btn:hover :global(svg) {
+    transform: translateX(3px);
+  }
+
+  /* ---------- banner: same style and height as the other banners ---------- */
+
+  .sc-hero {
+    position: relative;
+    overflow: hidden;
+    background: #f4f8fc;
+    padding-block: clamp(3rem, 6vw, 4rem);
+  }
+
+  .sc-hero__photo img {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: min(62%, 1000px);
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 35%);
+    mask-image: linear-gradient(90deg, transparent 0%, #000 35%);
+    pointer-events: none;
+  }
+
+  .sc-hero__inner {
+    position: relative;
+  }
+
+  .sc-hero__inner > * {
+    max-width: 34rem;
+  }
+
+  @media (min-width: 900px) {
+    .sc-hero {
+      min-height: var(--banner-h);
+      display: flex;
+      align-items: center;
+      padding-block: 1.5rem;
+    }
+
+    .sc-hero > .wrap {
+      width: min(100% - 2.5rem, var(--wrap));
+    }
+  }
+
+  @media (max-width: 899px) {
+    .sc-hero__photo img {
+      width: 100%;
+      opacity: 0.25;
+    }
+  }
+
+  .sc-crumbs {
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.8rem;
+  }
+
+  .sc-crumbs a {
+    color: var(--brand);
+    text-decoration: none;
+  }
+
+  .sc-crumbs a:hover {
+    text-decoration: underline;
+  }
+
+  .sc-crumbs span[aria-hidden] {
+    margin-inline: 0.5rem;
+  }
+
+  .sc-hero h1 {
+    color: var(--brand-deep);
+    font-size: clamp(2.1rem, 3.6vw, 2.75rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.08;
+    margin-bottom: 0.6rem;
+  }
+
+  .sc-hero__sub {
+    color: var(--ink);
+    font-size: clamp(1.1rem, 1.6vw, 1.3rem);
+    font-weight: 700;
+    margin-bottom: 0.6rem;
+  }
+
+  .sc-hero__lede {
+    font-size: 1.05rem;
+    color: var(--ink);
+    margin-bottom: 1.3rem;
+  }
+
+  /* ---------- lead ---------- */
+
+  .sc-lead {
+    padding-block: clamp(2.5rem, 5vw, 3.25rem);
+  }
+
+  .sc-lead h2 {
+    margin-bottom: 0.8rem;
+  }
+
+  .sc-lead p {
+    max-width: 72ch;
+    margin: 0;
+    font-size: 1.08rem;
+  }
+
+  /* ---------- systems ---------- */
+
+  .sc-systems {
+    background: #eef5fb;
+    border-block: 1px solid #dde9f4;
+    padding-block: clamp(2.5rem, 5vw, 3.5rem);
+  }
+
+  .sc-systems h2 {
+    margin-bottom: 1.4rem;
+  }
+
+  .sc-systems__grid {
+    display: grid;
+    gap: 1.2rem;
+  }
+
+  @media (min-width: 760px) {
+    .sc-systems__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .sc-system {
+    background: #fff;
+    border-top: 3px solid #1a9fe0;
+    border-radius: 0 0 4px 4px;
+    padding: 1.6rem 1.7rem 1.8rem;
+    box-shadow: 0 2px 20px -12px rgba(0, 63, 118, 0.2);
+  }
+
+  .sc-system h3 {
+    color: var(--brand-deep);
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .sc-system p {
+    margin-bottom: 1rem;
+  }
+
+  .sc-system ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .sc-system li {
+    position: relative;
+    padding-left: 1.3rem;
+    margin-bottom: 0.4rem;
+    color: var(--ink);
+  }
+
+  .sc-system li::before {
+    content: '';
+    position: absolute;
+    left: 0.1rem;
+    top: 0.6em;
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: 50%;
+    background: #1a9fe0;
+  }
+
+  /* ---------- where we can help ---------- */
+
+  .sc-help {
+    padding-block: clamp(2.5rem, 5vw, 3.5rem);
+  }
+
+  .sc-help h2 {
+    margin-bottom: 1.4rem;
+  }
+
+  .sc-help__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+  }
+
+  @media (min-width: 760px) {
+    .sc-help__list {
+      grid-template-columns: repeat(2, 1fr);
+      column-gap: 2rem;
+    }
+  }
+
+  @media (min-width: 1000px) {
+    .sc-help__list {
+      grid-template-columns: repeat(3, 1fr);
+      column-gap: 0;
+    }
+
+    .sc-help__list li {
+      padding-inline: 1.8rem;
+    }
+
+    .sc-help__list li:nth-child(3n + 1) {
+      padding-left: 0;
+    }
+
+    .sc-help__list li:not(:nth-child(3n + 1)) {
+      border-left: 1px solid var(--line);
+    }
+
+    .sc-help__list li:nth-child(-n + 3) {
+      border-bottom: 1px solid var(--line);
+    }
+  }
+
+  .sc-help__list li {
+    margin: 0;
+    display: flex;
+    gap: 1.1rem;
+    align-items: flex-start;
+    padding-block: 1.1rem;
+  }
+
+  /* #0A78C2 holds 4.69:1 on white. */
+  .sc-help__num {
+    flex: none;
+    color: #0a78c2;
+    font-weight: 700;
+    font-size: 1.05rem;
+    line-height: 1.5;
+  }
+
+  .sc-help h3 {
+    color: var(--brand-deep);
+    font-size: 1.08rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .sc-help p {
+    margin: 0;
+    font-size: 0.97rem;
+  }
+
+  /* ---------- RO Insight band ---------- */
+
+  .sc-ro {
+    background: var(--brand-deep);
+    color: #d6e6f5;
+    padding-block: clamp(2.75rem, 5vw, 3.5rem);
+    overflow: hidden;
+  }
+
+  .sc-ro__grid {
+    display: grid;
+    gap: 2.5rem;
+    align-items: center;
+  }
+
+  @media (min-width: 900px) {
+    .sc-ro__grid {
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+      gap: 3rem;
+    }
+  }
+
+  /* Cyan holds 4.7:1 on navy. */
+  .sc-ro__eyebrow {
+    margin: 0 0 0.6rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .sc-ro h2 {
+    color: #fff;
+    margin-bottom: 0.7rem;
+  }
+
+  .sc-ro__text {
+    font-size: 1.08rem;
+    max-width: 50ch;
+    margin-bottom: 0.7rem;
+  }
+
+  .sc-ro__note {
+    font-style: italic;
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.78);
+    margin-bottom: 1.5rem;
+  }
+
+  .sc-ro__screen {
+    margin: 0;
+  }
+
+  /* A simple laptop: the real dashboard in a dark bezel on a thin base. */
+  .sc-ro__frame {
+    background: #0a0e19;
+    border: 1px solid rgba(0, 185, 245, 0.3);
+    border-radius: 10px 10px 4px 4px;
+    padding: 0.6rem;
+    box-shadow: 0 30px 60px -24px rgba(0, 0, 0, 0.6);
+  }
+
+  .sc-ro__frame img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 3px;
+  }
+
+  .sc-ro__base {
+    height: 0.65rem;
+    margin-inline: -4%;
+    background: linear-gradient(180deg, #c7d0db, #8794a3);
+    border-radius: 0 0 10px 10px;
+  }
+
+  /* ---------- related services ---------- */
+
+  .sc-related {
+    padding-block: clamp(2.5rem, 5vw, 3.25rem);
+  }
+
+  .sc-related h2 {
+    margin-bottom: 1rem;
+  }
+
+  .sc-related__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+  }
+
+  @media (min-width: 760px) {
+    .sc-related__list {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .sc-related__list li:nth-child(even) {
+      border-left: 1px solid var(--line);
+      padding-left: 2rem;
+    }
+
+    .sc-related__list li:nth-child(odd) {
+      padding-right: 2rem;
+    }
+
+    .sc-related__list li:nth-child(-n + 2) {
+      border-bottom: 1px solid var(--line);
+    }
+  }
+
+  .sc-related__list li {
+    margin: 0;
+  }
+
+  .sc-related__list a {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding-block: 1rem;
+    color: var(--brand-deep);
+    font-weight: 700;
+    font-size: 1.05rem;
+    text-decoration: none;
+  }
+
+  .sc-related__list a:hover span {
+    text-decoration: underline;
+  }
+
+  .sc-related__list :global(.sc-related__icon) {
+    flex: none;
+    width: 2.2rem;
+    height: 2.2rem;
+    color: var(--brand-deep);
+  }
+
+  .sc-related__list a > :global(svg:last-child) {
+    flex: none;
+    width: 1.15rem;
+    height: 1.15rem;
+    color: #1a9fe0;
+    transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .sc-related__list a:hover > :global(svg:last-child) {
+    transform: translateX(3px);
+  }
+
+  /* ---------- call to action ---------- */
+
+  .sc-cta {
+    background: #eaf2fa;
+    padding-block: clamp(2.5rem, 5vw, 3.25rem);
+  }
+
+  .sc-cta__grid {
+    display: grid;
+    gap: 1.5rem;
+    align-items: center;
+  }
+
+  @media (min-width: 900px) {
+    .sc-cta__grid {
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 3rem;
+    }
+
+    .sc-cta__direct {
+      border-left: 1px solid #c9dcee;
+      padding-left: 3rem;
+    }
+  }
+
+  .sc-cta h2 {
+    margin-bottom: 0.4rem;
+  }
+
+  .sc-cta p {
+    max-width: 56ch;
+    margin-bottom: 1.2rem;
+  }
+
+  .sc-cta__direct {
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1rem;
+    color: var(--muted);
+  }
+
+  .sc-cta__direct a {
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .sc-cta__direct a:hover {
+    text-decoration: underline;
+  }
+</style>
