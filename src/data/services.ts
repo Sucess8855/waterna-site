@@ -200,6 +200,7 @@ export const services: Service[] = [
     related: ['design-services', 'technical-procurement-support', 'independent-review'],
     blurb: 'Compare options before you commit.',
     page: {
+      banner: true,
       sub: 'A clear basis for your next investment.',
       lede: 'Assess treatment options, understand costs and identify risks before committing to design and procurement.',
       scope: 'Water and wastewater treatment, including UF and RO desalination.',
@@ -289,6 +290,7 @@ export const services: Service[] = [
     related: ['feasibility-studies', 'independent-review', 'hazop'],
     blurb: 'From feasibility to detailed design.',
     page: {
+      banner: true,
       sub: 'Turn treatment concepts into practical engineering.',
       lede: 'Process engineering for new plants and system upgrades, from concept development through to front-end engineering design.',
       scope: 'Water and wastewater treatment, including UF and RO desalination.',
@@ -402,6 +404,7 @@ export const services: Service[] = [
     related: ['feasibility-studies', 'design-services', 'independent-review'],
     blurb: 'Technical input through tender and award.',
     page: {
+      banner: true,
       sub: 'Clear requirements. Informed supplier selection.',
       lede: 'Technical support for tender preparation, bid evaluation and supplier follow-up across water and wastewater treatment, including UF and RO desalination.',
       image: {
@@ -509,6 +512,7 @@ export const services: Service[] = [
     related: ['design-services', 'technical-procurement-support', 'hazop'],
     blurb: 'An expert view on your design.',
     page: {
+      banner: true,
       titleLines: ['Independent', 'Design Review'],
       heroIcon: true,
       sub: 'An independent assessment of your treatment design.',
@@ -625,6 +629,7 @@ export const services: Service[] = [
       'A full HAZOP report with the node worksheets, the risk ranking, and an action register written so each item can be closed and evidenced. We can also run the close-out review once actions have been addressed.',
     related: ['design-services', 'independent-review', 'feasibility-studies'],
     page: {
+      banner: true,
       titleLines: ['HAZOP &', 'Risk Studies'],
       heroIcon: true,
       sub: 'Structured reviews. Clear actions.',
