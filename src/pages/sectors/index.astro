@@ -1,192 +1,275 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { site } from '../../data/site';
 import { sectors } from '../../data/sectors';
+
+const arrow =
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>';
+
+/** The lead sector gets an accent rule across the top of its card. */
+const featured = 'uf-ro-desalination';
 ---
 
 <Base
   title="Sectors We Work In | Waterna"
-  description="UF and RO desalination, industrial water treatment, wastewater and effluent treatment, and anaerobic digestion and sludge — independent process engineering across each."
+  description="Process engineering for UF and RO desalination, industrial water, wastewater and oil and gas produced water treatment — new systems and the improvement of existing plant."
 >
-  <section class="phead">
+  <section class="sx-hero">
     <div class="wrap">
       <p class="eyebrow">Where we work</p>
-      <h1>Sectors we <span class="hl">work in</span></h1>
-      <p class="lede">
-        Our work spans four areas that share the same underlying engineering: characterise what is
-        actually arriving, design for the worst case rather than the average, and cost the whole life
-        rather than the purchase. Membrane desalination is where most of it sits.
+      <h1>Sectors we work in</h1>
+      <p class="sx-hero__lede">
+        Process engineering for membrane desalination, industrial water, wastewater and produced
+        water treatment. We help clients develop new systems and improve existing plant performance,
+        with particular expertise in UF and RO.
       </p>
     </div>
   </section>
 
-  <section class="section">
-    <div class="wrap">
-      <div class="grid grid--2">
-        {
-          sectors.map((s) => (
-            <article class="scard card--lift">
-              <a class="scard__media" href={`/sectors/${s.slug}`} tabindex="-1" aria-hidden="true">
-                <picture>
-                  <source
-                    type="image/webp"
-                    srcset={`/img/sectors/${s.image}-600.webp 600w, /img/sectors/${s.image}-1200.webp 1200w`}
-                    sizes="(min-width: 700px) 46vw, 100vw"
-                  />
-                  <img
-                    src={`/img/sectors/${s.image}-1200.jpg`}
-                    alt=""
-                    width="1200"
-                    height="674"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </picture>
+  <section class="sx-list">
+    <div class="wrap sx-grid">
+      {
+        sectors.map((s) => (
+          <article class:list={['sx-card', { 'sx-card--featured': s.slug === featured }]}>
+            <a class="sx-card__media" href={`/sectors/${s.slug}`} tabindex="-1" aria-hidden="true">
+              <picture>
+                <source
+                  type="image/webp"
+                  srcset={`/img/sectors/${s.image}-600.webp 600w, /img/sectors/${s.image}-1200.webp 1200w`}
+                  sizes="(min-width: 760px) 45vw, 100vw"
+                />
+                <img
+                  src={`/img/sectors/${s.image}-1200.jpg`}
+                  alt=""
+                  width="1200"
+                  height="674"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </picture>
+            </a>
+            <div class="sx-card__body">
+              <h2>
+                <a href={`/sectors/${s.slug}`}>{s.navTitle ?? s.title}</a>
+              </h2>
+              <p>{s.card.text}</p>
+              <ul>
+                {s.card.points.map((pt) => <li>{pt}</li>)}
+              </ul>
+              <a class="sx-card__more" href={`/sectors/${s.slug}`} aria-hidden="true" tabindex="-1">
+                Explore {s.navTitle ?? s.title} <Fragment set:html={arrow} />
               </a>
-              <div class="scard__body">
-                <h2>
-                  <a href={`/sectors/${s.slug}`}>{s.title}</a>
-                </h2>
-                <p>{s.summary}</p>
-                <ul class="scard__list">
-                  {s.technologies.slice(0, 4).map((t) => (
-                    <li>{t}</li>
-                  ))}
-                </ul>
-                <a class="scard__more" href={`/sectors/${s.slug}`}>
-                  Explore {s.navTitle ?? s.title} &rarr;
-                </a>
-              </div>
-            </article>
-          ))
-        }
-      </div>
+            </div>
+          </article>
+        ))
+      }
     </div>
   </section>
 
-  <section class="cta">
-    <div class="wrap cta__inner">
+  <section class="sx-cta">
+    <div class="wrap sx-cta__grid">
       <div>
-        <h2>Working on something that spans more than one of these?</h2>
-        <p>
-          Most real sites do. A works with an effluent plant, a digester and a process water demand
-          is one system, and it pays to have it looked at as one.
-        </p>
+        <h2>More than one treatment challenge?</h2>
+        <p>We help you assess how your water supply, treatment and reuse systems work together.</p>
       </div>
-      <div class="cta__actions">
-        <a class="btn btn--primary" href={site.phoneHref}>{site.phone}</a>
-        <a class="btn btn--ghost" href="/contact">Contact page</a>
-      </div>
+      <a class="btn btn--light sx-btn" href="/contact">Discuss your project <Fragment set:html={arrow} /></a>
     </div>
   </section>
 </Base>
 
 <style>
-  .phead {
-    background: var(--brand-tint);
-    border-bottom: 1px solid var(--line);
-    padding-block: clamp(2.5rem, 6vw, 4rem);
+  /* ---------- header band ---------- */
+
+  .sx-hero {
+    background: #eaf2fa;
+    padding-block: clamp(2.5rem, 5vw, 3.5rem);
   }
 
-  .scard {
-    display: flex;
-    flex-direction: column;
-    background: #fff;
-    border: 1px solid var(--line);
-    border-radius: 4px;
-    overflow: hidden;
-    box-shadow: var(--shadow-card);
+  .sx-hero h1 {
+    color: var(--brand-deep);
+    font-size: clamp(2.3rem, 4.5vw, 3.2rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 1rem;
   }
 
-  .scard__media {
-    display: block;
+  .sx-hero__lede {
+    font-size: 1.15rem;
+    max-width: 66ch;
+    margin: 0;
   }
 
-  .scard__media img {
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    object-fit: cover;
+  /* ---------- cards ---------- */
+
+  .sx-list {
+    padding-block: clamp(2rem, 4vw, 2.75rem) clamp(2.5rem, 5vw, 3.5rem);
   }
 
-  .scard__body {
-    padding: 1.5rem 1.6rem 1.6rem;
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-  }
-
-  .scard__more {
-    margin-top: auto;
-  }
-
-  .scard h2 {
-    font-size: 1.25rem;
-    margin-bottom: 0.5rem;
-  }
-
-  .scard h2 a {
-    text-decoration: none;
-    color: var(--ink);
-  }
-
-  .scard h2 a:hover {
-    color: var(--brand);
-  }
-
-  .scard__list {
-    list-style: none;
-    margin: 0 0 1rem;
-    padding: 0;
-    border-top: 1px solid var(--line);
-    padding-top: 0.85rem;
-  }
-
-  .scard__list li {
-    font-size: 0.9rem;
-    color: var(--muted);
-    margin-bottom: 0.25rem;
-  }
-
-  .scard__more {
-    font-weight: 600;
-    font-size: 0.95rem;
-    text-decoration: none;
-  }
-
-  .scard__more:hover {
-    text-decoration: underline;
-  }
-
-  .cta {
-    background: var(--brand-tint);
-    padding-block: clamp(2.5rem, 6vw, 4rem);
-    border-top: 1px solid var(--line);
-  }
-
-  .cta__inner {
+  .sx-grid {
     display: grid;
-    gap: 1.5rem;
-    align-items: center;
+    gap: 1.2rem;
   }
 
-  @media (min-width: 800px) {
-    .cta__inner {
-      grid-template-columns: 1.6fr 1fr;
+  @media (min-width: 760px) {
+    .sx-grid {
+      grid-template-columns: repeat(2, 1fr);
     }
   }
 
-  .cta h2 {
-    margin-bottom: 0.4rem;
-  }
-
-  .cta p {
-    margin-bottom: 0;
-    max-width: 54ch;
-  }
-
-  .cta__actions {
+  .sx-card {
+    position: relative;
     display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
+    flex-direction: column;
+    background: #fff;
+    border: 1px solid #dfe8f1;
+    border-radius: 6px;
+    padding: 0.8rem 0.8rem 1.4rem;
+    transition:
+      transform 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .sx-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px -18px rgba(0, 63, 118, 0.32);
+  }
+
+  .sx-card--featured {
+    border-top: 3px solid #1a9fe0;
+  }
+
+  .sx-card__media img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 2 / 1;
+    object-fit: cover;
+    border-radius: 3px;
+  }
+
+  .sx-card__body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 1.1rem 0.4rem 0;
+  }
+
+  .sx-card h2 {
+    font-size: clamp(1.35rem, 2vw, 1.6rem);
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+  }
+
+  .sx-card h2 a {
+    color: var(--brand-deep);
+    text-decoration: none;
+  }
+
+  /* The whole card is the link target. */
+  .sx-card h2 a::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+
+  .sx-card h2 a:focus-visible {
+    outline: none;
+  }
+
+  .sx-card:has(h2 a:focus-visible) {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  .sx-card p {
+    margin-bottom: 0.9rem;
+  }
+
+  .sx-card ul {
+    list-style: none;
+    margin: 0 0 1.2rem;
+    padding: 0;
+  }
+
+  .sx-card li {
+    position: relative;
+    padding-left: 1.4rem;
+    margin-bottom: 0.3rem;
+    color: var(--ink);
+    font-size: 0.98rem;
+  }
+
+  .sx-card li::before {
+    content: '';
+    position: absolute;
+    left: 0.15rem;
+    top: 0.55em;
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: 50%;
+    background: #1a9fe0;
+  }
+
+  .sx-card__more {
+    margin-top: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 700;
+    color: var(--brand-deep);
+    text-decoration: none;
+  }
+
+  .sx-card__more :global(svg) {
+    width: 1.05rem;
+    height: 1.05rem;
+    transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .sx-card:hover .sx-card__more :global(svg) {
+    transform: translateX(3px);
+  }
+
+  /* ---------- call to action ---------- */
+
+  .sx-cta {
+    background: var(--brand-deep);
+    color: #d6e6f5;
+    padding-block: clamp(2rem, 4vw, 2.75rem);
+  }
+
+  .sx-cta__grid {
+    display: grid;
+    gap: 1.4rem;
+    align-items: center;
+  }
+
+  @media (min-width: 860px) {
+    .sx-cta__grid {
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 3rem;
+    }
+  }
+
+  .sx-cta h2 {
+    color: #fff;
+    font-size: clamp(1.5rem, 2.4vw, 1.9rem);
+    font-weight: 800;
+    margin-bottom: 0.3rem;
+  }
+
+  .sx-cta p {
+    margin: 0;
+    font-size: 1.05rem;
+  }
+
+  .sx-btn {
+    justify-self: start;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .sx-btn :global(svg) {
+    width: 1.1rem;
+    height: 1.1rem;
   }
 </style>

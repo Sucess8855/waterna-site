@@ -12,11 +12,17 @@ export interface Sector {
   relatedServices: string[];
   /** Basename in public/img/sectors. */
   image: string;
+  /** Short description and three points for the sector card. */
+  card: { text: string; points: string[] };
 }
 
 export const sectors: Sector[] = [
   {
     slug: 'uf-ro-desalination',
+    card: {
+      text: 'Specialist engineering for ultrafiltration and reverse osmosis systems, from pretreatment and design to commissioning and performance improvement.',
+      points: ['UF and membrane pretreatment', 'Seawater and brackish water RO', 'Troubleshooting and optimisation'],
+    },
     image: 'uf-ro',
     title: 'Ultrafiltration & RO Desalination',
     navTitle: 'UF & RO Desalination',
@@ -74,6 +80,10 @@ export const sectors: Sector[] = [
 
   {
     slug: 'industrial-water-treatment',
+    card: {
+      text: 'Treatment systems developed around your process water quality, production needs and operating conditions.',
+      points: ['Clarification and filtration', 'Ion exchange and softening', 'Process water quality and reuse'],
+    },
     image: 'industrial',
     title: 'Industrial Water Treatment',
     summary:
@@ -123,6 +133,10 @@ export const sectors: Sector[] = [
 
   {
     slug: 'wastewater-treatment',
+    card: {
+      text: 'Assessment and design of effluent treatment systems, with a focus on discharge requirements, reliable operation and practical improvements.',
+      points: ['Primary and biological treatment', 'Tertiary treatment and polishing', 'Process assessment and optimisation'],
+    },
     image: 'wastewater',
     title: 'Wastewater Treatment',
     summary:
@@ -172,53 +186,56 @@ export const sectors: Sector[] = [
   },
 
   {
-    slug: 'anaerobic-digestion',
-    image: 'anaerobic',
-    title: 'Anaerobic Digestion & Sludge',
-    navTitle: 'Anaerobic Digestion',
+    slug: 'produced-water-treatment',
+    image: 'produced-water',
+    card: {
+      text: 'Process engineering support for produced water treatment in the oil and gas industry, from treatment assessment to design review and plant optimisation.',
+      points: ['Water characterisation and treatment selection', 'Oil–water separation and polishing', 'Design review and performance assessment'],
+    },
+    title: 'Produced Water Treatment',
     summary:
-      'Engineering support for digestion, thermal hydrolysis, dewatering and sludge management, with options evaluated against process performance and whole-life cost.',
-    metaTitle: 'Anaerobic Digestion & Sludge Treatment Consultants | Waterna',
+      'Process engineering for produced water in oil and gas — characterisation, treatment selection, design review and the optimisation of existing separation and polishing trains.',
+    metaTitle: 'Produced Water Treatment Consultants | Waterna',
     metaDescription:
-      'Independent engineering for anaerobic digestion, thermal hydrolysis, sludge dewatering and disposal — including digestate liquor, biogas safety and HAZOP.',
+      'Independent process engineering for oil and gas produced water — water characterisation, treatment selection, oil–water separation and polishing, design review and performance assessment.',
     intro:
-      'Anaerobic digestion turns a disposal cost into an energy stream, but it also brings a biological process and an explosive atmosphere onto a site, and it returns a liquor to the works that can quietly undo the treatment upstream of it.',
+      'Produced water is the largest waste stream in oil and gas production, and one of the least predictable. Its volume, oil content and chemistry change over a field’s life, and a treatment train designed for the first years of production is rarely right for the later ones.',
     body: [
-      'We work on digestion and sludge treatment as a whole system rather than a single asset: what feeds the digester, what the digester does to it, what comes back as liquor, and where the residue finally goes. Schemes that look attractive on gas yield alone often look different once dewatering performance, liquor return load and the disposal route are priced in.',
-      'Our team has designed and commissioned treatment for sludge streams with high solids, high COD and high dissolved solids — the conditions where standard assumptions stop applying. We also chair the HAZOPs, which on a digestion site is not a formality: biogas, hydrogen sulphide and confined spaces put this class of plant in a different risk category from the rest of a works.',
+      'We support produced water treatment from first characterisation through to the optimisation of plant already in service: establishing what is actually in the water, selecting a treatment route that holds up as conditions change, reviewing designs before they are built, and finding why an existing train is not meeting its oil-in-water or reinjection specification.',
+      'Our background in gas processing and refining means we treat produced water as part of the production system rather than an afterthought. Upstream chemicals, separator performance and the destination of the treated water — discharge, reinjection or reuse — all shape what the treatment needs to do.',
     ],
     challenges: [
       [
-        'Digestate liquor return',
-        'Dewatering liquor returns a concentrated ammonia load to the head of the works. Ignoring it is one of the most common ways a digestion project degrades final effluent quality.',
+        'Variable composition',
+        'Oil content, solids, salinity and production chemicals all change over a field’s life. A design basis built on a single sample will not hold.',
       ],
       [
-        'Dewatering performance',
-        'Cake dryness drives disposal cost more than almost anything else, and the polymer and machine selection that achieve it are specific to the sludge.',
+        'Oil–water separation',
+        'Dispersed and emulsified oil behave very differently. Separator, hydrocyclone and flotation performance depends on droplet size, not just on oil concentration.',
       ],
       [
-        'Biogas safety',
-        'An explosive atmosphere, hydrogen sulphide and confined spaces demand a hazard study appropriate to the risk, not a checklist.',
+        'Production chemical effects',
+        'Demulsifiers, corrosion inhibitors and scale inhibitors can stabilise emulsions and foul downstream treatment if their interactions are not understood.',
       ],
       [
-        'Feedstock variability',
-        'Digestion is a biological process with a slow recovery time. Feedstock changes that seem minor can take weeks to work through.',
+        'Discharge and reinjection specifications',
+        'Oil-in-water limits for discharge and solids or particle-size limits for reinjection set very different targets for the same water.',
       ],
       [
-        'Disposal route',
-        'Land spreading, incineration, composting and landfill each carry different regulatory and cost exposure, and the route should shape the treatment train.',
+        'Scaling and solids',
+        'Mixing incompatible waters and changes in pressure and temperature drive scaling, while produced solids load filters and separators.',
       ],
     ],
     technologies: [
-      'Mesophilic and thermophilic digestion',
-      'Thermal hydrolysis pre-treatment',
-      'Sludge thickening',
-      'Centrifuge and belt press dewatering',
-      'Digestate liquor treatment',
-      'Biogas handling and upgrading',
-      'Drying and pasteurisation',
-      'Odour control',
+      'Gravity and plate separators',
+      'Hydrocyclones',
+      'Induced and dissolved gas flotation',
+      'Walnut shell and media filtration',
+      'Cartridge and membrane filtration',
+      'Chemical treatment and demulsification',
+      'Scale and corrosion control',
+      'Reinjection water treatment',
     ],
-    relatedServices: ['hazop', 'design-services', 'plant-optimisation'],
+    relatedServices: ['feasibility-studies', 'independent-review', 'plant-optimisation'],
   },
 ];
